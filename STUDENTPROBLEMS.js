@@ -4,7 +4,7 @@
 
 var g_canvas = document.getElementById("myCanvas");
 var g_background = document.getElementById("backgroundColorCanvas");
-var g_backgroundSprites = document.getElementById("backgroundSprites");
+var g_backgroundSprites = document.getElementById("backgroundSpriteSprites");
 //console.log('myCanvas', g_canvas);
 var g_ctx = g_canvas.getContext("2d");
 
@@ -77,7 +77,7 @@ function gatherInputs() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-
+    
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
@@ -93,9 +93,12 @@ var g_images = {};
 function requestPreloads() {
     //breyta þessum myndum í okkar myndir 
     var requiredImages = {
-        ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
+        lamp : "https://notendur.hi.is/alm20/images/lamp.png",
+        window: "https://notendur.hi.is/alm20/images/window.png",
+        door: "https://notendur.hi.is/alm20/images/door.png",
+       /* ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"*/
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -105,12 +108,17 @@ var g_sprites = {};
 
 function preloadDone() {
     //breyta líka í okkar
-    g_sprites.ship  = new Sprite(g_images.ship);
+    /*g_sprites.ship  = new Sprite(g_images.ship);
     g_sprites.ship2 = new Sprite(g_images.ship2);
     g_sprites.rock  = new Sprite(g_images.rock);
 
     g_sprites.bullet = new Sprite(g_images.ship);
-    g_sprites.bullet.scale = 0.25;
+    g_sprites.bullet.scale = 0.25;*/
+    //var lamp = new Sprite(g_images.lamp);
+    //var window = new Sprite(g_images.window);
+    //var door = new Sprite(g_images.door);
+
+    g_sprites.backgroundSprites = [new Sprite(g_images.window), new Sprite(g_images.lamp), new Sprite(g_images.door)];
 
     entityManager.init();
 

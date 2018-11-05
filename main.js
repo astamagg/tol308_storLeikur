@@ -28,7 +28,6 @@ var main = {
     // "Frame Time" is a (potentially high-precision) frame-clock for animations
     _frameTime_ms : null,
     _frameTimeDelta_ms : null,
-
 };
 
 // Perform one iteration of the mainloop

@@ -8,14 +8,27 @@
 
 var entityManager = {
     
+_backgroundSprites   : [],
+
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
         fn.call(aCategory[i]);
     }
 },
 
+_generateBackgroundSprites : function() {
+    var i,
+        NUM_BACKGROUND_SPRITES = 3;
+
+    for (i = 0; i < NUM_BACKGROUND_SPRITES; ++i) {
+        this.generateBackgroundSprites(i);
+    }
+},
+
+
 init: function() {
-  
+    this._generateBackgroundSprites();
+    console.log('BackgroundSprites', this._backgroundSprites);
 },
 // PUBLIC METHODS
 
@@ -29,7 +42,11 @@ KILL_ME_NOW : -1,
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [];
+    this._categories = [this._backgroundSprites];
+},
+
+generateBackgroundSprites : function(i) {
+    this._backgroundSprites.push(new BackgroundSprite(i));
 },
 
 update: function(du) {
@@ -38,9 +55,12 @@ update: function(du) {
 
 render: function(ctx) {
     for (var i = 0; i < this._categories.length; ++i) {
-        var aCategory = this._categories[c];
-
-        aCategory[i].render(ctx);
+        var aCategory = this._categories[i];
+       
+        for(var j = 0; j < aCategory.length; j++) {
+            
+            aCategory[j].render(ctx);
+        }
         //debug.text(".", debugX + i * 10, debugY);
 
     }
