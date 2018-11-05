@@ -13,6 +13,10 @@ _forEachOf: function(aCategory, fn) {
         fn.call(aCategory[i]);
     }
 },
+
+init: function() {
+  
+},
 // PUBLIC METHODS
 
 // A special return value, used by other objects,
@@ -33,7 +37,8 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    for (var i = 0; i < aCategory.length; ++i) {
+    for (var i = 0; i < this._categories.length; ++i) {
+        var aCategory = this._categories[c];
 
         aCategory[i].render(ctx);
         //debug.text(".", debugX + i * 10, debugY);
