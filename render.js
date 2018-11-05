@@ -11,7 +11,7 @@ var TOGGLE_BOX = 'B'.charCodeAt(0);
 var TOGGLE_UNDO_BOX = 'U'.charCodeAt(0);
 var TOGGLE_FLIPFLOP = 'F'.charCodeAt(0);
 var TOGGLE_RENDER = 'R'.charCodeAt(0);
-//útfæra allt render
+
 function render(ctx) {
     if (eatKey(TOGGLE_CLEAR)) g_doClear = !g_doClear;
     if (eatKey(TOGGLE_BOX)) g_doBox = !g_doBox;
