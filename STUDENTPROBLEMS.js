@@ -1,5 +1,5 @@
 "use strict";
-
+//stelpan er 80X64 pixlar
 /* jshint browser: true, devel: true, globalstrict: true */
 
 var g_canvas = document.getElementById("myCanvas");
@@ -95,7 +95,8 @@ function requestPreloads() {
     var requiredImages = {
         lamp : "https://notendur.hi.is/alm20/images/lamp.png",
         window: "https://notendur.hi.is/alm20/images/window.png",
-        door: "https://notendur.hi.is/alm20/images/door.png",
+        door: "https://notendur.hi.is/alm20/images/door1.png",
+    
        /* ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
         rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"*/

@@ -26,5 +26,4 @@ BackgroundSprite.prototype.render = function(ctx) {
     this.sprite.drawWrappedCentredAt(
         ctx, this.cx, this.cy
     );
-    console.log('fór í þetta render');
 };
