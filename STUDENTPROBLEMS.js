@@ -19,6 +19,15 @@ var g_ctx = g_canvas.getContext("2d");
 //
 // It then delegates the game-specific logic to `gameRender`
 
+
+
+function createInitialRunner() {
+    entityManager.generateRunner({
+      cx: 200,
+      cy: 200,
+    });
+  }
+
 function updateSimulation(du) {
     
     processDiagnostics();
@@ -93,9 +102,7 @@ var g_images = {};
 function requestPreloads() {
     //breyta þessum myndum í okkar myndir 
     var requiredImages = {
-        ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
-        ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+        girlstanding : "src/girlstanding.png",
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -105,14 +112,10 @@ var g_sprites = {};
 
 function preloadDone() {
     //breyta líka í okkar
-    g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.ship2 = new Sprite(g_images.ship2);
-    g_sprites.rock  = new Sprite(g_images.rock);
-
-    g_sprites.bullet = new Sprite(g_images.ship);
-    g_sprites.bullet.scale = 0.25;
-
+    g_sprites.runner  = new Sprite(g_images.girlstanding);
+  
     entityManager.init();
+    createInitialRunner();
 
     main.init();
 }
