@@ -6,11 +6,10 @@ function Background(image) {
     this.cy = 0;
 }
 
-Background.prototype.render = function(ctx) {
+Background.prototype.draw = function(ctx) {
     ctx.drawImage(this.image, this.cx, this.cy);
 }
 
 Background.prototype.update = function(du) {
-    //Add a connection to the velocity in the game and move the background by an
-    //appropriate amount of pixels
+    //calling the draw function again redrawing it at the new location
 }

@@ -94,12 +94,8 @@ var g_background = {};
 
 function requestPreloads() {
     
-    //breyta þessum myndum í okkar myndir 
     var requiredImages = {
-        lamp : "https://notendur.hi.is/alm20/images/lamp.png",
-        window: "https://notendur.hi.is/alm20/images/window.png",
-        door: "https://notendur.hi.is/alm20/images/door1.png",
-        //background: "https://notendur.hi.is/alm20/images/background.png",
+        background: "https://notendur.hi.is/alm20/images/background.png",
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -108,8 +104,7 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-    //g_background = new Background(g_images.background);
-    g_sprites.backgroundSprites = [new Sprite(g_images.window), new Sprite(g_images.lamp), new Sprite(g_images.door)];
+    g_background = new Background(g_images.background);
 
     entityManager.init();
 

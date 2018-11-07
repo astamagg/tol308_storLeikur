@@ -16,19 +16,9 @@ _forEachOf: function(aCategory, fn) {
     }
 },
 
-_generateBackgroundSprites : function() {
-    var i,
-        NUM_BACKGROUND_SPRITES = 3;
-
-    for (i = 0; i < NUM_BACKGROUND_SPRITES; ++i) {
-        this.generateBackgroundSprites(i);
-    }
-},
-
-
 init: function() {
-    this._generateBackgroundSprites();
-    console.log('BackgroundSprites', this._backgroundSprites);
+   // this._generateBackgroundSprites();
+    //console.log('BackgroundSprites', this._backgroundSprites);
 },
 // PUBLIC METHODS
 
