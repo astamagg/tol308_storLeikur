@@ -79,11 +79,20 @@ wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
 // CANVAS OPS
 // ==========
 
-clearCanvas: function (ctx) {
+//Add the redraw of the background picture
+clearBackgroundCanvas: function(ctx) {
     var prevfillStyle = ctx.fillStyle;
     ctx.fillStyle = "rgb(255, 255,224)";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = prevfillStyle;
+},
+
+//add the redraw of the forground picture
+clearCanvas: function (ctx) {
+    /*var prevfillStyle = ctx.fillStyle;
+    ctx.fillStyle = "rgb(255, 255,224)";
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = prevfillStyle;*/
 },
 
 strokeCircle: function (ctx, x, y, r) {

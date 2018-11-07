@@ -1,11 +1,10 @@
 "use strict";
-//stelpan er 80X64 pixlar
 /* jshint browser: true, devel: true, globalstrict: true */
 
 var g_canvas = document.getElementById("myCanvas");
-var g_background = document.getElementById("backgroundColorCanvas");
-var g_backgroundSprites = document.getElementById("backgroundSpriteSprites");
-//console.log('myCanvas', g_canvas);
+var g_background = document.getElementById("backgroundCanvas");
+
+var g_ctxBackground = g_background.getContext("2d");
 var g_ctx = g_canvas.getContext("2d");
 
 // =================
@@ -78,7 +77,9 @@ function gatherInputs() {
 
 function renderSimulation(ctx) {
     
+    // Background.render();
     entityManager.render(ctx);
+    
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
@@ -89,17 +90,16 @@ function renderSimulation(ctx) {
 // =============
 
 var g_images = {};
+var g_background = {};
 
 function requestPreloads() {
+    
     //breyta þessum myndum í okkar myndir 
     var requiredImages = {
         lamp : "https://notendur.hi.is/alm20/images/lamp.png",
         window: "https://notendur.hi.is/alm20/images/window.png",
         door: "https://notendur.hi.is/alm20/images/door1.png",
-    
-       /* ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
-        ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"*/
+        //background: "https://notendur.hi.is/alm20/images/background.png",
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -108,17 +108,7 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-    //breyta líka í okkar
-    /*g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.ship2 = new Sprite(g_images.ship2);
-    g_sprites.rock  = new Sprite(g_images.rock);
-
-    g_sprites.bullet = new Sprite(g_images.ship);
-    g_sprites.bullet.scale = 0.25;*/
-    //var lamp = new Sprite(g_images.lamp);
-    //var window = new Sprite(g_images.window);
-    //var door = new Sprite(g_images.door);
-
+    //g_background = new Background(g_images.background);
     g_sprites.backgroundSprites = [new Sprite(g_images.window), new Sprite(g_images.lamp), new Sprite(g_images.door)];
 
     entityManager.init();

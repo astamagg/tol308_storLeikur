@@ -22,7 +22,11 @@ function render(ctx) {
     // I've pulled the clear out of `renderSimulation()` and into
     // here, so that it becomes part of our "diagnostic" wrappers
     //
-    if (g_doClear) util.clearCanvas(ctx);
+
+    if (g_doClear) {
+        util.clearBackgroundCanvas(ctx);
+        util.clearCanvas(ctx);
+    }
     
     // The main purpose of the box is to demonstrate that it is
     // always deleted by the subsequent "undo" before you get to
