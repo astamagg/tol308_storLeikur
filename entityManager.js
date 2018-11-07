@@ -6,9 +6,10 @@
 //
 /*jslint nomen: true, white: true, plusplus: true*/
 
+
 var entityManager = {
-    
-_backgroundSprites   : [],
+
+_runner:[],   
 
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
@@ -17,8 +18,7 @@ _forEachOf: function(aCategory, fn) {
 },
 
 init: function() {
-   // this._generateBackgroundSprites();
-    //console.log('BackgroundSprites', this._backgroundSprites);
+    this.generateRunner();
 },
 // PUBLIC METHODS
 
@@ -27,16 +27,16 @@ init: function() {
 //
 KILL_ME_NOW : -1,
 
+generateRunner: function(descr) {
+    this._runner.push(new Runner(descr));
+  },
+
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._backgroundSprites];
-},
-
-generateBackgroundSprites : function(i) {
-    this._backgroundSprites.push(new BackgroundSprite(i));
+    this._categories = [this._runner]; 
 },
 
 update: function(du) {
@@ -44,16 +44,14 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    for (var i = 0; i < this._categories.length; ++i) {
+    /*for (var i = 0; i < this._categories.length; ++i) {
         var aCategory = this._categories[i];
-       
-        for(var j = 0; j < aCategory.length; j++) {
-            
-            aCategory[j].render(ctx);
-        }
+
+        aCategory[i].render(ctx);
         //debug.text(".", debugX + i * 10, debugY);
 
-    }
+    }*/
+    this._runner[0].render(ctx);
 },
 }
 entityManager.deferredSetup();

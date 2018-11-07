@@ -18,6 +18,15 @@ var g_ctx = g_canvas.getContext("2d");
 //
 // It then delegates the game-specific logic to `gameRender`
 
+
+
+function createInitialRunner() {
+    entityManager.generateRunner({
+      cx: 200,
+      cy: 200,
+    });
+  }
+
 function updateSimulation(du) {
     
     processDiagnostics();
@@ -96,6 +105,8 @@ function requestPreloads() {
     
     var requiredImages = {
         background: "https://notendur.hi.is/alm20/images/background.png",
+        girlstanding : "src/girlstanding.png",
+
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -105,8 +116,11 @@ var g_sprites = {};
 
 function preloadDone() {
     g_background = new Background(g_images.background);
-
+    //breyta líka í okkar
+    g_sprites.runner  = new Sprite(g_images.girlstanding);
+  
     entityManager.init();
+    createInitialRunner();
 
     main.init();
 }
