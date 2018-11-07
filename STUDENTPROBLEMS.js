@@ -1,11 +1,10 @@
 "use strict";
-
 /* jshint browser: true, devel: true, globalstrict: true */
 
 var g_canvas = document.getElementById("myCanvas");
-var g_background = document.getElementById("backgroundColorCanvas");
-var g_backgroundSprites = document.getElementById("backgroundSprites");
-//console.log('myCanvas', g_canvas);
+var g_background = document.getElementById("backgroundCanvas");
+
+var g_ctxBackground = g_background.getContext("2d");
 var g_ctx = g_canvas.getContext("2d");
 
 // =================
@@ -86,8 +85,10 @@ function gatherInputs() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-
+    
+    // Background.render();
     entityManager.render(ctx);
+    
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
@@ -98,11 +99,14 @@ function renderSimulation(ctx) {
 // =============
 
 var g_images = {};
+var g_background = {};
 
 function requestPreloads() {
-    //breyta þessum myndum í okkar myndir 
+    
     var requiredImages = {
+        background: "https://notendur.hi.is/alm20/images/background.png",
         girlstanding : "src/girlstanding.png",
+
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -111,6 +115,7 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
+    g_background = new Background(g_images.background);
     //breyta líka í okkar
     g_sprites.runner  = new Sprite(g_images.girlstanding);
   
