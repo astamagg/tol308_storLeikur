@@ -86,7 +86,6 @@ function gatherInputs() {
 
 function renderSimulation(ctx) {
     
-    // Background.render();
     entityManager.render(ctx);
     
 
