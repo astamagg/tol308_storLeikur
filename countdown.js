@@ -2,14 +2,14 @@
 var countdown = {
 _time: 60,  //time in seconds
 _timeString: "01:00",   //string to be rendered
-updateCount: 0, //frame count
+updateCount: 1, //frame count
 
 //updating the function every 60 updates
 update:function(du) {
     this.updateCount++;
     if(this.updateCount === 60) {
         this._time = this._time - 1;
-        this.updateCount = 0;
+        this.updateCount = 1;
         this.timeToMinutes();
     }
     this.checkGameState();
