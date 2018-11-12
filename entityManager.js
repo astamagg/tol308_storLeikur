@@ -40,7 +40,7 @@ deferredSetup : function () {
 },
 
 update: function(du) {
-
+    countdown.update(du);
 },
 
 render: function(ctx) {
@@ -51,7 +51,11 @@ render: function(ctx) {
         //debug.text(".", debugX + i * 10, debugY);
 
     }*/
+    
     this._runner[0].render(ctx);
+   // drawClock(ctx);
+   countdown.render(ctx);
 },
 }
 entityManager.deferredSetup();
+
