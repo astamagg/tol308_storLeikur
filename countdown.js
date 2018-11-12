@@ -38,8 +38,6 @@ timeToMinutes() {
 checkGameState: function() {
     if(this._time < 0) {
         this._timeString = "You lost";
-        this._time = 60
-        this._timeString = "01:00";
     }
 },
 
