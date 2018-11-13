@@ -41,7 +41,7 @@ deferredSetup : function () {
 
 update: function(du) {
     countdown.update(du);
-    this._runner[0].computeSubstep(du);
+    this._runner[0].update(du);
 },
 
 render: function(ctx) {

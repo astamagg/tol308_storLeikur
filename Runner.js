@@ -23,6 +23,8 @@ function Runner(descr) {
 
   // Set normal drawing scale, and warp state off
   this._scale = 1;
+  this.frameCount = 0;
+  this.moveBitch = false;
 }
 
 Runner.prototype = new Entity();
@@ -47,7 +49,7 @@ Runner.prototype.walkLoop = [0,1,2,3,4,1];
 Runner.prototype.crouchLoop = [0,1,2,3,4,2,0];
 Runner.prototype.jump = [0,1];
 Runner.prototype.loops = [[0,1,2,3,4,1], [0,1,2,3,4,2,0], [0,1]];
-Runner.prototype.normalSpeed = 10;
+Runner.prototype.normalSpeed = 15;
 Runner.prototype.fastSpeed = 5;
 Runner.prototype.slowSpeed = 15;
 Runner.prototype.currentSpeed = 10; 
@@ -72,11 +74,13 @@ Runner.prototype.update = function(du) {
   if (keys[this.KEY_JUMP]) {
     this.currentLoop = this.currentLoop = 2;
   }*/
-  this.frameCount = 0;
-
-  this.currentLoopIndex++;
-  if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
-    this.currentLoopIndex = 0;
+  this.computeSubStep(du);
+  if(this.moveBitch) {
+    console.log('fór inn í update');
+    if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
+      this.currentLoopIndex = 0;
+      this.moveBitch = false;
+    }
   }
 };
 
@@ -85,7 +89,7 @@ Runner.prototype.computeSubStep = function(du) {
 
   this.frameCount++;
   if (this.frameCount < this.normalSpeed) { //hversu hratt við update-um
-    this.update(du);
+    this.moveBitch = true;
     return;
   }
 };
@@ -107,7 +111,12 @@ Runner.prototype.halt = function() {
 };
 
 Runner.prototype.render = function(ctx) {
-
-  this.sprite.drawFrame(ctx, this.currentLoop, this.currentLoopIndex, this.cx, this.cy);
+  if(this.moveBitch) {
+    console.log('fór inn í render');
+    console.log('currentloopindex', this.currentLoopIndex);
+    this.sprite.drawFrame(ctx, this.currentLoop, this.currentLoopIndex, this.cx, this.cy);
+    this.moveBitch = false;
+    this.currentLoopIndex++;
+  }
 };
 
