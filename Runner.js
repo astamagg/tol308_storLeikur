@@ -76,7 +76,6 @@ Runner.prototype.update = function(du) {
   }*/
   this.computeSubStep(du);
   if(this.moveBitch) {
-    console.log('fór inn í update');
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
       this.currentLoopIndex = 0;
       this.moveBitch = false;
@@ -90,6 +89,7 @@ Runner.prototype.computeSubStep = function(du) {
   this.frameCount++;
   if (this.frameCount < this.normalSpeed) { //hversu hratt við update-um
     this.moveBitch = true;
+    this.frameCount = 0;
     return;
   }
 };
@@ -112,8 +112,6 @@ Runner.prototype.halt = function() {
 
 Runner.prototype.render = function(ctx) {
   if(this.moveBitch) {
-    console.log('fór inn í render');
-    console.log('currentloopindex', this.currentLoopIndex);
     this.sprite.drawFrame(ctx, this.currentLoop, this.currentLoopIndex, this.cx, this.cy);
     this.moveBitch = false;
     this.currentLoopIndex++;
