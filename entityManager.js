@@ -22,9 +22,9 @@ _generateTimeChangers : function() {
     var i,
         NUM_TIMECHANGERS = 2;
     for (i = 0; i < NUM_TIMECHANGERS; ++i) {
-        this.generateTimeChangers(i);
+        this.generateTimeChangers();
     }
-    console.log('timeChanger', this._timeChanger);
+    console.log('this._generateTimeChangers', this._timeChanger);
 },
 
 init: function() {
@@ -38,8 +38,8 @@ init: function() {
 //
 KILL_ME_NOW : -1,
 
-generateTimeChangers: function(descr, i) {
-    this._timeChanger.push(new TimeChanger(descr, i));
+generateTimeChangers: function(descr) {
+    this._timeChanger.push(new TimeChanger(descr));
 },
 
 generateRunner: function(descr) {
@@ -51,12 +51,50 @@ generateRunner: function(descr) {
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._runner, this._timeChanger]; 
+    this._categories = [this._timeChanger]; 
 },
 
 update: function(du) {
     countdown.update(du);
+    for(var c = 0; c < this._categories.length; c++) {
+        var aCategory = this._categories[c];
+        var i = 0;
+        while ( i < aCategory.length) {
+            aCategory[i].update(du);
+            i++;
+        }
+    }
+    //TimeChanger.update(du);
 },
+
+/*update: function(du) {
+    countdown.update(du);
+
+    for (var c = 0; c < this._categories.length; ++c) {
+
+        var aCategory = this._categories[c];
+        var i = 0;
+
+        while (i < aCategory.length) {
+            aCategory[i].update(du);
+           // var status = aCategory[i].update(du);
+
+           /* if (status === this.KILL_ME_NOW) {
+                // remove the dead guy, and shuffle the others down to
+                // prevent a confusing gap from appearing in the array
+                aCategory.splice(i,1);
+            }
+            else {
+                ++i;
+            }
+        }
+    }
+    
+   // if (this._rocks.length === 0) this._generateRocks();
+
+},*/
+
+
 
 render: function(ctx) {
     for (var i = 0; i < this._categories.length; ++i) {
