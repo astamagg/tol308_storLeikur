@@ -17,5 +17,7 @@ TimeChanger.prototype.update = function(du) {
 }
 
 TimeChanger.prototype.render = function(ctx) {
-    ctx.drawImage(g_sprites.timeChange[Math.round(Math.random())]);
+    //console.log('g_sprites', g_sprites.timeChanger[Math.round(Math.random())]);
+    
+    ctx.drawImage(g_sprites.timeChanger[Math.round(Math.random())].image, 10, 10, 150, 180);
 }

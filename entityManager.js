@@ -59,13 +59,13 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    /*for (var i = 0; i < this._categories.length; ++i) {
+    for (var i = 0; i < this._categories.length; ++i) {
         var aCategory = this._categories[i];
 
         aCategory[i].render(ctx);
         //debug.text(".", debugX + i * 10, debugY);
 
-    }*/
+    }
     
     this._runner[0].render(ctx);
    // drawClock(ctx);
