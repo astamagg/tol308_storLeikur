@@ -45,11 +45,11 @@ Runner.prototype.cy = 200;
 Runner.prototype.numSubSteps = 1;
 Runner.prototype.width = 64;
 Runner.prototype.height = 80;
-Runner.prototype.walkLoop = [0,1,2,3,4,1];
+Runner.prototype.walkLoop = [0,1,2,3,4];
 Runner.prototype.crouchLoop = [0,1,2,3,4,2,0];
 Runner.prototype.jump = [0,1];
-Runner.prototype.loops = [[0,1,2,3,4,1], [0,1,2,3,4,2,0], [0,1]];
-Runner.prototype.normalSpeed = 15;
+Runner.prototype.loops = [[0,1,2,3,4], [0,1,2,3,4,2,0], [0,1]];
+Runner.prototype.normalSpeed = 150;
 Runner.prototype.fastSpeed = 5;
 Runner.prototype.slowSpeed = 15;
 Runner.prototype.currentSpeed = 10; 
@@ -74,6 +74,7 @@ Runner.prototype.update = function(du) {
   if (keys[this.KEY_JUMP]) {
     this.currentLoop = this.currentLoop = 2;
   }*/
+  
   this.computeSubStep(du);
   if(this.moveBitch) {
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
@@ -112,7 +113,7 @@ Runner.prototype.halt = function() {
 
 Runner.prototype.render = function(ctx) {
   if(this.moveBitch) {
-    this.sprite.drawFrame(ctx, this.currentLoop, this.currentLoopIndex, this.cx, this.cy);
+    this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
     this.moveBitch = false;
     this.currentLoopIndex++;
   }
