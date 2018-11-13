@@ -10,6 +10,7 @@
 var entityManager = {
 
 _runner:[],   
+_timeChanger: [],
 
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
@@ -17,8 +18,18 @@ _forEachOf: function(aCategory, fn) {
     }
 },
 
+_generateRocks : function() {
+    var i,
+        NUM_TIMECHANGERS = 2;
+
+    for (i = 0; i < NUM_TIMECHANGERS; ++i) {
+        this.generateTimeChangers();
+    }
+},
+
 init: function() {
     this.generateRunner();
+    this.generateTimeChangers();
 },
 // PUBLIC METHODS
 
@@ -26,6 +37,10 @@ init: function() {
 // to request the blessed release of death!
 //
 KILL_ME_NOW : -1,
+
+generateTimeChangers: function(descr) {
+    this._timeChanger.push(new TimeChanger(descr));
+},
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
@@ -36,7 +51,7 @@ generateRunner: function(descr) {
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._runner]; 
+    this._categories = [this._runner, this._timeChanger]; 
 },
 
 update: function(du) {
