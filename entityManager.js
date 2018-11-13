@@ -18,18 +18,18 @@ _forEachOf: function(aCategory, fn) {
     }
 },
 
-_generateRocks : function() {
+_generateTimeChangers : function() {
     var i,
         NUM_TIMECHANGERS = 2;
-
     for (i = 0; i < NUM_TIMECHANGERS; ++i) {
-        this.generateTimeChangers();
+        this.generateTimeChangers(i);
     }
+    console.log('timeChanger', this._timeChanger);
 },
 
 init: function() {
     this.generateRunner();
-    this.generateTimeChangers();
+    this._generateTimeChangers();
 },
 // PUBLIC METHODS
 
@@ -38,8 +38,8 @@ init: function() {
 //
 KILL_ME_NOW : -1,
 
-generateTimeChangers: function(descr) {
-    this._timeChanger.push(new TimeChanger(descr));
+generateTimeChangers: function(descr, i) {
+    this._timeChanger.push(new TimeChanger(descr, i));
 },
 
 generateRunner: function(descr) {

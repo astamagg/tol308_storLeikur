@@ -125,11 +125,7 @@ function preloadDone() {
     //breyta líka í okkar
     g_sprites.runner  = new Sprite(g_images.girlstanding);
 
-    g_sprites.timeChanger = [ 
-        { sprite: new Sprite(g_images.piazza),
-        timeId: 5,},
-        { sprite: new Sprite(g_images.netflix),
-        timeId: -5}];
+    g_sprites.timeChanger = [ new Sprite(g_images.piazza),new Sprite(g_images.netflix)];
     
     entityManager.init();
     createInitialRunner();
