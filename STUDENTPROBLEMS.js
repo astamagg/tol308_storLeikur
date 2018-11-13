@@ -104,7 +104,7 @@ function requestPreloads() {
     
     var requiredImages = {
         background: "https://notendur.hi.is/alm20/images/background.png",
-        girlstanding : "src/girlstanding.png",
+        spritesheet : "src/spritesheet64x80.png",
 
     };
 
@@ -116,7 +116,7 @@ var g_sprites = {};
 function preloadDone() {
     g_background = new Background(g_images.background);
     //breyta líka í okkar
-    g_sprites.runner  = new Sprite(g_images.girlstanding);
+    g_sprites.runner  = new Sprite(g_images.spritesheet);
   
     entityManager.init();
     createInitialRunner();

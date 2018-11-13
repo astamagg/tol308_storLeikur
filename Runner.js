@@ -19,11 +19,10 @@ function Runner(descr) {
   this.rememberResets();
 
   // Default sprite, if not otherwise specified
-  this.sprite = this.sprite || g_sprites.runner;
+  this.sprite = g_sprites.runner;
 
   // Set normal drawing scale, and warp state off
   this._scale = 1;
-  this._isWarping = false;
 }
 
 Runner.prototype = new Entity();
@@ -41,10 +40,20 @@ Runner.prototype.KEY_CROUCH = 'S'.charCodeAt(0);
 // Initial, inheritable, default values
 Runner.prototype.cx = 200;
 Runner.prototype.cy = 200;
-Runner.prototype.velX = 0;
-Runner.prototype.velY = 0;
-Runner.prototype.launchVel = 2;
 Runner.prototype.numSubSteps = 1;
+Runner.prototype.width = 64;
+Runner.prototype.height = 80;
+Runner.prototype.walkLoop = [0,1,2,3,4,1];
+Runner.prototype.crouchLoop = [0,1,2,3,4,2,0];
+Runner.prototype.jump = [0,1];
+Runner.prototype.loops = [[0,1,2,3,4,1], [0,1,2,3,4,2,0], [0,1]];
+Runner.prototype.normalSpeed = 10;
+Runner.prototype.fastSpeed = 5;
+Runner.prototype.slowSpeed = 15;
+Runner.prototype.currentSpeed = 10; 
+Runner.prototype.currentLoop = 0;
+Runner.prototype.currentLoopIndex = 0;
+Runner.prototype.endFrame = 11; 
 
 
 
@@ -52,30 +61,28 @@ Runner.prototype.update = function(du) {
 
   // Perform movement substeps
   //to do add diferent frames
-  var steps = this.numSubSteps;
-  var dStep = du / steps;
-  for (var i = 0; i < steps; ++i) {
-    this.computeSubStep(dStep);
+  // ef key = S þá crouch animation
+  // ef key = w þá jump animation 
+  
+/*
+  if (keys[this.KEY_CROUCH]) {
+    this.currentLoop = this.currentLoop = 1;
+  }
+  if (keys[this.KEY_JUMP]) {
+    this.currentLoop = this.currentLoop = 2;
+  }*/
+
+  this.currentLoopIndex++;
+  if (this.currentLoopIndex >= this.currentLoop.length) {
+    this.currentLoopIndex = 0;
   }
 
 };
 
+
+//sama og step fallið? 
 Runner.prototype.computeSubStep = function(du) {
-  /*var thrust = this.computeThrustMag();
 
-  // Apply thrust directionally, based on our rotation
-  //var accelX = +Math.sin(this.rotation) * thrust;
-  //var accelY = -Math.cos(this.rotation) * thrust;
-
-  accelY += this.computeGravity();
-
-  this.applyAccel(accelX, accelY, du);
-
-  this.wrapPosition();
-
-  if (thrust === 0 || g_allowMixedActions) {
-    this.updateRotation(du);
-  }*/
 };
 
 var NOMINAL_GRAVITY = 0.12;
@@ -84,53 +91,8 @@ Runner.prototype.computeGravity = function() {
   return g_useGravity ? NOMINAL_GRAVITY : 0;
 };
 
-var NOMINAL_THRUST = +0.2;
-var NOMINAL_RETRO = -0.1;
-
-Runner.prototype.computeThrustMag = function() {
-  /*var thrust = 0;
-
-  if (keys[this.KEY_JUMP]) {
-    thrust += NOMINAL_THRUST;
-  }
-  if (keys[this.KEY_CROUCH]) {
-    thrust += NOMINAL_RETRO;
-  }
-*/
-  return thrust;
-};
-
-Runner.prototype.applyAccel = function(accelX, accelY, du) {
-  // u = original velocity
-  var oldVelX = this.velX;
-  var oldVelY = this.velY;
-
-  // v = u + at
-  this.velX += accelX * du;
-  this.velY += accelY * du;
-
-  // v_ave = (u + v) / 2
-  var aveVelX = (oldVelX + this.velX) / 2;
-  var aveVelY = (oldVelY + this.velY) / 2;
-
-  // Decide whether to use the average or not (average is best!)
-  var intervalVelX = g_useAveVel ? aveVelX : this.velX;
-  var intervalVelY = g_useAveVel ? aveVelY : this.velY;
-
-  // s = s + v_ave * t
-  var nextX = this.cx + intervalVelX * du;
-  var nextY = this.cy + intervalVelY * du;
-
-  // s = s + v_ave * t
-  this.cx += du * intervalVelX;
-  this.cy += du * intervalVelY;
-};
-
-
 Runner.prototype.reset = function() {
   this.setPos(this.reset_cx, this.reset_cy);
-  this.rotation = this.reset_rotation;
-
   this.halt();
 };
 
@@ -139,13 +101,7 @@ Runner.prototype.halt = function() {
   this.velY = 0;
 };
 
-
 Runner.prototype.render = function(ctx) {
-  //var origScale = this.sprite.scale;
-  // pass my scale into the sprite, for drawing
-  //this.sprite.scale = this._scale;
- 
-  
-  this.sprite.drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
-  //this.sprite.scale = origScale;
+
+  this.sprite.drawFrame(ctx, this.currentLoop, this.currentLoopIndex, this.cx, this.cy);
 };
