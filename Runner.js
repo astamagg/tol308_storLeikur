@@ -54,6 +54,7 @@ Runner.prototype.currentSpeed = 10;
 Runner.prototype.currentLoop = 0;
 Runner.prototype.currentLoopIndex = 0;
 Runner.prototype.endFrame = 11; 
+Runner.prototype.frameCount = 0; 
 
 
 
@@ -71,18 +72,22 @@ Runner.prototype.update = function(du) {
   if (keys[this.KEY_JUMP]) {
     this.currentLoop = this.currentLoop = 2;
   }*/
+  this.frameCount = 0;
 
   this.currentLoopIndex++;
-  if (this.currentLoopIndex >= this.currentLoop.length) {
+  if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
     this.currentLoopIndex = 0;
   }
-
 };
-
 
 //sama og step fallið? 
 Runner.prototype.computeSubStep = function(du) {
 
+  this.frameCount++;
+  if (this.frameCount < this.normalSpeed) { //hversu hratt við update-um
+    this.update(du);
+    return;
+  }
 };
 
 var NOMINAL_GRAVITY = 0.12;
@@ -105,3 +110,4 @@ Runner.prototype.render = function(ctx) {
 
   this.sprite.drawFrame(ctx, this.currentLoop, this.currentLoopIndex, this.cx, this.cy);
 };
+
