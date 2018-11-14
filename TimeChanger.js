@@ -17,7 +17,8 @@ function TimeChanger(descr) {
     this.velX = this.randomVelocity();
 
     this.cx = g_ctx.canvas.width + 10;
-    this.cy = util.randRange(100, 300);
+    this.cy = util.randRange(80, 250);
+    console.log('cy', this.cy);
 };
 
 TimeChanger.prototype = new Entity();
