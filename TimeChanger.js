@@ -4,11 +4,12 @@ function TimeChanger(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
     
-    //this.image = g_sprites.timeChanger[i].image;
     if(this._spatialID === 2) {
         this.sprite = this.sprite || g_sprites.timeChanger[0];
+        this.timeChange = 5;
     } else {
         this.sprite = this.sprite || g_sprites.timeChanger[1];
+        this.timeChange = -5;
     }
     this.frameCounter = 0;
     this.frameMax = util.randRange(0, 100);
@@ -16,7 +17,7 @@ function TimeChanger(descr) {
     this.velX = this.randomVelocity();
 
     this.cx = g_ctx.canvas.width + 10;
-    this.cy = util.randRange(10, 300);
+    this.cy = util.randRange(30, 300);
 };
 
 TimeChanger.prototype = new Entity();
@@ -49,7 +50,4 @@ TimeChanger.prototype.render = function(ctx) {
 
         ctx.drawImage(this.sprite.image, this.cx, this.cy);
     }
-    //console.log('g_sprites', g_sprites.timeChanger[Math.round(Math.random())]);
-    //bara draw öðru hvoru og bara annað þá
-    //ctx.drawImage(g_sprites.timeChanger[Math.round(Math.random())].image, 10, 10, 150, 180);
 }
