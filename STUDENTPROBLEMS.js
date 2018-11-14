@@ -26,7 +26,7 @@ function createInitialRunner() {
       cx: 200,
       cy: 200,
     });
-  }
+}
 
 function updateSimulation(du) {
     
@@ -38,13 +38,66 @@ function updateSimulation(du) {
    // eatKey(Ship.prototype.KEY_FIRE);
 }
 
+// Button
+
+var g_gameOver = false;
+var g_theStory = true;
+var g_WINNER = false;
+var g_instructions = false;
+
+var g_buttonsFrontPage = [
+
+    new Button({
+        text : 'Start new game',
+        color : 'red',
+        width : 200,
+        height : 40,
+        x : g_canvas.width/2 - 100,
+        y : g_canvas.height/1.2 - 80,
+        onClick : function () {
+            g_theStory = false;
+        }
+    }),
+
+    new Button({
+        text : 'Instructions',
+        color : 'red',
+        width : 200,
+        height : 40,
+        x : g_canvas.width/2 - 100,
+        y : g_canvas.height/1.1 - 60,
+        onClick : function () {
+            g_theStory = false;
+            g_instructions = true;
+        }
+    }),
+
+];
+
+var g_buttonInstruction = new Button({
+    text : 'Go back',
+    color : 'red',
+    width : 200,
+    height : 40,
+    x : g_canvas.width/2 - 100,
+    y : g_canvas.height/1.1
+});
+
+var g_buttonGameOver = new Button({
+    text : 'New game',
+    color : 'red',
+    width : 200,
+    height : 40,
+    x : 100,
+    y : 100
+});
+
 var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 
 var KEY_MIXED   = keyCode('M');;
-var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 
@@ -57,6 +110,9 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_K = keyCode('K');
+
+var KEY_G = keyCode('G');
+var KEY_W = keyCode('W');
 
 function processDiagnostics() {
 /*
@@ -87,9 +143,26 @@ function gatherInputs() {
 
 function renderSimulation(ctx) {
 
-    entityManager.render(ctx);
+    if (g_gameOver || g_WINNER) {
+        gameOver(ctx);
+    } else {
+        if (g_theStory) {
+            theStory(ctx);
+            for (let i=0; i<g_buttonsFrontPage.length; i++) { 
+                g_buttonsFrontPage[i].render(ctx);
+            }
+        } else if (g_instructions) {
+            instructionGame(ctx);
+            g_buttonInstruction.render(ctx);
+        }
+        
+        if (!g_theStory && !g_instructions) {
+            entityManager.render(ctx);
+    
+            if (g_renderSpatialDebug) spatialManager.render(ctx);
+        }
+    }
 
-    if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
 
@@ -103,6 +176,7 @@ function requestPreloads() {
     //breyta þessum myndum í okkar myndir 
     var requiredImages = {
         girlstanding : "src/girlstanding.png",
+        backgroundFrontPage : "src/backgroundFrontPage.png",
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
