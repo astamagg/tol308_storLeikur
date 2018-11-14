@@ -5,14 +5,13 @@ function TimeChanger(descr) {
     this.setup(descr);
     
     //this.image = g_sprites.timeChanger[i].image;
-    if(this.spatialId === 2) {
-        this.sprite = g_sprites.timeChanger[0];
+    if(this._spatialID === 2) {
+        this.sprite = this.sprite || g_sprites.timeChanger[0];
     } else {
-        this.sprite = g_sprites.timeChanger[1];
+        this.sprite = this.sprite || g_sprites.timeChanger[1];
     }
-    
     this.frameCounter = 0;
-    this.frameMax = Math.random(0, 50);
+    this.frameMax = util.randRange(0, 100);
     this.drawTimeChanger = false;
     this.velX = this.randomVelocity();
 
@@ -35,7 +34,7 @@ TimeChanger.prototype.update = function(du) {
 
     if(this.frameCounter > this.frameMax) {
         this.drawTimeChanger = true;
-        //this.currentTimeChanger = g_sprites.timeChanger[Math.round(Math.random())].image;
+        this.frameMax = util.randRange(0, 100);
         this.frameCounter = 0;
     }
     if(this.drawTimeChanger) {

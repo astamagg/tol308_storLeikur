@@ -99,8 +99,9 @@ update: function(du) {
 render: function(ctx) {
     for (var i = 0; i < this._categories.length; ++i) {
         var aCategory = this._categories[i];
-
-        aCategory[i].render(ctx);
+        for(var j = 0; j < aCategory.length; j++) {
+            aCategory[j].render(ctx);
+        }
         //debug.text(".", debugX + i * 10, debugY);
 
     }
