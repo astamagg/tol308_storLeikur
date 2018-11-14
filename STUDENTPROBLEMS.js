@@ -4,8 +4,8 @@
 var g_canvas = document.getElementById("myCanvas");
 var g_background = document.getElementById("backgroundCanvas");
 
-var g_ctxBackground = g_background.getContext("2d");
-var g_ctx = g_canvas.getContext("2d");
+var ctxBackground = g_background.getContext("2d");
+var ctx = g_canvas.getContext("2d");
 
 // =================
 // RENDER SIMULATION
