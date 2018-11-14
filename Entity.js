@@ -34,6 +34,8 @@ function Entity() {
 
 };
 
+//Bæta við entity id til þess að vita hvaða entity þetta er
+
 Entity.prototype.setup = function (descr) {
 
     // Apply all setup properies from the (optional) descriptor
