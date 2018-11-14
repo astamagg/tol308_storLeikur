@@ -125,6 +125,8 @@ function imagesPreload(requiredImages,
             currentImage.name = currentName;
 
             currentImage.asyncLoad(requiredImages[currentName], preloadHandler);
+            
         }
     }
+    console.log('requiredImages', requiredImages);
 }

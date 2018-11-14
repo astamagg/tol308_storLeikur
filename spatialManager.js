@@ -7,7 +7,7 @@ e.g. general collision detection.
 
 */
 
-"use strict";
+'use strict';
 
 /* jshint browser: true, devel: true, globalstrict: true */
 
@@ -17,90 +17,96 @@ e.g. general collision detection.
 */
 
 var spatialManager = {
+  // "PRIVATE" DATA
 
-// "PRIVATE" DATA
+  _nextSpatialID: 1, // make all valid IDs non-falsey (i.e. don't start at 0)
 
-_nextSpatialID : 1, // make all valid IDs non-falsey (i.e. don't start at 0)
+  _entities: [],
 
-_entities : [],
+  // "PRIVATE" METHODS
+  //
+  // <none yet>
 
-// "PRIVATE" METHODS
-//
-// <none yet>
+  // PUBLIC METHODS
 
-
-// PUBLIC METHODS
-
-getNewSpatialID : function() {
-    // TODO: YOUR STUFF HERE! -> DONE
+  getNewSpatialID: function() {
+    // YOUR STUFF HERE! -> DONE
     var newSpatialID = this._nextSpatialID;
 
     this._nextSpatialID += 1;
-    
+
     return newSpatialID;
+  },
 
-},
-
-register: function(entity) {
-    // TODO: YOUR STUFF HERE! -> DONE
+  register: function(entity) {
+    // YOUR STUFF HERE! -> DONE
     var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
 
     //create the entity with the current position, radius and the thing itself
     var updatedEntity = {
-        posX: pos.posX,
-        posY: pos.posY,
-        radius: entity.getRadius(),
-        entity: entity,
+      posX: pos.posX,
+      posY: pos.posY,
+      radius: entity.getRadius(),
+      entity: entity,
     };
-    
+
     //add the value to the ID of the entity
     this._entities[spatialID] = updatedEntity;
-},
+  },
 
-unregister: function(entity) {
-    // TODO: YOUR STUFF HERE! -> done
+  unregister: function(entity) {
+    // YOUR STUFF HERE! -> done
     var spatialID = entity.getSpatialID();
     //create a new entity that is empty for this particular ID
     //I have a question about this, this is a rather simple method but does it not take
     //up alot of memory to have an array with empty indices?
-    this._entities[spatialID] = new Entity(); 
-},
+    this._entities[spatialID] = new Entity();
+  },
 
-findEntityInRange: function(posX, posY, radius) {
-    // TODO: YOUR STUFF HERE! -> DONE
+  findEntityInRange: function(posX, posY, radius) {
+    // YOUR STUFF HERE! -> DONE
+    // TODO: Öll entity þurfa að vera með width og height breytur
+    // Þurfum í raun bara að nota find entity in range fyrir stelpuna - hún er eina sem getur collide-að
+    // Svo köllum við á util fallið areColliding hér til að athuga hvort hún snerti hluti
     var smallestID = 0;
     var smallestDistance = 1000000;
-    for(var ID in this._entities) {
-        //return if I am comparing the entity to itself
-        if(posX === this._entities[ID].posX && posY === this._entities[ID]) {
-            return;
-        }
-        //calculate the distance between the two objects
-        var distance = util.wrappedDistSq(posX, posY, this._entities[ID].posX, this._entities[ID].posY, g_canvas.width, g_canvas.height);
-        //update the smallest value
-        if(distance < smallestDistance) {
-            smallestDistance = distance;
-            smallestID = ID;
-        }
+    for (var ID in this._entities) {
+      //return if I am comparing the entity to itself
+      if (posX === this._entities[ID].posX && posY === this._entities[ID]) {
+        return;
+      }
+      //calculate the distance between the two objects
+      var distance = util.wrappedDistSq(
+        posX,
+        posY,
+        this._entities[ID].posX,
+        this._entities[ID].posY,
+        g_canvas.width,
+        g_canvas.height
+      );
+      //update the smallest value
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        smallestID = ID;
+      }
     }
     //calculate the distance between their centers
     var limit = radius + this._entities[smallestID].radius;
 
     //return the value if the distance is smaller that limit squared
-    if(smallestDistance < limit*limit) {
-        return this._entities[smallestID].entity;
+    if (smallestDistance < limit * limit) {
+      return this._entities[smallestID].entity;
     }
-},
+  },
 
-render: function(ctx) {
+  render: function(ctx) {
     var oldStyle = ctx.strokeStyle;
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = 'red';
     for (var ID in this._entities) {
-        var e = this._entities[ID];
-        util.strokeCircle(ctx, e.posX, e.posY, e.radius);
+      var e = this._entities[ID];
+      util.strokeCircle(ctx, e.posX, e.posY, e.radius);
     }
     ctx.strokeStyle = oldStyle;
-}
-
-}
+  },
+};
