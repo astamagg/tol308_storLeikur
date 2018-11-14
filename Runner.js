@@ -49,9 +49,8 @@ Runner.prototype.walkLoop = [0,1,2,3,4];
 Runner.prototype.crouchLoop = [0,1,2,3,4,2,0];
 Runner.prototype.jump = [0,1];
 Runner.prototype.loops = [[0,1,2,3,4], [0,1,2,3,4,2,0], [0,1]];
-Runner.prototype.normalSpeed = 150;
-Runner.prototype.fastSpeed = 5;
-Runner.prototype.slowSpeed = 15;
+Runner.prototype.speed = 150;
+
 Runner.prototype.currentSpeed = 10; 
 Runner.prototype.currentLoop = 0;
 Runner.prototype.currentLoopIndex = 0;
@@ -67,14 +66,14 @@ Runner.prototype.update = function(du) {
   // ef key = S þá crouch animation
   // ef key = w þá jump animation 
   
-/*
-  if (keys[this.KEY_CROUCH]) {
+
+  if (eatKey(this.KEY_CROUCH)) {
     this.currentLoop = this.currentLoop = 1;
   }
-  if (keys[this.KEY_JUMP]) {
-    this.currentLoop = this.currentLoop = 2;
-  }*/
-  
+  if (eatKey(this.KEY_JUMP)) {
+    this.currentLoop = this.currentLoop = 1;
+  }
+
   this.computeSubStep(du);
   if(this.moveBitch) {
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
@@ -88,7 +87,7 @@ Runner.prototype.update = function(du) {
 Runner.prototype.computeSubStep = function(du) {
 
   this.frameCount++;
-  if (this.frameCount < this.normalSpeed) { //hversu hratt við update-um
+  if (this.frameCount < this.speed) { //hversu hratt við update-um
     this.moveBitch = true;
     this.frameCount = 0;
     return;
