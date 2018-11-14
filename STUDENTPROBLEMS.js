@@ -179,6 +179,13 @@ function requestPreloads() {
     var requiredImages = {
         background: "https://notendur.hi.is/alm20/images/background.png",
         girlstanding : "src/girlstanding.png",
+        coffee: "src/coffee.png",
+        energydrink: "src/energydrink.png",
+        piazza: "src/piazza.png",
+        spotify: "src/spotify.png",
+        candy: "src/candy.png",
+        youtube: "src/youtube.png",
+        netflix: "src/netflix.png",
         backgroundFrontPage : "src/backgroundFrontPage.png",
     };
 
@@ -191,7 +198,9 @@ function preloadDone() {
     g_background = new Background(g_images.background);
     //breyta líka í okkar
     g_sprites.runner  = new Sprite(g_images.girlstanding);
-  
+
+    g_sprites.timeChanger = [ new Sprite(g_images.piazza),new Sprite(g_images.netflix)];
+    
     entityManager.init();
     createInitialRunner();
 

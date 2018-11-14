@@ -2,7 +2,7 @@
 var countdown = {
 _time: 60,  //time in seconds
 _timeString: "01:00",   //string to be rendered
-updateCount: 1, //frame count
+updateCount: 0, //frame count
 
 //updating the function every 60 updates
 update:function(du) {

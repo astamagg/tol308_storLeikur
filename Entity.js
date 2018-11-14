@@ -51,6 +51,7 @@ Entity.prototype.setPos = function(cx, cy) {
 
 Entity.prototype.getPos = function() {
   return { posX: this.cx, posY: this.cy };
+
 };
 
 Entity.prototype.getRadius = function() {
