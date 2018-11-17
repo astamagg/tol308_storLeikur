@@ -121,7 +121,8 @@ function requestPreloads() {
         candy: "src/candy.png",
         youtube: "src/youtube.png",
         netflix: "src/netflix.png",
-
+        beer: "src/beer.png",
+        youtube: "src/youtube.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -172,13 +173,15 @@ function preloadDone() {
         },
         {
             sprite: new Sprite(g_images.beer),
-            powerChange: -1/3,
+            powerChange: -3,
             height: g_images.beer.height,
             width: g_images.beer.width,
         },
         {
             sprite: new Sprite(g_images.youtube),
-            
+            powerChnage: -3,
+            height: g_images.youtube.height,
+            width: g_images.youtube.width,
         }
     
     
