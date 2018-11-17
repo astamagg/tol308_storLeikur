@@ -10,7 +10,7 @@
 var entityManager = {
 
 _runner:[],   
-_timeChanger: [],
+_powerChanger: [],
 
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
@@ -18,18 +18,18 @@ _forEachOf: function(aCategory, fn) {
     }
 },
 
-_generateTimeChangers : function() {
+_generatePowerChangers : function() {
     var i,
-        NUM_TIMECHANGERS = 2;
-    for (i = 0; i < NUM_TIMECHANGERS; ++i) {
-        this.generateTimeChangers();
+        NUM_POWERCHANGERS = 6;
+    for (i = 0; i < NUM_POWERCHANGERS; ++i) {
+        this.generatePowerChangers();
     }
-    console.log('this._generateTimeChangers', this._timeChanger);
+    console.log('timeChangers', this._timeChanger);
 },
 
 init: function() {
+    this._generatePowerChangers();
     this.generateRunner();
-    this._generateTimeChangers();
 },
 // PUBLIC METHODS
 
@@ -38,8 +38,8 @@ init: function() {
 //
 KILL_ME_NOW : -1,
 
-generateTimeChangers: function(descr) {
-    this._timeChanger.push(new TimeChanger(descr));
+generatePowerChangers: function(descr) {
+    this._powerChanger.push(new PowerChanger(descr));
 },
 
 generateRunner: function(descr) {
@@ -51,7 +51,7 @@ generateRunner: function(descr) {
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._timeChanger]; 
+    this._categories = [this._powerChanger]; 
 },
 
 update: function(du) {
