@@ -20,11 +20,11 @@ _forEachOf: function(aCategory, fn) {
 
 _generatePowerChangers : function() {
     var i,
-        NUM_POWERCHANGERS = 6;
+        NUM_POWERCHANGERS = 8;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generatePowerChangers();
     }
-    console.log('timeChangers', this._timeChanger);
+    console.log('powerChanger', this._powerChanger);
 },
 
 init: function() {

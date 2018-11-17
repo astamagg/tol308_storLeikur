@@ -256,13 +256,10 @@ function preloadDone() {
         },
         {
             sprite: new Sprite(g_images.youtube),
-            powerChnage: -3,
+            powerChange: -3,
             height: g_images.youtube.height,
             width: g_images.youtube.width,
-        }
-    
-    
-    ];
+        }];
             
 
     g_background = new Background(g_images.background);

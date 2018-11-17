@@ -3,6 +3,7 @@
 function PowerChanger(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
+    console.log('this', this);
     this.powerChange = g_sprites.powerUpsDowns[this.getEntityID()].powerChange; 
     this.sprite = this.sprite || g_sprites.powerUpsDowns[this.getEntityID()].sprite;
     this.frameCounter = 0;
