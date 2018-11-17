@@ -28,6 +28,13 @@ Sprite.prototype.drawAt = function (ctx, x, y) {
                   x, y);
 };
 
+Sprite.prototype.drawFrame = function(ctx, frameX, frameY, canvasX, canvasY) {
+    ctx.drawImage(this.image,
+                  frameX * 64, frameY * 80, 64, 80, 
+                  canvasX, canvasY, 64, 80);
+  }
+
+
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
     if (rotation === undefined) rotation = 0;
     

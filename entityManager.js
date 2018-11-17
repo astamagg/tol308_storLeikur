@@ -56,6 +56,8 @@ deferredSetup : function () {
 
 update: function(du) {
     countdown.update(du);
+    this._runner[0].update(du);
+
     for(var c = 0; c < this._categories.length; c++) {
         var aCategory = this._categories[c];
         var i = 0;

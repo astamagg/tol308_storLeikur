@@ -14,7 +14,7 @@ functions... shared data properties are potentially quite confusing.
 
 */
 
-"use strict";
+'use strict';
 
 /* jshint browser: true, devel: true, globalstrict: true */
 
@@ -24,20 +24,35 @@ functions... shared data properties are potentially quite confusing.
 */
 var _nextEntityID = 0;
 
-
 function Entity() {
-
-/*
+  /*
     // Diagnostics to check inheritance stuff
     this._entityProperty = true;
     console.dir(this);
 */
+}
 
+Entity.prototype.setup = function(descr) {
+  // Apply all setup properies from the (optional) descriptor
+  for (var property in descr) {
+    this[property] = descr[property];
+  }
+
+  // Get my (unique) spatial ID
+  this._spatialID = spatialManager.getNewSpatialID();
+
+  // I am not dead yet!
+  this._isDeadNow = false;
 };
 
-//Bæta við entity id til þess að vita hvaða entity þetta er
+Entity.prototype.setPos = function(cx, cy) {
+  this.cx = cx;
+  this.cy = cy;
+};
 
-Entity.prototype.setup = function (descr) {
+Entity.prototype.getPos = function() {
+  return { posX: this.cx, posY: this.cy };
+
 
     // Apply all setup properies from the (optional) descriptor
     for (var property in descr) {
@@ -65,16 +80,20 @@ Entity.prototype.setPos = function (cx, cy) {
     this.cy = cy;
 };
 
-Entity.prototype.getPos = function () {
-    return {posX : this.cx, posY : this.cy};
+Entity.prototype.getRadius = function() {
+  return 0;
 };
 
-Entity.prototype.getRadius = function () {
-    return 0;
+Entity.prototype.getHeight = function() {
+  return 0;
 };
 
-Entity.prototype.getSpatialID = function () {
-    return this._spatialID;
+Entity.prototype.getWidth = function() {
+  return 0;
+};
+
+Entity.prototype.getSpatialID = function() {
+  return this._spatialID;
 };
 
 Entity.prototype.getEntityID = function() {
@@ -83,21 +102,22 @@ Entity.prototype.getEntityID = function() {
 
 Entity.prototype.kill = function () {
     this._isDeadNow = true;
+  
+Entity.prototype.kill = function() {
+  this._isDeadNow = true;
 };
 
-Entity.prototype.findHitEntity = function () {
-    var pos = this.getPos();
-    return spatialManager.findEntityInRange(
-        pos.posX, pos.posY, this.getRadius()
-    );
+Entity.prototype.findHitEntity = function() {
+  var pos = this.getPos();
+  return spatialManager.findEntityInRange(pos.posX, pos.posY, this.getRadius());
 };
 
 // This is just little "convenience wrapper"
-Entity.prototype.isColliding = function () {
-    return this.findHitEntity();
+Entity.prototype.isColliding = function() {
+  return this.findHitEntity();
 };
 
-Entity.prototype.wrapPosition = function () {
-    this.cx = util.wrapRange(this.cx, 0, g_canvas.width);
-    this.cy = util.wrapRange(this.cy, 0, g_canvas.height);
+Entity.prototype.wrapPosition = function() {
+  this.cx = util.wrapRange(this.cx, 0, g_canvas.width);
+  this.cy = util.wrapRange(this.cy, 0, g_canvas.height);
 };
