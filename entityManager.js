@@ -20,16 +20,16 @@ _forEachOf: function(aCategory, fn) {
 
 _generateTimeChangers : function() {
     var i,
-        NUM_TIMECHANGERS = 2;
+        NUM_TIMECHANGERS = 6;
     for (i = 0; i < NUM_TIMECHANGERS; ++i) {
         this.generateTimeChangers();
     }
-    console.log('this._generateTimeChangers', this._timeChanger);
+    console.log('timeChangers', this._timeChanger);
 },
 
 init: function() {
-    this.generateRunner();
     this._generateTimeChangers();
+    this.generateRunner();
 },
 // PUBLIC METHODS
 

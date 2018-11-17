@@ -7,6 +7,14 @@ var g_background = document.getElementById("backgroundCanvas");
 var g_ctxBackground = g_background.getContext("2d");
 var g_ctx = g_canvas.getContext("2d");
 
+var g_powerUpsAndDown = {
+    "timeIncrease": 1,
+    "timeDecrease": 2,
+    "speedIncrease": 3,
+    "speedDecrease": 4,
+    "floorPowers": 5,
+}
+
 // =================
 // RENDER SIMULATION
 // =================
@@ -77,6 +85,7 @@ function processDiagnostics() {
 }
 
 
+
 function gatherInputs() {
     // Nothing to do here!
     // The event handlers do everything we need for now.
@@ -121,11 +130,64 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
+    g_sprites.powerUpsDowns = [
+        {
+            sprite: new Sprite(g_images.piazza),
+            powerChange: 5,
+            height: g_images.piazza.height,
+            width: g_images.piazza.width
+
+        },
+        {
+            sprite: new Sprite(g_images.netflix),
+            powerChange: -5,
+            height: g_images.netflix.height,
+            width: g_images.netflix.width
+        },
+        {
+            sprite: new Sprite(g_images.energydrink),
+            powerChange: 3,
+            height: g_images.energydrink.height,
+            width: g_images.energydrink.width
+            
+        },
+        {   
+            sprite: new Sprite(g_images.coffee),
+            powerChange: 3,
+            height: g_images.coffee.height,
+            width: g_images.coffee.width
+
+        },
+        {
+            sprite: new Sprite(g_images.spotify),
+            powerChange: 3,
+            height: g_images.spotify.height,
+            width: g_images.spotify.width
+        },
+        {
+            sprite: new Sprite(g_images.candy),
+            powerChange: 3,
+            height: g_images.candy.height,
+            width: g_images.candy.width
+        },
+        {
+            sprite: new Sprite(g_images.beer),
+            powerChange: -1/3,
+            height: g_images.beer.height,
+            width: g_images.beer.width,
+        },
+        {
+            sprite: new Sprite(g_images.youtube),
+            
+        }
+    
+    
+    ];
+            
+
     g_background = new Background(g_images.background);
     //breyta líka í okkar
     g_sprites.runner  = new Sprite(g_images.girlstanding);
-
-    g_sprites.timeChanger = [ new Sprite(g_images.piazza),new Sprite(g_images.netflix)];
     
     entityManager.init();
     createInitialRunner();

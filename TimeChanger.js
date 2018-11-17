@@ -3,25 +3,19 @@
 function TimeChanger(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
-    
-    if(this._spatialID === 2) {
-        this.sprite = this.sprite || g_sprites.timeChanger[0];
-        this.timeChange = 5;
-    } else {
-        this.sprite = this.sprite || g_sprites.timeChanger[1];
-        this.timeChange = -5;
-    }
+    this.powerChange = g_sprites.powerUpsDowns[this.getEntityID()].powerChange; 
+    this.sprite = this.sprite || g_sprites.powerUpsDowns[this.getEntityID()].sprite;
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 100);
+    this.frameMax = util.randRange(0, 360);
     this.drawTimeChanger = false;
     this.velX = this.randomVelocity();
 
     this.cx = g_ctx.canvas.width + 10;
     this.cy = util.randRange(80, 250);
-    console.log('cy', this.cy);
 };
 
 TimeChanger.prototype = new Entity();
+
 
 TimeChanger.prototype.randomVelocity = function() {
     var MIN_SPEED = 20,
@@ -36,7 +30,7 @@ TimeChanger.prototype.update = function(du) {
 
     if(this.frameCounter > this.frameMax) {
         this.drawTimeChanger = true;
-        this.frameMax = util.randRange(0, 100);
+        this.frameMax = util.randRange(0, 250);
         this.frameCounter = 0;
     }
     if(this.drawTimeChanger) {
