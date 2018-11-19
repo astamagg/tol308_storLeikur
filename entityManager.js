@@ -11,6 +11,7 @@ var entityManager = {
 
 _runner:[],   
 _powerChanger: [],
+_stillPowerChanger: [],
 
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
@@ -18,17 +19,27 @@ _forEachOf: function(aCategory, fn) {
     }
 },
 
+//Generate power changers that move
 _generatePowerChangers : function() {
     var i,
         NUM_POWERCHANGERS = 8;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generatePowerChangers();
     }
-    console.log('powerChanger', this._powerChanger);
+},
+
+//generate power changers that stay still
+_generateStillPowerChangers: function() {
+    var i,
+        NUM_POWERCHANGERS = 2;
+    for (i = 0; i < NUM_POWERCHANGERS; ++i) {
+        this.generateStillPowerChangers();
+    }
 },
 
 init: function() {
     this._generatePowerChangers();
+    this._generateStillPowerChangers();
     this.generateRunner();
 },
 // PUBLIC METHODS
@@ -42,6 +53,10 @@ generatePowerChangers: function(descr) {
     this._powerChanger.push(new PowerChanger(descr));
 },
 
+generateStillPowerChangers: function(descr) {
+    this._stillPowerChanger.push(new StillPowerChanger(descr));
+},
+
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
   },
@@ -51,7 +66,7 @@ generateRunner: function(descr) {
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._powerChanger]; 
+    this._categories = [this._powerChanger, this._stillPowerChanger]; 
 },
 
 update: function(du) {
@@ -68,35 +83,6 @@ update: function(du) {
     }
     //TimeChanger.update(du);
 },
-
-/*update: function(du) {
-    countdown.update(du);
-
-    for (var c = 0; c < this._categories.length; ++c) {
-
-        var aCategory = this._categories[c];
-        var i = 0;
-
-        while (i < aCategory.length) {
-            aCategory[i].update(du);
-           // var status = aCategory[i].update(du);
-
-           /* if (status === this.KILL_ME_NOW) {
-                // remove the dead guy, and shuffle the others down to
-                // prevent a confusing gap from appearing in the array
-                aCategory.splice(i,1);
-            }
-            else {
-                ++i;
-            }
-        }
-    }
-    
-   // if (this._rocks.length === 0) this._generateRocks();
-
-},*/
-
-
 
 render: function(ctx) {
     for (var i = 0; i < this._categories.length; ++i) {

@@ -200,6 +200,8 @@ function requestPreloads() {
         beer: "src/beer.png",
         youtube: "src/youtube.png",
         backgroundFrontPage : "src/backgroundFrontPage.png",
+        desk: "src/desk.png",
+        chair: "src/chair.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -207,7 +209,9 @@ function requestPreloads() {
 
 var g_sprites = {};
 
-function preloadDone() {
+//initialize all the power ups and downs as sprites.
+//done in a function for clarity
+function setUpPowerUps() {
     g_sprites.powerUpsDowns = [
         {
             sprite: new Sprite(g_images.piazza),
@@ -259,9 +263,24 @@ function preloadDone() {
             powerChange: -3,
             height: g_images.youtube.height,
             width: g_images.youtube.width,
+        },
+        {
+            sprite: new Sprite(g_images.chair),
+            powerChange: -3,
+            height: g_images.chair.height,
+            width: g_images.chair.width,
+        },
+        {
+            sprite: new Sprite(g_images.desk),
+            powerChange: -3,
+            height: g_images.desk.height,
+            width: g_images.desk.width,
         }];
-            
+}
 
+function preloadDone() {  
+    setUpPowerUps();
+    
     g_background = new Background(g_images.background);
     //breyta líka í okkar
 
