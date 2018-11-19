@@ -27,16 +27,6 @@ function createInitialRunner() {
     });
 }
 
-function updateSimulation(du) {
-    
-    processDiagnostics();
-    
-    entityManager.update(du);
-
-    // Prevent perpetual firing!
-   // eatKey(Ship.prototype.KEY_FIRE);
-}
-
 // Button
 
 var g_gameOver = false;
@@ -112,6 +102,18 @@ var KEY_K = keyCode('K');
 
 var KEY_G = keyCode('G');
 var KEY_W = keyCode('W');
+
+function updateSimulation(du) {
+    
+    processDiagnostics();
+
+    if (!g_theStory && !g_instructions) {
+        entityManager.update(du);
+    }
+
+    // Prevent perpetual firing!
+   // eatKey(Ship.prototype.KEY_FIRE);
+}
 
 function processDiagnostics() {
 /*
