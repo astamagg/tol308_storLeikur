@@ -52,7 +52,6 @@ function theStory (ctx) {
     for (let i = 0; i < g_buttonsFrontPage.length; i++) {
         if (g_buttonsFrontPage[i].contains(g_mouseX, g_mouseY)) {
             g_buttonsFrontPage[i].onClick();
-            console.log("BLABLA");
         }
     }
 

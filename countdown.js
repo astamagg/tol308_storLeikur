@@ -5,7 +5,7 @@ _timeString: "01:00",   //string to be rendered
 updateCount: 0, //frame count
 
 //updating the function every 60 updates
-update:function(du) {
+update:function() {
     this.updateCount++;
     if(this.updateCount === 60) {
         this._time = this._time - 1;
@@ -18,6 +18,7 @@ update:function(du) {
 //rendering the clock
 render:function(ctx) {
     ctx.font = "30px Courier";
+    ctx.fillStyle = "black";
     var width = (g_canvas.width-ctx.measureText(this._timeString).width)/2;
     ctx.fillText(this._timeString, width, 50);
 },
