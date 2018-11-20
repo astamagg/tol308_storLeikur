@@ -15,16 +15,12 @@
 function Runner(descr) {
   // Common inherited setup logic from Entity
   this.setup(descr);
-
   this.rememberResets();
-
   // Default sprite, if not otherwise specified
   this.sprite = g_sprites.runner;
-
   // Set normal drawing scale, and warp state off
   this._scale = 1;
   //this.frameCount = 0;
-  this.moveBitch = false;
 }
 
 Runner.prototype = new Entity();
@@ -35,21 +31,25 @@ Runner.prototype.rememberResets = function() {
   this.reset_cy = this.cy;
 };
 
-Runner.prototype.KEY_CROUCH = 'S'.charCodeAt(0);
+/*
+Runner.prototype.KEY_CROUCH = 40;
 Runner.prototype.KEY_JUMP   = ' '.charCodeAt(0);
-
-//Runner.prototype.KEY_CROUCH = 'S'.charCodeAt(0);
-
+*/
+Runner.prototype.KEY_JUMP   = 'W'.charCodeAt(0);
+Runner.prototype.KEY_CROUCH = 'S'.charCodeAt(0);
 
 // Initial, inheritable, default values
 Runner.prototype.cx = 50;
-Runner.prototype.cy = 170;
+Runner.prototype.cy = 220;
+Runner.prototype.y_velocity = 0; 
 Runner.prototype.numSubSteps = 1; //what is this
 Runner.prototype.width = 64;
 Runner.prototype.height = 80;
 Runner.prototype.totalDistance = 0;
 //animations from spritesheet frames
-Runner.prototype.loops = [[0,1,2,3,4], [0,1,2,3,4], [2,1,0], [1]]; //walk, crouchingDown, standing up, jump,
+//Runner.prototype.loops = [[0,1,2,3,4], [0,1,2,3,4], [2,1,0], [1]]; //walk, crouchingDown, standing up, jump,
+Runner.prototype.loops = [[0,1,2,3,4], [4], [1]]; //walk, crouchingDown, standing up, jump,
+
 
 //animation update speed and interval (running speed)
 Runner.prototype.speed = 10;
@@ -68,106 +68,100 @@ Runner.prototype.isCrouching = false;
 Runner.prototype.runningSpeed = 25;  //normal = 20-25?  
 
 
-/*Runner.prototype.handleKeys = function(){
-
-  if (this.KEY_CROUCH) {
-    this.isCrouching = true;
+Runner.prototype.handleKeys = function(){
+  if (keys[this.KEY_CROUCH]) {
+    console.log('crouch');
+    this.isCrouching = true;    
   }
-  if (this.KEY_JUMP) {
+  else {
+    this.isCrouching = false;
+  }
+  if (keys[this.KEY_JUMP] && this.cy <= 220) {
+    //console.log('jump');
+    //this.y_velocity -= 20;
     this.isJumping = true;
   }
-/*Jumping
-setja velocity á entityið -> neg y- velocity
-síðan mun gravity minnka velocity þangað til að kallinn lendir aftur
+  else {
+    if(this.y_velocity = 1.7){
+         this.isJumping = false;
+         console.log(this.isJumping);
+         
+    }
 
-Hafa veriable jumps
-tap -> hoppa minna
-lengra press -> hoppa hærra
-
-nota G for gravity
-
-this.isJumping = true; 
-this.isCrouching = true; //hvar endurstill ég þetta? 
-
-
-  return true; 
-};*/
+  }
+};
 
 Runner.prototype.update = function(du) {
 
+this.handleKeys(); 
 this.updateInterval -= du;
-
-
-//eatKey bregst ekki við því ef maður heldur takkanum inni? 
-if (eatKey(this.KEY_CROUCH)) {
-    this.isCrouching = true;
-  }
-if (eatKey(this.KEY_JUMP)) {
-    this.isJumping = true;
-}
-/*
-//En þetta virkar ekki heldur
-if (this.KEY_CROUCH) {
-  this.isCrouching = true;
-}
-if (this.KEY_JUMP) {
-  this.isJumping = true;
-}*/
 
 //hversu oft við viljum breyta um ramma
 var updateTresh = this.runningSpeed;
 
-  if (this.updateInterval < updateTresh) {
-    this.computeSubStep(this.updateInterval);
-      //hvað er hvert skref mikil x færsla?
-      //placeholder if settning til þess að stelpan birtist aftur
-     if(this.cx > 600 ){
-       this.cx = 0;
-     }
-     else this.cx += this.speed;
-     //console.log(this.currentLoopIndex);
-     this.updateInterval = 30; 
-     }
-
+if (this.updateInterval < updateTresh) {
+  this.computeSubStep(this.updateInterval);
+    //hvað er hvert skref mikil x færsla?
+    //placeholder if settning til þess að stelpan birtist aftur
+    if(this.cx > 600 ){
+      this.cx = 0;
+    }
+    else this.cx += this.speed;
+    //console.log(this.currentLoopIndex);
+    this.updateInterval = 30; 
+    }
   //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
 };
 
+
 //Færa spritesheet ramma um eitt skref
 Runner.prototype.computeSubStep = function(du) {
-
+ 
 if(this.isCrouching){
-
-  //á meðan að takkinn er niðri þá ætlum við að fara niður í full crouch stöðu
-  //1. crouching down þangað til að takkanum er sleppt 
-  //      this.currentLopp = 1;
-  //2. þá færa á standing up loopu, keyra hana 1x
-  //      this.isCrouching = false
-  //      this.currentLoop = 2 (fyrir 1xloop)
-  //3. setja aftur á walking loop-u
-  //      this.currentLopp = 0; 
-
   this.currentLoop = 1;
-  //this.currentLoopIndex = 0; 
-  while(this.currentLoopIndex > this.currentLoop.length){
-    this.currentLoopIndex++;
-    console.log(this.currentLoopIndex);
-  }
-  this.currentLoop = 0;
-  this.isCrouching = false
-  //this.currentLoop = this.currentLoop = 3;
+}
+//höndla hopp
+// gefa velocity á meðan að við höldum niðri takkanum
+// gera alla takka óvirka þar til við snertum base-ið 
+if(this.isJumping){
+  //console.log('changeloop');
+  this.currentLoop = 2;
+  console.log("current loop:", this.currentLoop);
+  
+  this.y_velocity -= 20;
+  this.cy += this.y_velocity; 
+    //this.cy -= 10;
+    //this.g_useGravity = true;
+    console.log(this.cy);
+    console.log("isJumping yvel:",this.y_velocity);
+    
+    //accelY += this.computeGravity();
+}
+if(!this.isJumping){
+  this.y_velocity += 2.7;
+  console.log("yvel:",this.y_velocity);
+  this.cy += this.y_velocity;
 }
 
-/*
-//höndla hopp
-if(this.isJumping){
-  this.currentLoop = this.currentLoop = 3;
-  this.cy += ?? 
-  eitthvað með gravity
-}*/
+if(this.cy > 220){
+  this.isJumping = false;
+  this.cy = 220; 
+  this.y_velocity = 0; 
+}
+else{
+  this.isJumping = true;
+}
 
+
+if(!this.isCrouching && !this.isJumping){
+  this.currentLoop = 0;
+  this.currentLoopIndex++;
+}
 //fara á næsta ramma
-this.currentLoopIndex++;
-
+/*
+if(!this.isCrouching || !this.isJumping){
+  this.currentLoopIndex++;
+}*/
 //loppa í hring til þess að gera animation og færa stelpuna um x distance
 if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
   this.currentLoopIndex = 0; 

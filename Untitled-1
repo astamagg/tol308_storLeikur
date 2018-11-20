@@ -1,0 +1,70 @@
+Til þess að animate-a
+
+1. búa til sprite með SpriteSheet
+2. Teikna réttan ramma
+3. Búa til animation fylki fyrir hreyfingar sem loop-a
+4. Teikna 
+
+
+
+
+//Running
+nota rest pose fyrir animation
+þegar að það er smellt á takkann einu sinni -> have eitthvað minna animation (baby step)
+
+Sprites array með integer blah
+
+
+
+
+//Jumping
+setja velocity á entityið -> neg y- velocity
+síðan mun gravity minnka velocity þangað til að kallinn lendir aftur
+
+Hafa veriable jumps
+tap -> hoppa minna
+lengra press -> hoppa hærra
+
+nota G for gravity
+
+þegar collision = setja vel = 0
+Update routine: 
+push-up loop: í staðin fyrir að fara í síðustu stöðu, færa kallinn um 1px, 
+skoða hvort að það sé collision og endurtaka ef þarf
+Þetta er sniðugt ef að við erum með mis-hátt undirlag en gæti feilað ef að við erum með hreyfanlega platforms
+
+
+Þegar kallinn borðar nammi -> triggerar trail í 3 sek? 
+
+
+
+
+widt 64 (næsta labb)
+h    80 (næsta cycle)
+
+
+function SpriteSheet(path, frameWidth, frameHeight) {
+ 
+    var image = new Image();
+    var framesPerRow;
+  
+    // calculate the number of frames in a row after the image loads
+    var self = this;
+    image.onload = function() {
+       framesPerRow = Math.floor(image.width / frameWidth);
+    };
+  
+    image.src = path;
+ }
+
+ 
+
+
+ Frame sets: 
+
+ Walk: [0,1,2,3,4]
+ Crouch: [5,6,7,8,9] (eða one row down)
+ Jump: [10,11]
+
+ Default er walk cycle
+ Þarf bara að forrita crouch og jumps
