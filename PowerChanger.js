@@ -10,10 +10,13 @@ PowerChanger.prototype = new Entity();
 
 PowerChanger.prototype.innerSetUp = function() {
     //find the power changer, that is what effect it has if the runner hits it
-    this.powerChange = g_sprites.powerUpsDowns[this.getEntityID()].powerChange; 
+    var ID = Math.floor(util.randRange(0,8));
+    this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
+    console.log(this.sprite);
+    this.powerChange = g_sprites.powerUpsDowns[ID].powerChange; 
     //sprite, height, width and the initial placement and velocity of the entity
-    this.id = this.getEntityID;
-    this.spriteLogicAndPlacement();
+    this.id = this.getEntityID();
+    this.speedAndPlacement();
     //get the entity ID
 
     this.drawLogic();  //when to start drawing the entity
@@ -28,22 +31,22 @@ PowerChanger.prototype.getWidth = function() {
 };
 
 //tells us which sprite it is
-PowerChanger.prototype.spriteLogicAndPlacement = function() {
-    this.sprite = this.sprite || g_sprites.powerUpsDowns[this.getEntityID()].sprite;
-    this.height = g_sprites.powerUpsDowns[this.getEntityID()].height;
-    this.width = g_sprites.powerUpsDowns[this.getEntityID()];
+PowerChanger.prototype.speedAndPlacement = function() {
+    
+    this.height = this.sprite.height;
+    this.width = this.sprite.width;
 
     this.velX = this.randomVelocity();  //choosing a random velocity
 
     //original placement
     this.cx = g_ctx.canvas.width + 10;
-    this.cy = util.randRange(200, 325);
+    this.cy = util.randRange(220, 325);
 };
 
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 1500);
+    this.frameMax = Math.floor(util.randRange(0, 3000));
     this.drawTimeChanger = false;
 };
 
@@ -61,15 +64,17 @@ PowerChanger.prototype.update = function(du) {
         this.frameCounter++;
     }
 
-    if(this.frameCounter > this.frameMax && g_powerChangerCounter < 3) {
+    if(this.frameCounter > this.frameMax && g_powerChangerCounter < 4) {
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
-        this.frameMax = util.randRange(0, 2000);
+        this.frameMax = util.randRange(0, 1500);
         this.frameCounter = 0;
     }
+
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
-    } 
+    }
+
     if(this.cx < -30) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;

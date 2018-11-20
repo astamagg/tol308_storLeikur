@@ -203,7 +203,8 @@ function requestPreloads() {
         youtube: "src/youtube.png",
         backgroundFrontPage : "src/backgroundFrontPage.png",
         desk: "src/desk.png",
-        chair: "src/chair.png"
+        chair: "src/chair.png",
+        bed: "src/bedtile(54x54).png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -277,6 +278,30 @@ function setUpPowerUps() {
             powerChange: -3,
             height: g_images.desk.height,
             width: g_images.desk.width,
+        },
+        {
+            sprite: new Sprite(g_images.bed),
+            powerChange: 0,
+            height: g_images.bed.height,
+            width: g_images.bed.width,
+        },
+        {
+            sprite: new Sprite(g_images.chair),
+            powerChange: -3,
+            height: g_images.chair.height,
+            width: g_images.chair.width,
+        },
+        {
+            sprite: new Sprite(g_images.desk),
+            powerChange: -3,
+            height: g_images.desk.height,
+            width: g_images.desk.width,
+        },
+        {
+            sprite: new Sprite(g_images.bed),
+            powerChange: 0,
+            height: g_images.bed.height,
+            width: g_images.bed.width,
         }];
 }
 

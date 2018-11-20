@@ -10,11 +10,27 @@ StillPowerChanger.prototype = new Entity();
 
 StillPowerChanger.prototype.innerSetUp = function() {
      //find the power changer, that is what effect it has if the runner hits it
-    this.powerChange = g_sprites.powerUpsDowns[this.getEntityID()].powerChange;
+    var ID = Math.floor(util.randRange(8,11));
+    this.powerChange = g_sprites.powerUpsDowns[ID].powerChange;
+    this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
     this.id = this.getEntityID();   //get the id 
-    this.spriteLogicAndPlacement(); //get the sprite, it's height and placement
 
-    this.drawLogic();   //decide when to start drawing it
+    this.height = this.sprite.height;
+    this.width = this.sprite.width;
+
+    this.cx = g_ctx.canvas.width + 50;
+   
+    //decide between the two because they are not the same size
+    if(ID === 8) {
+        this.cy = 315;
+    } else if(ID === 9) {
+        this.cy = 250;
+    } else {
+        this.cy = 345;
+    }
+
+    this.drawLogic();
+
 };
 
 StillPowerChanger.prototype.getHeight = function() {
@@ -23,22 +39,6 @@ StillPowerChanger.prototype.getHeight = function() {
 
 StillPowerChanger.prototype.getWidth = function() {
     return this.width;
-};
-
-//placement on the frame and the sprite source for the entity
-StillPowerChanger.prototype.spriteLogicAndPlacement = function() {
-    this.sprite = this.sprite || g_sprites.powerUpsDowns[this.getEntityID()].sprite;
-    this.height = g_sprites.powerUpsDowns[this.getEntityID()].height;
-    this.width = g_sprites.powerUpsDowns[this.getEntityID()].width;
-
-    this.cx = g_ctx.canvas.width + 50;
-
-    //decide between the two because they are not the same size
-    if(this.id === 8) {
-        this.cy = 315;
-    } else {
-        this.cy = 250;
-    }
 };
 
 //deciding when to start drawing the entity
@@ -55,7 +55,7 @@ StillPowerChanger.prototype.update = function(du) {
     }
 
     if(this.frameCounter > this.frameMax) {
-        this.drawTimeChanger = true;
+        this.drawTimeChanger = false;
         this.frameMax = util.randRange(0, 250);
         this.frameCounter = 0;
     }
