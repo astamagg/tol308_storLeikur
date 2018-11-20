@@ -64,39 +64,34 @@ var spatialManager = {
     this._entities[spatialID] = new Entity();
   },
 
-  findEntityInRange: function(posX, posY, radius) {
+  findEntityInRange: function(posX, posY, width, height) {
     // YOUR STUFF HERE! -> DONE
     // TODO: Öll entity þurfa að vera með width og height breytur
     // Þurfum í raun bara að nota find entity in range fyrir stelpuna - hún er eina sem getur collide-að
     // Svo köllum við á util fallið areColliding hér til að athuga hvort hún snerti hluti
-    var smallestID = 0;
-    var smallestDistance = 1000000;
     for (var ID in this._entities) {
       //return if I am comparing the entity to itself
-      if (posX === this._entities[ID].posX && posY === this._entities[ID]) {
+      if (
+        posX === this._entities[ID].posX &&
+        posY === this._entities[ID].posY
+      ) {
         return;
       }
-      //calculate the distance between the two objects
-      var distance = util.wrappedDistSq(
-        posX,
-        posY,
-        this._entities[ID].posX,
-        this._entities[ID].posY,
-        g_canvas.width,
-        g_canvas.height
-      );
-      //update the smallest value
-      if (distance < smallestDistance) {
-        smallestDistance = distance;
-        smallestID = ID;
+      //return item if it's colliding
+      if (
+        util.areColliding(
+          posX,
+          posY,
+          width,
+          height,
+          ID.posX,
+          ID.posY,
+          ID.getWidth(),
+          ID.getHeight()
+        )
+      ) {
+        return this._entities[ID].entity;
       }
-    }
-    //calculate the distance between their centers
-    var limit = radius + this._entities[smallestID].radius;
-
-    //return the value if the distance is smaller that limit squared
-    if (smallestDistance < limit * limit) {
-      return this._entities[smallestID].entity;
     }
   },
 

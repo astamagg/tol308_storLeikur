@@ -54,31 +54,30 @@ Entity.prototype.setPos = function(cx, cy) {
 Entity.prototype.getPos = function() {
   return { posX: this.cx, posY: this.cy };
 
+  // Apply all setup properies from the (optional) descriptor
+  for (var property in descr) {
+    this[property] = descr[property];
+  }
 
-    // Apply all setup properies from the (optional) descriptor
-    for (var property in descr) {
-        this[property] = descr[property];
-    }
-    
-    // Get my (unique) spatial ID
-    this._spatialID = spatialManager.getNewSpatialID();
-    this.entityID = this.getNewEntityID();
-    
-    // I am not dead yet!
-    this._isDeadNow = false;
+  // Get my (unique) spatial ID
+  this._spatialID = spatialManager.getNewSpatialID();
+  this.entityID = this.getNewEntityID();
+
+  // I am not dead yet!
+  this._isDeadNow = false;
 };
 
 Entity.prototype.getNewEntityID = function() {
-    var newEntityID = _nextEntityID;
+  var newEntityID = _nextEntityID;
 
-    _nextEntityID += 1;
-    
-    return newEntityID;
+  _nextEntityID += 1;
+
+  return newEntityID;
 };
 
-Entity.prototype.setPos = function (cx, cy) {
-    this.cx = cx;
-    this.cy = cy;
+Entity.prototype.setPos = function(cx, cy) {
+  this.cx = cx;
+  this.cy = cy;
 };
 
 Entity.prototype.getRadius = function() {
@@ -98,16 +97,21 @@ Entity.prototype.getSpatialID = function() {
 };
 
 Entity.prototype.getEntityID = function() {
-    return this.entityID;
+  return this.entityID;
 };
-  
+
 Entity.prototype.kill = function() {
   this._isDeadNow = true;
 };
 
 Entity.prototype.findHitEntity = function() {
   var pos = this.getPos();
-  return spatialManager.findEntityInRange(pos.posX, pos.posY, this.getRadius());
+  return spatialManager.findEntityInRange(
+    pos.posX,
+    pos.posY,
+    this.getWidth(),
+    this.getHeight()
+  );
 };
 
 // This is just little "convenience wrapper"
