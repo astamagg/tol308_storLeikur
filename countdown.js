@@ -17,10 +17,10 @@ update:function() {
 
 //rendering the clock
 render:function(ctx) {
-    ctx.font = "30px Courier";
+    ctx.font = "50px Courier";
     ctx.fillStyle = "black";
     var width = (g_canvas.width-ctx.measureText(this._timeString).width)/2;
-    ctx.fillText(this._timeString, width, 50);
+    ctx.fillText(this._timeString, width, 100);
 },
 
 //changing seconds to string

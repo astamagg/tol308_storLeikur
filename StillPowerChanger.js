@@ -18,6 +18,14 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.drawLogic();   //decide when to start drawing it
 };
 
+StillPowerChanger.prototype.getHeight = function() {
+    return this.height;
+};
+
+StillPowerChanger.prototype.getWidth = function() {
+    return this.width;
+};
+
 //placement on the frame and the sprite source for the entity
 StillPowerChanger.prototype.spriteLogicAndPlacement = function() {
     this.sprite = this.sprite || g_sprites.powerUpsDowns[this.getEntityID()].sprite;

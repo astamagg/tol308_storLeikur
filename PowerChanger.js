@@ -19,6 +19,14 @@ PowerChanger.prototype.innerSetUp = function() {
     this.drawLogic();  //when to start drawing the entity
 };
 
+PowerChanger.prototype.getHeight = function() {
+    return this.height;
+};
+
+PowerChanger.prototype.getWidth = function() {
+    return this.width;
+};
+
 //tells us which sprite it is
 PowerChanger.prototype.spriteLogicAndPlacement = function() {
     this.sprite = this.sprite || g_sprites.powerUpsDowns[this.getEntityID()].sprite;
@@ -29,13 +37,13 @@ PowerChanger.prototype.spriteLogicAndPlacement = function() {
 
     //original placement
     this.cx = g_ctx.canvas.width + 10;
-    this.cy = util.randRange(125, 300);
+    this.cy = util.randRange(200, 325);
 };
 
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 2000);
+    this.frameMax = util.randRange(0, 2500);
     this.drawTimeChanger = false;
 };
 

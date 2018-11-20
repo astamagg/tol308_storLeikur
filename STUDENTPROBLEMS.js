@@ -188,7 +188,7 @@ var g_background = {};
 function requestPreloads() {
     
     var requiredImages = {
-        background: "https://notendur.hi.is/alm20/images/background.png",
+        background: "src/background/background(2100x400).png",
 
         spritesheet : "src/spritesheet64x80.png",
         girlstanding : "src/girlstanding.png",
