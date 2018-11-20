@@ -30,6 +30,10 @@ PowerChanger.prototype.getWidth = function() {
     return this.width;
 };
 
+PowerChanger.prototype.getPowerChanger = function() {
+    return this.powerChange;
+};
+
 //tells us which sprite it is
 PowerChanger.prototype.speedAndPlacement = function() {
     
@@ -46,7 +50,7 @@ PowerChanger.prototype.speedAndPlacement = function() {
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = Math.floor(util.randRange(0, 3000));
+    this.frameMax = Math.floor(util.randRange(0, 2000));
     this.drawTimeChanger = false;
 };
 
@@ -67,7 +71,7 @@ PowerChanger.prototype.update = function(du) {
     if(this.frameCounter > this.frameMax && g_powerChangerCounter < 4) {
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
-        this.frameMax = util.randRange(0, 1500);
+        this.frameMax = util.randRange(0, 2500);
         this.frameCounter = 0;
     }
 

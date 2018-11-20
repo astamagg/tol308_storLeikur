@@ -41,12 +41,16 @@ StillPowerChanger.prototype.getWidth = function() {
     return this.width;
 };
 
+StillPowerChanger.prototype.getPowerChange = function() {
+    return this.powerChange;
+};
+
 //deciding when to start drawing the entity
 StillPowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
     this.frameMax = util.randRange(0, 1500);
     this.drawTimeChanger = true;
-}
+};
 
 
 StillPowerChanger.prototype.update = function(du) {
@@ -64,10 +68,10 @@ StillPowerChanger.prototype.update = function(du) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
-}
+};
 
 StillPowerChanger.prototype.render = function(ctx) {
     if(this.drawTimeChanger) {
         ctx.drawImage(this.sprite.image, this.cx, this.cy);
     }
-}
+};

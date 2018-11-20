@@ -92,6 +92,10 @@ Entity.prototype.getWidth = function() {
   return 0;
 };
 
+Entity.prototype.getPowerChanger = function() {
+  return 0;
+}
+
 Entity.prototype.getSpatialID = function() {
   return this._spatialID;
 };
