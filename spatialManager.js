@@ -39,7 +39,6 @@ var spatialManager = {
   },
 
   register: function(entity) {
-    // YOUR STUFF HERE! -> DONE
     var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
 
@@ -50,7 +49,6 @@ var spatialManager = {
       radius: entity.getRadius(),
       entity: entity,
     };
-
     //add the value to the ID of the entity
     this._entities[spatialID] = updatedEntity;
   },
@@ -59,21 +57,18 @@ var spatialManager = {
     // YOUR STUFF HERE! -> done
     var spatialID = entity.getSpatialID();
     //create a new entity that is empty for this particular ID
-    //I have a question about this, this is a rather simple method but does it not take
-    //up alot of memory to have an array with empty indices?
     this._entities[spatialID] = new Entity();
   },
 
   findEntityInRange: function(posX, posY, width, height) {
-    // YOUR STUFF HERE! -> DONE
-    // TODO: Öll entity þurfa að vera með width og height breytur
     // Þurfum í raun bara að nota find entity in range fyrir stelpuna - hún er eina sem getur collide-að
     // Svo köllum við á util fallið areColliding hér til að athuga hvort hún snerti hluti
     for (var ID in this._entities) {
+      //console.log('ID', ID);
       //return if I am comparing the entity to itself
       if (
-        posX === this._entities[ID].posX &&
-        posY === this._entities[ID].posY
+        posX === this._entities[ID].entity.getPos().posX &&
+        posY === this._entities[ID].entity.getPos().posY
       ) {
         return;
       }
@@ -84,10 +79,10 @@ var spatialManager = {
           posY,
           width,
           height,
-          ID.posX,
-          ID.posY,
-          ID.getWidth(),
-          ID.getHeight()
+          this._entities[ID].entity.getPos().posX ,
+          this._entities[ID].entity.getPos().posY,
+          this._entities[ID].entity.height,
+          this._entities[ID].entity.width,
         )
       ) {
         return this._entities[ID].entity;

@@ -30,8 +30,8 @@ var g_powerUpsAndDown = {
 
 function createInitialRunner() {
     entityManager.generateRunner({
-      cx: 200,
-      cy: 200,
+      cx: 50,
+      cy: 270,
     });
 }
 
@@ -282,7 +282,6 @@ function preloadDone() {
     g_sprites.runner  = new Sprite(g_images.spritesheet);
   
     entityManager.init();
-    createInitialRunner();
 
     main.init();
 }
