@@ -14,6 +14,7 @@ PowerChanger.prototype.innerSetUp = function() {
     this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
     console.log(this.sprite);
     this.powerChange = g_sprites.powerUpsDowns[ID].powerChange; 
+    this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     //sprite, height, width and the initial placement and velocity of the entity
     this.id = this.getEntityID();
     this.speedAndPlacement();
@@ -22,16 +23,24 @@ PowerChanger.prototype.innerSetUp = function() {
     this.drawLogic();  //when to start drawing the entity
 };
 
+//return the height of the entity
 PowerChanger.prototype.getHeight = function() {
     return this.height;
 };
 
+//return the effect of the entity
 PowerChanger.prototype.getWidth = function() {
     return this.width;
 };
 
+//get the power effect after collision
 PowerChanger.prototype.getPowerChanger = function() {
     return this.powerChange;
+};
+
+//get the type of the power after collision
+PowerChanger.prototype.getPowerType = function() {
+    return this.powerType;
 };
 
 //tells us which sprite it is

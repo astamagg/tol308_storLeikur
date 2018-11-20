@@ -75,6 +75,7 @@ Entity.prototype.getNewEntityID = function() {
   return newEntityID;
 };
 
+//getters and setters for the features of the entity
 Entity.prototype.setPos = function(cx, cy) {
   this.cx = cx;
   this.cy = cy;
@@ -93,6 +94,10 @@ Entity.prototype.getWidth = function() {
 };
 
 Entity.prototype.getPowerChanger = function() {
+  return 0;
+}
+
+Entity.prototype.getPowerType = function() {
   return 0;
 }
 

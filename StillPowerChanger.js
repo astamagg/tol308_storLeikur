@@ -13,6 +13,7 @@ StillPowerChanger.prototype.innerSetUp = function() {
     var ID = Math.floor(util.randRange(8,11));
     this.powerChange = g_sprites.powerUpsDowns[ID].powerChange;
     this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
+    this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     this.id = this.getEntityID();   //get the id 
 
     this.height = this.sprite.height;
@@ -41,8 +42,14 @@ StillPowerChanger.prototype.getWidth = function() {
     return this.width;
 };
 
+//get the power effect after collision
 StillPowerChanger.prototype.getPowerChange = function() {
     return this.powerChange;
+};
+
+//get the type of the power after collision
+StillPowerChanger.prototype.getPowerType = function() {
+    return this.powerType;
 };
 
 //deciding when to start drawing the entity
