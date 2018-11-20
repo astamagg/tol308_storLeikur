@@ -19,7 +19,7 @@ update:function() {
 render:function(ctx) {
     ctx.font = "50px Courier";
     ctx.fillStyle = "black";
-    var width = (g_canvas.width-ctx.measureText(this._timeString).width)/2;
+    var width = g_canvas.width/2;
     ctx.fillText(this._timeString, width, 100);
 },
 

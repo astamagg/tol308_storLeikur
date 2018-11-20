@@ -10,10 +10,9 @@ StillPowerChanger.prototype = new Entity();
 
 StillPowerChanger.prototype.innerSetUp = function() {
      //find the power changer, that is what effect it has if the runner hits it
-    this.powerChange = g_sprites.powerUpsDowns[this.getEntityID()].powerChange; 
+    this.powerChange = g_sprites.powerUpsDowns[this.getEntityID()].powerChange;
+    this.id = this.getEntityID();   //get the id 
     this.spriteLogicAndPlacement(); //get the sprite, it's height and placement
-
-    this.id = this.getEntityID();   //get the id
 
     this.drawLogic();   //decide when to start drawing it
 };
@@ -32,13 +31,13 @@ StillPowerChanger.prototype.spriteLogicAndPlacement = function() {
     this.height = g_sprites.powerUpsDowns[this.getEntityID()].height;
     this.width = g_sprites.powerUpsDowns[this.getEntityID()].width;
 
-    this.cx = g_ctx.canvas.width + 10;
+    this.cx = g_ctx.canvas.width + 50;
 
     //decide between the two because they are not the same size
     if(this.id === 8) {
-        this.cy = 215;
+        this.cy = 315;
     } else {
-        this.cy = 150;
+        this.cy = 250;
     }
 };
 
@@ -46,7 +45,7 @@ StillPowerChanger.prototype.spriteLogicAndPlacement = function() {
 StillPowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
     this.frameMax = util.randRange(0, 1500);
-    this.drawTimeChanger = false;
+    this.drawTimeChanger = true;
 }
 
 
@@ -59,6 +58,11 @@ StillPowerChanger.prototype.update = function(du) {
         this.drawTimeChanger = true;
         this.frameMax = util.randRange(0, 250);
         this.frameCounter = 0;
+    }
+
+    if(this.cx < -30) {
+        g_powerChangerCounter--;
+        return entityManager.KILL_ME_NOW;
     }
 }
 

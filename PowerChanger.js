@@ -12,9 +12,9 @@ PowerChanger.prototype.innerSetUp = function() {
     //find the power changer, that is what effect it has if the runner hits it
     this.powerChange = g_sprites.powerUpsDowns[this.getEntityID()].powerChange; 
     //sprite, height, width and the initial placement and velocity of the entity
+    this.id = this.getEntityID;
     this.spriteLogicAndPlacement();
     //get the entity ID
-    this.id = this.getEntityID;
 
     this.drawLogic();  //when to start drawing the entity
 };
@@ -43,7 +43,7 @@ PowerChanger.prototype.spriteLogicAndPlacement = function() {
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 2500);
+    this.frameMax = util.randRange(0, 1500);
     this.drawTimeChanger = false;
 };
 
@@ -70,7 +70,7 @@ PowerChanger.prototype.update = function(du) {
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     } 
-    if(this.cx < 0) {
+    if(this.cx < -30) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
