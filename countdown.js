@@ -18,6 +18,7 @@ update:function(du) {
 //rendering the clock
 render:function(ctx) {
     ctx.font = "30px Courier";
+    ctx.fillStyle = "black";
     var width = (g_canvas.width-ctx.measureText(this._timeString).width)/2;
     ctx.fillText(this._timeString, width, 50);
 },

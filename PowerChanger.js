@@ -29,13 +29,13 @@ PowerChanger.prototype.spriteLogicAndPlacement = function() {
 
     //original placement
     this.cx = g_ctx.canvas.width + 10;
-    this.cy = util.randRange(120, 250);
+    this.cy = util.randRange(125, 300);
 };
 
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 1500);
+    this.frameMax = util.randRange(0, 2000);
     this.drawTimeChanger = false;
 };
 
@@ -53,14 +53,19 @@ PowerChanger.prototype.update = function(du) {
         this.frameCounter++;
     }
 
-    if(this.frameCounter > this.frameMax) {
+    if(this.frameCounter > this.frameMax && g_powerChangerCounter < 3) {
         this.drawTimeChanger = true;
-        this.frameMax = util.randRange(0, 1500);
+        g_powerChangerCounter++;
+        this.frameMax = util.randRange(0, 2000);
         this.frameCounter = 0;
     }
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     } 
+    if(this.cx < 0) {
+        g_powerChangerCounter--;
+        return entityManager.KILL_ME_NOW;
+    }
 }
 
 PowerChanger.prototype.render = function(ctx) {

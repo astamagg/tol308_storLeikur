@@ -15,6 +15,7 @@ var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
 var g_background = document.getElementById("backgroundColorCanvas");
 var g_ctxBackground = g_canvas.getContext("2d");
+var g_powerChangerCounter = 0;
 
 
 // The "nominal interval" is the one that all of our time-based units are
