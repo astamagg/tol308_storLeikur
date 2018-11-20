@@ -219,90 +219,58 @@ function setUpPowerUps() {
         {
             sprite: new Sprite(g_images.piazza),
             powerChange: 5,
-            height: g_images.piazza.height,
-            width: g_images.piazza.width
-
+            powerType: "timeChanger",
         },
         {
             sprite: new Sprite(g_images.netflix),
             powerChange: -5,
-            height: g_images.netflix.height,
-            width: g_images.netflix.width
+            powerType: "timeChanger",
         },
         {
             sprite: new Sprite(g_images.energydrink),
             powerChange: 3,
-            height: g_images.energydrink.height,
-            width: g_images.energydrink.width
-            
+            powerType: "speedChanger",
         },
         {   
             sprite: new Sprite(g_images.coffee),
             powerChange: 3,
-            height: g_images.coffee.height,
-            width: g_images.coffee.width
-
+            powerType: "speedChanger"
         },
         {
             sprite: new Sprite(g_images.spotify),
             powerChange: 3,
-            height: g_images.spotify.height,
-            width: g_images.spotify.width
+            powerType: "speedChanger",
         },
         {
             sprite: new Sprite(g_images.candy),
             powerChange: 3,
-            height: g_images.candy.height,
-            width: g_images.candy.width
+            powerType: "candy",
         },
         {
             sprite: new Sprite(g_images.beer),
             powerChange: -3,
-            height: g_images.beer.height,
-            width: g_images.beer.width,
+            powerType: "speedChanger",
         },
         {
             sprite: new Sprite(g_images.youtube),
             powerChange: -3,
-            height: g_images.youtube.height,
-            width: g_images.youtube.width,
+            powerType: "speedChanger",
         },
         {
             sprite: new Sprite(g_images.chair),
             powerChange: -3,
-            height: g_images.chair.height,
-            width: g_images.chair.width,
+            powerType: "crash",
         },
         {
             sprite: new Sprite(g_images.desk),
             powerChange: -3,
-            height: g_images.desk.height,
-            width: g_images.desk.width,
+            powerType: "crash",
         },
         {
             sprite: new Sprite(g_images.bed),
             powerChange: 0,
-            height: g_images.bed.height,
-            width: g_images.bed.width,
-        },
-        {
-            sprite: new Sprite(g_images.chair),
-            powerChange: -3,
-            height: g_images.chair.height,
-            width: g_images.chair.width,
-        },
-        {
-            sprite: new Sprite(g_images.desk),
-            powerChange: -3,
-            height: g_images.desk.height,
-            width: g_images.desk.width,
-        },
-        {
-            sprite: new Sprite(g_images.bed),
-            powerChange: 0,
-            height: g_images.bed.height,
-            width: g_images.bed.width,
-        }];
+            powerType: "dead",
+        },];
 }
 
 function preloadDone() {  
