@@ -47,7 +47,7 @@ function Camera(xView, roomWidth, roomHeight)
 Camera.prototype.update = function()
 {
     const runner = entityManager._runner[0];
-    // console.log(runner);
+    console.log(runner);
     // keep following the player
     if (runner.roomX - this.xView  + this.xDeadZone > this.wView) {
         this.xView = runner.roomX - (this.wView - this.xDeadZone);

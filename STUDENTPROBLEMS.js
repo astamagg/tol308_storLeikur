@@ -77,7 +77,7 @@ var g_buttonInstruction = new Button({
     width : 200,
     height : 40,
     x : g_canvas.width/2 - 100,
-    y : g_canvas.height/1.1
+    y : g_canvas.height/1.15
 });
 
 var g_buttonGameOver = new Button({
