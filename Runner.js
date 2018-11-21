@@ -125,6 +125,9 @@ Runner.prototype.update = function(du) {
       }
       this.updateInterval = 30; 
   }
+
+  this.cx = this.getPos().posX;
+  this.cy = this.getPos().posY;
     //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
     var entityHit = this.isColliding();
     if(entityHit) {
