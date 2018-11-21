@@ -68,7 +68,7 @@ Runner.prototype.gravity = 1;
 var jumpCounter = 0;  // how long the jump button can be pressed down
 var ground = 270;
 var NOMINAL_GRAVITY = 1;
-var JUMP_ACCELERATION = NOMINAL_GRAVITY * 12; // the bigger this number the higher the jump
+var JUMP_ACCELERATION = NOMINAL_GRAVITY * 15; // the bigger this number the higher the jump
 
 
 Runner.prototype.handleKeys = function(){
@@ -77,9 +77,11 @@ Runner.prototype.handleKeys = function(){
   }else{
     this.isCrouching = false;
   }
-  if (keys[this.KEY_JUMP] && this.cy === 270 && !this.isJumping ) {
-    this.isJumping = true;
+  if (keys[this.KEY_JUMP] && this.isJumping ==false ) {
+    
     this.y_velocity -= JUMP_ACCELERATION;  
+    this.isJumping = true;
+
     //TODO bæta við lengra jump-i ef við höldum inni
     //með því að nota jumpCounter
   }
@@ -96,8 +98,17 @@ Runner.prototype.update = function(du) {
 
   if (this.isJumping) {
     this.y_velocity += this.gravity;
+    //this.cy += this.y_velocity;
+
   }
 
+  //collision check
+  //TODO fix glitch when hitting ground
+  if(this.cy > 270){
+    this.isJumping = false;
+    this.cy = 270; 
+    this.y_velocity = 0; 
+  }
 
   if (this.updateInterval < updateTresh) {
     this.computeSubStep(this.updateInterval);
@@ -126,14 +137,6 @@ Runner.prototype.computeSubStep = function(du) {
   }
   if(this.isJumping){
     this.currentLoop = 2;
-  }
-
-  //collision check
-  //TODO fix glitch when hitting ground
-  if(this.cy > 270){
-    this.isJumping = false;
-    this.cy = 270; 
-    this.y_velocity = 0; 
   }
 
   //if not crouching or jumping set to walk animation
