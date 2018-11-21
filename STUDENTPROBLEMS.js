@@ -7,6 +7,7 @@ var g_background = document.getElementById("backgroundCanvas");
 var ctxBackground = g_background.getContext("2d");
 var ctx = g_canvas.getContext("2d");
 var g_camera;
+var g_music;
 
 var g_powerUpsAndDown = {
     "timeIncrease": 1,
@@ -26,8 +27,6 @@ var g_powerUpsAndDown = {
 // the diagnostic toggles (including screen-clearing).
 //
 // It then delegates the game-specific logic to `gameRender`
-
-
 
 function createInitialRunner() {
     entityManager.generateRunner({
@@ -94,8 +93,8 @@ var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
+var isPlaying = true;
 
-var KEY_MIXED   = keyCode('M');;
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 
@@ -111,11 +110,25 @@ var KEY_K = keyCode('K');
 
 var KEY_G = keyCode('G');
 var KEY_W = keyCode('W');
+var TOGGLE_MUTE = 'M'.charCodeAt(0);
+
+function toggleMusic() {
+
+    if (isPlaying) {
+        g_music.play();
+    } else {
+        g_music.pause();
+    }
+
+    if (eatKey(TOGGLE_MUTE)) isPlaying = !isPlaying;
+}
+
 
 function updateSimulation(du) {
     
     processDiagnostics();
     if (typeof g_camera === 'undefined') { return }
+    if (typeof g_music === 'undefined') { return }
     if (!g_theStory && !g_instructions) {
         entityManager.update(du);
         g_camera.update(du);
@@ -173,8 +186,10 @@ function renderSimulation(ctx) {
         
         if (!g_theStory && !g_instructions) {
             entityManager.render(ctx);
-    
+            toggleMusic();
+
             if (g_renderSpatialDebug) spatialManager.render(ctx);
+            
         }
     }
 
@@ -277,12 +292,16 @@ function setUpPowerUps() {
 
 function preloadDone() {
     g_camera = new Camera(/*x start*/0, g_images.background.width, g_images.background.height);
+
+    g_music = new Audio('src/sounds/gametrack.mp3');
+
     setUpPowerUps();
     
     g_background = new Background(g_images.background);
     //breyta líka í okkar
 
     g_sprites.runner  = new Sprite(g_images.spritesheet);
+
   
     entityManager.init();
 
