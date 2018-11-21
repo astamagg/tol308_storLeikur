@@ -30,8 +30,8 @@ var g_powerUpsAndDown = {
 
 function createInitialRunner() {
     entityManager.generateRunner({
-      cx: 200,
-      cy: 200,
+      cx: 50,
+      cy: 270,
     });
 }
 
@@ -155,6 +155,8 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleRocks();*/
 
+    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
+
 }
 
 
@@ -206,9 +208,7 @@ function requestPreloads() {
     
     var requiredImages = {
         background: "src/background/background(2100x400).png",
-
-        spritesheet : "src/spritesheet64x80.png",
-        girlstanding : "src/girlstanding.png",
+        spritesheet : "src/girlspritesheet.png",
         coffee: "src/coffee.png",
         energydrink: "src/energydrink.png",
         piazza: "src/piazza.png",
@@ -304,7 +304,6 @@ function preloadDone() {
 
   
     entityManager.init();
-    createInitialRunner();
 
     main.init();
 }

@@ -38,9 +38,9 @@ _generateStillPowerChangers: function() {
 },
 
 init: function() {
+    this.generateRunner();
     this._generatePowerChangers();
     this._generateStillPowerChangers();
-    this.generateRunner();
 },
 // PUBLIC METHODS
 
@@ -66,12 +66,12 @@ generateRunner: function(descr) {
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._powerChanger, this._stillPowerChanger]; 
+    this._categories = [this._runner, this._powerChanger, this._stillPowerChanger]; 
 },
 
 update: function(du) {
     countdown.update(du);
-    this._runner[0].update(du);
+   // this._runner[0].update(du);
 
     for(var c = 0; c < this._categories.length; c++) {
         var aCategory = this._categories[c];
@@ -93,6 +93,8 @@ update: function(du) {
 },
 
 render: function(ctx) {
+    countdown.render(ctx);
+    
     for (var i = 0; i < this._categories.length; ++i) {
         var aCategory = this._categories[i];
         for(var j = 0; j < aCategory.length; j++) {
@@ -102,9 +104,8 @@ render: function(ctx) {
 
     }
     
-    this._runner[0].render(ctx);
+   // this._runner[0].render(ctx);
    // drawClock(ctx);
-   countdown.render(ctx);
 },
 }
 entityManager.deferredSetup();

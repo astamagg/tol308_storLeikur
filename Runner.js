@@ -21,6 +21,7 @@ function Runner(descr) {
   // Set normal drawing scale, and warp state off
   this._scale = 1;
   //this.frameCount = 0;
+  spatialManager.register(this);
 }
 
 Runner.prototype = new Entity();
@@ -44,17 +45,17 @@ Runner.prototype.numSubSteps = 1; //what is this
 Runner.prototype.width = 64;
 Runner.prototype.height = 80;
 Runner.prototype.totalDistance = 0;
+Runner.prototype.isPowered = false;
 //animations from spritesheet frames
-//Runner.prototype.loops = [[0,1,2,3,4], [0,1,2,3,4], [2,1,0], [1]]; //walk, crouchingDown, standing up, jump,
-Runner.prototype.loops = [[0,1,2,3,4], [4], [1]]; //walk, crouchingDown, standing up, jump,
-
+Runner.prototype.loops = [[0],[0],[0,1,2,3,4]]; //crouch, jump, walk
+Runner.prototype.poweredLoops = [[1,2,3,4],[1,2,3,4],[],[0,1,2,3,4]]; ///powered- crouch, jump, walk
 
 //animation update speed and interval (running speed)
 Runner.prototype.speed = 10;
 Runner.prototype.updateInterval = 30;
 
 //position in loops for drawing
-Runner.prototype.currentLoop = 0;
+Runner.prototype.currentLoop = 2; //start in walk loop
 Runner.prototype.currentLoopIndex = 0;
 
 //bools for jumping & crouching
@@ -68,7 +69,7 @@ Runner.prototype.gravity = 1;
 var jumpCounter = 0;  // how long the jump button can be pressed down
 var ground = 270;
 var NOMINAL_GRAVITY = 1;
-var JUMP_ACCELERATION = NOMINAL_GRAVITY * 12; // the bigger this number the higher the jump
+var JUMP_ACCELERATION = NOMINAL_GRAVITY * 15; // the bigger this number the higher the jump
 
 
 Runner.prototype.handleKeys = function(){
@@ -77,15 +78,18 @@ Runner.prototype.handleKeys = function(){
   }else{
     this.isCrouching = false;
   }
-  if (keys[this.KEY_JUMP] && this.cy === 270 && !this.isJumping ) {
-    this.isJumping = true;
+  if (keys[this.KEY_JUMP] && this.isJumping ==false ) {
+    
     this.y_velocity -= JUMP_ACCELERATION;  
+    this.isJumping = true;
+
     //TODO bæta við lengra jump-i ef við höldum inni
     //með því að nota jumpCounter
   }
 };
 
 Runner.prototype.update = function(du) {
+  //spatialManager.(this);
 
   this.handleKeys(); 
   this.updateInterval -= du;
@@ -96,9 +100,18 @@ Runner.prototype.update = function(du) {
 
   if (this.isJumping) {
     this.y_velocity += this.gravity;
+    //this.cy += this.y_velocity;
+
   }
 
+  //collision check
+  if(this.cy > 270){
+    this.isJumping = false;
+    this.cy = 270; 
+    this.y_velocity = 0; 
+  }
 
+  
   if (this.updateInterval < updateTresh) {
     this.computeSubStep(this.updateInterval);
       //hvað er hvert skref mikil x færsla?
@@ -110,10 +123,16 @@ Runner.prototype.update = function(du) {
         this.cx += this.speed;
         this.roomX += this.speed;
       }
-      //console.log(this.currentLoopIndex);
       this.updateInterval = 30; 
   }
     //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
+    var entityHit = this.isColliding();
+    if(entityHit) {
+     // var type = entityHit.getPowerType();
+      util.reactToPowerChanger(entityHit);
+      entityHit.kill();
+      spatialManager.unregister(entityHit);
+    }
 
 };
 
@@ -121,30 +140,39 @@ Runner.prototype.update = function(du) {
 Runner.prototype.computeSubStep = function(du) {
   this.cy += this.y_velocity;
   
-  if(this.isCrouching){
-    this.currentLoop = 1;
-  }
-  if(this.isJumping){
-    this.currentLoop = 2;
-  }
-
-  //collision check
-  //TODO fix glitch when hitting ground
-  if(this.cy > 270){
-    this.isJumping = false;
-    this.cy = 270; 
-    this.y_velocity = 0; 
-  }
-
-  //if not crouching or jumping set to walk animation
-  if(!this.isCrouching && !this.isJumping){
-    this.currentLoop = 0;
+  if(this.isPowered){
+    if(this.isCrouching){
+      this.currentLoop = 0;
+    }
+    if(this.isJumping){
+      this.currentLoop = 1;
+    }
+    //if not crouching or jumping set to walk animation
+    if(!this.isCrouching && !this.isJumping){
+      this.currentLoop = 3;
+    }
+    if (this.currentLoopIndex >= this.poweredLoops[this.currentLoop].length) {
+      this.currentLoopIndex = 0; 
+    }
     this.currentLoopIndex++;
-  }
 
-  //loppa í hring til þess að gera animation og færa stelpuna um x distance
-  if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
-    this.currentLoopIndex = 0; 
+  }else{
+    if(this.isCrouching){
+      this.currentLoop = 0;
+    }
+    if(this.isJumping){
+      this.currentLoop = 1;
+    }
+    //if not crouching or jumping set to walk animation
+    if(!this.isCrouching && !this.isJumping){
+      this.currentLoop = 2;
+      this.currentLoopIndex++;
+    }
+
+    //loppa í hring til þess að gera animation og færa stelpuna um x distance
+    if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
+      this.currentLoopIndex = 0; 
+    }
   }
 };
 
@@ -167,10 +195,19 @@ Runner.prototype.halt = function() {
   this.velY = 0;
 };
 
+Runner.prototype.getPos = function() {
+  return {posX : this.cx, posY : this.cy};
+}
+
 //teikna ramma á spritesheet
 Runner.prototype.render = function(ctx) {
   const drawX = (this.roomX-this.width/2) - g_camera.xView;
-//drawFrame(ctx, X gildi á ramma, Y gildi á ramma, x staðsettning á canvas, y staðsettning á canvas  )
-  this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, drawX, this.cy);
+  //drawFrame(ctx, X gildi á ramma, Y gildi á ramma, x staðsettning á canvas, y staðsettning á canvas  )
+  
+  if(this.isPowered){
+    this.sprite.drawFrame(ctx,this.poweredLoops[this.currentLoop][this.currentLoopIndex], this.currentLoop, drawX, this.cy);
+  }else{
+    this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, drawX, this.cy);
+  }
 };
 
