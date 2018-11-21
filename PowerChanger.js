@@ -58,14 +58,14 @@ PowerChanger.prototype.speedAndPlacement = function() {
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = Math.floor(util.randRange(0, 2000));
+    this.frameMax = Math.floor(util.randRange(0, 2500));
     this.drawTimeChanger = false;
 };
 
 //generate a random velocity for the entity 
 PowerChanger.prototype.randomVelocity = function() {
-    var MIN_SPEED = 20,
-    MAX_SPEED = 70;
+    var MIN_SPEED = 60,
+    MAX_SPEED = 110;
 
     var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
     return speed;
@@ -82,7 +82,7 @@ PowerChanger.prototype.update = function(du) {
         spatialManager.register(this);
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
-        this.frameMax = util.randRange(0, 2500);
+        this.frameMax = util.randRange(0, 3000);
         this.frameCounter = 0;
        // spatialManager.register(this);
     }
