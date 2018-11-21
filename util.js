@@ -140,6 +140,7 @@ var util = {
 
   reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
+    var change = entity.getPowerChanger();
     console.log('type', type);
     if(type === "speedChanger") {
       console.log('fór inn í speed changer');
