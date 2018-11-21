@@ -41,7 +41,6 @@ var spatialManager = {
   register: function(entity) {
     var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
-
     //create the entity with the current position, radius and the thing itself
     var updatedEntity = {
       posX: pos.posX,
@@ -64,7 +63,6 @@ var spatialManager = {
     // Þurfum í raun bara að nota find entity in range fyrir stelpuna - hún er eina sem getur collide-að
     // Svo köllum við á util fallið areColliding hér til að athuga hvort hún snerti hluti
     for (var ID in this._entities) {
-      //console.log('ID', ID);
       //return if I am comparing the entity to itself
       if (
         posX === this._entities[ID].entity.getPos().posX &&

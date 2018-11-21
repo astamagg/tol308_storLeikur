@@ -72,17 +72,18 @@ PowerChanger.prototype.randomVelocity = function() {
 };
 
 PowerChanger.prototype.update = function(du) {
-    spatialManager.unregister(this);
 
     if(!this.drawTimeChanger) {
         this.frameCounter++;
     }
 
     if(this.frameCounter > this.frameMax && g_powerChangerCounter < 4) {
+        spatialManager.unregister(this);
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
         this.frameMax = util.randRange(0, 2500);
         this.frameCounter = 0;
+        spatialManager.register(this);
     }
 
     if(this.drawTimeChanger) {
@@ -93,9 +94,7 @@ PowerChanger.prototype.update = function(du) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
-    
-    spatialManager.register(this);
- 
+
 };
 
 PowerChanger.prototype.getPos = function() {

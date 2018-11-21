@@ -61,24 +61,23 @@ StillPowerChanger.prototype.drawLogic = function() {
 
 
 StillPowerChanger.prototype.update = function(du) {
-    spatialManager.unregister(this);
 
     if(!this.drawTimeChanger) {
         this.frameCounter++;
     }
 
     if(this.frameCounter > this.frameMax) {
+        spatialManager.unregister(this);
         this.drawTimeChanger = false;
         this.frameMax = util.randRange(0, 250);
         this.frameCounter = 0;
+        spatialManager.register(this);
     }
 
     if(this.cx < -30) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
-
-    spatialManager.register(this);
 };
 
 StillPowerChanger.prototype.getPos = function() {
