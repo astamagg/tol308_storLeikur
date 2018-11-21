@@ -13,7 +13,7 @@ html {
 .full-game {
   margin: auto;
   width: 700px;
-  height: 500px;
+  height: 550px;
   display: flex;
   flex-direction: column;
   z-index: 3;
@@ -21,24 +21,28 @@ html {
 
 .roof {
   position: relative;
-  border-bottom: 110px solid rgb(128, 9, 9);
-  border-left: 60px solid transparent;
-  border-right: 60px solid transparent;
+  border-bottom: 140px solid rgb(128, 9, 9);
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
   height: 0;
   z-index: 4;
   width: 680px;
-  margin-left: -48px;
+  margin-left: -62px;
 }
 
 .chimney {
   position: absolute;
-  width: 32px;
-  height: 60px;
-  top: -20px;
+  width: 40px;
+  height: 70px;
+  top: -24px;
   left: 610px;
-  border-style: solid;
-  border-color: rgb(92, 10, 10);
-  background: rgb(102, 12, 12);
+  /* border-style: solid;
+  border-color: rgb(120, 8, 8); */
+  background: linear-gradient(rgb(110, 7, 7) 70%, rgb(128, 9, 9));
+}
+
+.the-canvas {
+  margin-top: -20px;
 }
 
 .snow-container {
