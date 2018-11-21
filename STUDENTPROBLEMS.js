@@ -191,9 +191,7 @@ function requestPreloads() {
     
     var requiredImages = {
         background: "src/background/background(2100x400).png",
-
-        spritesheet : "src/spritesheet64x80.png",
-        girlstanding : "src/girlstanding.png",
+        spritesheet : "src/girlspritesheet.png",
         coffee: "src/coffee.png",
         energydrink: "src/energydrink.png",
         piazza: "src/piazza.png",
