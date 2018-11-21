@@ -11,7 +11,7 @@ var util = {
   // RANGES
   // ======
 
-  clampRange: function(value, lowBound, highBound) {
+  /*clampRange: function(value, lowBound, highBound) {
     if (value < lowBound) {
       value = lowBound;
     } else if (value > highBound) {
@@ -38,7 +38,7 @@ var util = {
       return false;
     }
     return true;
-  },
+  },*/
 
   // RANDOMNESS
   // ==========
@@ -50,9 +50,9 @@ var util = {
   // MISC
   // ====
 
-  square: function(x) {
+ /* square: function(x) {
     return x * x;
-  },
+  },*/
 
   // Check whether there is a collision
   areColliding: function(
@@ -84,7 +84,7 @@ var util = {
 
   // DISTANCES
   // =========
-
+/*
   distSq: function(x1, y1, x2, y2) {
     return this.square(x2 - x1) + this.square(y2 - y1);
   },
@@ -99,7 +99,7 @@ var util = {
       dy = yWrap - dy;
     }
     return this.square(dx) + this.square(dy);
-  },
+  },*/
 
   // CANVAS OPS
   // ==========
@@ -119,7 +119,7 @@ var util = {
     ctx.fillStyle = prevfillStyle;*/
   },
 
-  strokeCircle: function(ctx, x, y, r) {
+  /*strokeCircle: function(ctx, x, y, r) {
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.stroke();
@@ -136,7 +136,7 @@ var util = {
     ctx.fillStyle = style;
     ctx.fillRect(x, y, w, h);
     ctx.fillStyle = oldStyle;
-  },
+  },*/
 
   reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();

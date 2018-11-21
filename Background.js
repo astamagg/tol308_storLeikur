@@ -21,11 +21,8 @@ Background.prototype.draw = function(ctx) {
     }
 
     ctx.drawImage(this.image, sx, 0, sWidth, sHeight, 0, 0, sWidth, sHeight);
-    // ctx.drawImage(this.image, this.cx, this.cy);
 }
 
 Background.prototype.update = function(du) {
     //calling the draw function again redrawing it at the new location
-
-
 }

@@ -77,20 +77,23 @@ PowerChanger.prototype.update = function(du) {
         this.frameCounter++;
     }
 
-    if(this.frameCounter > this.frameMax && g_powerChangerCounter < 4) {
-       // spatialManager.unregister(this);
-        spatialManager.register(this);
+    //draw a new power changer if frame count is reached and the number of
+    // power changers already in the frame is less than four
+    if(this.frameCounter > this.frameMax && g_powerChangerCounter < 3) {
+        //once they are drawn the spatial manager need to know about them for collision
+        spatialManager.register(this);  
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
+        //reseting the frame max and the fram counter
         this.frameMax = util.randRange(0, 3000);
         this.frameCounter = 0;
-       // spatialManager.register(this);
     }
 
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     }
 
+    //if the powerChanger has gone beyond the frame or has hit the runner we remove it
     if(this.cx < -30 || this._isDeadNow) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;

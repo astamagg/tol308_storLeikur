@@ -41,14 +41,7 @@ var spatialManager = {
   register: function(entity) {
     var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
-    //create the entity with the current position, radius and the thing itself
-   /* var updatedEntity = {
-      posX: pos.posX,
-      posY: pos.posY,
-      radius: entity.getRadius(),
-      entity: entity,
-      empty: false,
-    };*/
+
     //add the value to the ID of the entity
     this._entities[spatialID] = entity;
   },
@@ -63,8 +56,8 @@ var spatialManager = {
   },
 
   findEntityInRange: function(posX, posY, width, height) {
-    // Þurfum í raun bara að nota find entity in range fyrir stelpuna - hún er eina sem getur collide-að
-    // Svo köllum við á util fallið areColliding hér til að athuga hvort hún snerti hluti
+    //All the entities are rectangels. Every entity is checked against the runner
+    //The closest entity gets hit by the runner
     for (var ID in this._entities) {
       //return if I am comparing the entity to itself
       
@@ -95,6 +88,7 @@ var spatialManager = {
     }
   },
 
+  //rendering creates a red rectangle around the entities for easier debugging
   render: function(ctx) {
     var oldStyle = ctx.strokeStyle;
     ctx.strokeStyle = 'red';
