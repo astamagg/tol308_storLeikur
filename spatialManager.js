@@ -68,7 +68,7 @@ var spatialManager = {
         posX === this._entities[ID].entity.getPos().posX &&
         posY === this._entities[ID].entity.getPos().posY
       ) {
-        return;
+        continue;
       }
       //return item if it's colliding
       if (
