@@ -202,6 +202,7 @@ Runner.prototype.getPos = function() {
 //teikna ramma á spritesheet
 Runner.prototype.render = function(ctx) {
   const drawX = (this.roomX-this.width/2) - g_camera.xView;
+  this.cx = drawX;
   //drawFrame(ctx, X gildi á ramma, Y gildi á ramma, x staðsettning á canvas, y staðsettning á canvas  )
   
   if(this.isPowered){
