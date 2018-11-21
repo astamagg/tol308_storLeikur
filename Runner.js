@@ -38,6 +38,7 @@ Runner.prototype.KEY_CROUCH = 'S'.charCodeAt(0);
 // Initial, inheritable, default values
 Runner.prototype.cx = 50;
 Runner.prototype.cy = 270;
+Runner.prototype.roomX = 50;
 Runner.prototype.y_velocity = 0; 
 Runner.prototype.numSubSteps = 1; //what is this
 Runner.prototype.width = 64;
@@ -102,10 +103,13 @@ Runner.prototype.update = function(du) {
     this.computeSubStep(this.updateInterval);
       //hvað er hvert skref mikil x færsla?
       //placeholder if settning til þess að stelpan birtist aftur
-      if(this.cx > 600 ){
-        this.cx = 0;
+      if(this.cx > 1700 ){
+        this.reset();
       }
-      else this.cx += this.speed;
+      else {
+        this.cx += this.speed;
+        this.roomX += this.speed;
+      }
       //console.log(this.currentLoopIndex);
       this.updateInterval = 30; 
   }
@@ -154,6 +158,7 @@ Runner.prototype.getHeight = function() {
 
 Runner.prototype.reset = function() {
   this.setPos(this.reset_cx, this.reset_cy);
+  this.roomX = this.reset_cx;
   this.halt();
 };
 
@@ -164,7 +169,8 @@ Runner.prototype.halt = function() {
 
 //teikna ramma á spritesheet
 Runner.prototype.render = function(ctx) {
+  const drawX = (this.roomX-this.width/2) - g_camera.xView;
 //drawFrame(ctx, X gildi á ramma, Y gildi á ramma, x staðsettning á canvas, y staðsettning á canvas  )
-  this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
+  this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, drawX, this.cy);
 };
 

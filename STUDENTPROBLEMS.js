@@ -6,6 +6,7 @@ var g_background = document.getElementById("backgroundCanvas");
 
 var ctxBackground = g_background.getContext("2d");
 var ctx = g_canvas.getContext("2d");
+var g_camera;
 
 var g_powerUpsAndDown = {
     "timeIncrease": 1,
@@ -114,9 +115,10 @@ var KEY_W = keyCode('W');
 function updateSimulation(du) {
     
     processDiagnostics();
-
+    if (typeof g_camera === 'undefined') { return }
     if (!g_theStory && !g_instructions) {
         entityManager.update(du);
+        g_camera.update(du);
     }
 
     // Prevent perpetual firing!
@@ -152,7 +154,7 @@ function gatherInputs() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-
+    if (typeof g_camera === 'undefined') { return }
 
     if (g_gameOver || g_WINNER) {
         gameOver(ctx);
@@ -273,7 +275,8 @@ function setUpPowerUps() {
         },];
 }
 
-function preloadDone() {  
+function preloadDone() {
+    g_camera = new Camera(/*x start*/0, g_images.background.width, g_images.background.height);
     setUpPowerUps();
     
     g_background = new Background(g_images.background);
