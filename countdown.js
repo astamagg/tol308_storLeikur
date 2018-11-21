@@ -4,15 +4,15 @@ _time: 60,  //time in seconds
 _timeString: "01:00",   //string to be rendered
 updateCount: 0, //frame count
 
-//updating the function every 60 updates
 update:function() {
     this.updateCount++;
+    //change the value every 60 updates
     if(this.updateCount === 60) {
-        this._time = this._time - 1;
-        this.updateCount = 1;
-        this.timeToMinutes();
+        this._time = this._time - 1; //change the time value
+        this.updateCount = 1;   
+        this.timeToMinutes();   //change to minutes
     }
-    this.checkGameState();
+    this.checkGameState();   //check if the game is over
 },
 
 //rendering the clock
@@ -25,9 +25,10 @@ render:function(ctx) {
 
 //changing seconds to string
 timeToMinutes() {
-    var minutes = Math.floor(this._time/60);
+    var minutes = Math.floor(this._time/60);  
     var seconds = this._time - minutes * 60;
 
+    //checking whether second value goes below 10, then we need to add a 0 to the string for completeness
     if(seconds < 10 && minutes < 1) {
         this._timeString =  "0" + minutes + ":0" + seconds;
     } else {

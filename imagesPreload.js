@@ -1,4 +1,5 @@
 // Multi-Image Preloader
+//This class is based on instruction classes by Patrick Kerr
 
 "use strict";
 

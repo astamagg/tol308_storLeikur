@@ -21,6 +21,7 @@ function handleMouse(evt) {
     
 }
 
+//change the color of a button if it is pressed
 function handleButtonColor(evt) {
     
     let instructionButton = g_buttonInstruction.contains(
@@ -49,6 +50,7 @@ function handleButtonColor(evt) {
 
 }
 
+//change the color back to the original when we stop pressing
 function handleButtonUp(evt) {
     
     g_buttonGameOver.color = 'red';

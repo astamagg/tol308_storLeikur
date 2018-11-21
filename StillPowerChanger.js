@@ -16,14 +16,15 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
     this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     this.id = this.getEntityID();   //get the id 
-    this.velX = this.randomVelocity();
+    //because the runner doesn't move when it reaches the middle the other things have to move
+    this.velX = this.randomVelocity(); 
 
     this.width = this.sprite.width;
     this.height = this.sprite.height;
 
     this.cx = g_ctx.canvas.width + 10;
    
-    //decide between the two because they are not the same size
+    //decide between the three static power ups because they need different placements
     if(ID === 8) {
         this.cy = 315;
     } else if(ID === 9) {
@@ -36,6 +37,7 @@ StillPowerChanger.prototype.innerSetUp = function() {
 
 };
 
+//compute a random velocity
 StillPowerChanger.prototype.randomVelocity = function() {
     var MIN_SPEED = 60,
     MAX_SPEED = 110;
@@ -65,7 +67,7 @@ StillPowerChanger.prototype.getPowerType = function() {
 //deciding when to start drawing the entity
 StillPowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 3500);
+    this.frameMax = util.randRange(0, 5000);
     this.drawTimeChanger = false;
 };
 
@@ -75,10 +77,12 @@ StillPowerChanger.prototype.update = function(du) {
     if(!this.drawTimeChanger) {
         this.frameCounter++;
     }
+    //start drawing it at a certain space count
     if(this.frameCounter > this.frameMax) {
+        //add to the space to check collision
         spatialManager.register(this);
         this.drawTimeChanger = true;
-        this.frameMax = util.randRange(0, 4000);
+        this.frameMax = util.randRange(0, 6000);
         this.frameCounter = 0;
     }
 
@@ -86,6 +90,7 @@ StillPowerChanger.prototype.update = function(du) {
         this.cx -= this.velX * du;
     }
 
+    //if it as reached beyond the frame or was hit by the user it should disappear
     if(this.cx < -30 || this._isDeadNow) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
