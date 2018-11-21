@@ -31,8 +31,8 @@ var g_powerUpsAndDown = {
 
 function createInitialRunner() {
     entityManager.generateRunner({
-      cx: 200,
-      cy: 200,
+      cx: 50,
+      cy: 270,
     });
 }
 
@@ -141,6 +141,8 @@ function processDiagnostics() {
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
     if (eatKey(KEY_0)) entityManager.toggleRocks();*/
+
+    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
 }
 
@@ -283,7 +285,6 @@ function preloadDone() {
     g_sprites.runner  = new Sprite(g_images.spritesheet);
   
     entityManager.init();
-    createInitialRunner();
 
     main.init();
 }
