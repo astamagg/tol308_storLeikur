@@ -137,4 +137,25 @@ var util = {
     ctx.fillRect(x, y, w, h);
     ctx.fillStyle = oldStyle;
   },
+
+  reactToPowerChanger: function(entity) {
+    var type = entity.getPowerType();
+    console.log('type', type);
+    if(type === "speedChanger") {
+      console.log('fór inn í speed changer');
+      //breyttu runner speed
+    }
+    if(type === "timeChanger") {
+      console.log('fór inn í time changer');
+      //breyttu klukkunni sem birtist
+    }
+    if(type === "dead") {
+      console.log('fórum inn í dead')
+      //game over
+    }
+    if(type === "crash") {
+      console.log('fór inn í crash');
+      //hafa áhrif á hraðann.
+    }
+  }
 };

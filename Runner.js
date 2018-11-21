@@ -86,7 +86,7 @@ Runner.prototype.handleKeys = function(){
 };
 
 Runner.prototype.update = function(du) {
-  //spatialManager.unregister(this);
+  //spatialManager.(this);
 
   this.handleKeys(); 
   this.updateInterval -= du;
@@ -112,9 +112,12 @@ Runner.prototype.update = function(du) {
       this.updateInterval = 30; 
   }
     //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
-
-    if(this.isColliding()) {
-      console.log('ouch');
+    var entityHit = this.isColliding();
+    if(entityHit) {
+     // var type = entityHit.getPowerType();
+      util.reactToPowerChanger(entityHit);
+      entityHit.kill();
+      spatialManager.unregister(entityHit);
     }
 
 };

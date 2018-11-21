@@ -42,21 +42,24 @@ var spatialManager = {
     var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
     //create the entity with the current position, radius and the thing itself
-    var updatedEntity = {
+   /* var updatedEntity = {
       posX: pos.posX,
       posY: pos.posY,
       radius: entity.getRadius(),
       entity: entity,
-    };
+      empty: false,
+    };*/
     //add the value to the ID of the entity
-    this._entities[spatialID] = updatedEntity;
+    this._entities[spatialID] = entity;
   },
 
   unregister: function(entity) {
-    // YOUR STUFF HERE! -> done
-    var spatialID = entity.getSpatialID();
-    //create a new entity that is empty for this particular ID
-    this._entities[spatialID] = new Entity();
+    //unregister with the the index of the entity in the array
+    var index = this._entities.indexOf(entity);
+
+    if(index === -1) return;
+    this._entities.splice(index, 1);
+    
   },
 
   findEntityInRange: function(posX, posY, width, height) {
@@ -64,9 +67,13 @@ var spatialManager = {
     // Svo köllum við á util fallið areColliding hér til að athuga hvort hún snerti hluti
     for (var ID in this._entities) {
       //return if I am comparing the entity to itself
+      
+      if(this._entities[ID].empty) {
+        continue;
+      }
       if (
-        posX === this._entities[ID].entity.getPos().posX &&
-        posY === this._entities[ID].entity.getPos().posY
+        posX === this._entities[ID].getPos().posX &&
+        posY === this._entities[ID].getPos().posY
       ) {
         continue;
       }
@@ -77,13 +84,13 @@ var spatialManager = {
           posY,
           width,
           height,
-          this._entities[ID].entity.getPos().posX ,
-          this._entities[ID].entity.getPos().posY,
-          this._entities[ID].entity.height,
-          this._entities[ID].entity.width,
+          this._entities[ID].getPos().posX ,
+          this._entities[ID].getPos().posY,
+          this._entities[ID].height,
+          this._entities[ID].width,
         )
       ) {
-        return this._entities[ID].entity;
+        return this._entities[ID];
       }
     }
   },
@@ -93,7 +100,8 @@ var spatialManager = {
     ctx.strokeStyle = 'red';
     for (var ID in this._entities) {
       var e = this._entities[ID];
-      util.strokeCircle(ctx, e.posX, e.posY, e.radius);
+
+      ctx.strokeRect(e.getPos().posX, e.getPos().posY, e.getWidth(), e.getHeight());
     }
     ctx.strokeStyle = oldStyle;
   },

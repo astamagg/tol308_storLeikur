@@ -78,19 +78,20 @@ PowerChanger.prototype.update = function(du) {
     }
 
     if(this.frameCounter > this.frameMax && g_powerChangerCounter < 4) {
-        spatialManager.unregister(this);
+       // spatialManager.unregister(this);
+        spatialManager.register(this);
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
         this.frameMax = util.randRange(0, 2500);
         this.frameCounter = 0;
-        spatialManager.register(this);
+       // spatialManager.register(this);
     }
 
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     }
 
-    if(this.cx < -30) {
+    if(this.cx < -30 || this._isDeadNow) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }

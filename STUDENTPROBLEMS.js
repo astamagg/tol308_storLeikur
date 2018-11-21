@@ -140,6 +140,8 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleRocks();*/
 
+    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
+
 }
 
 

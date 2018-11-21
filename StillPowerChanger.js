@@ -67,11 +67,12 @@ StillPowerChanger.prototype.update = function(du) {
     }
 
     if(this.frameCounter > this.frameMax) {
-        spatialManager.unregister(this);
+        //spatialManager.unregister(this);
+        spatialManager.register(this);
         this.drawTimeChanger = false;
         this.frameMax = util.randRange(0, 250);
         this.frameCounter = 0;
-        spatialManager.register(this);
+        //spatialManager.register(this);
     }
 
     if(this.cx < -30) {
