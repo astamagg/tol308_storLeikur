@@ -19,14 +19,27 @@ html {
   z-index: 3;
 }
 
-/* .roof {
+.roof {
+  position: relative;
   border-bottom: 110px solid rgb(128, 9, 9);
   border-left: 60px solid transparent;
   border-right: 60px solid transparent;
   height: 0;
   z-index: 4;
   width: 680px;
-} */
+  margin-left: -48px;
+}
+
+.chimney {
+  position: absolute;
+  width: 32px;
+  height: 60px;
+  top: -20px;
+  left: 610px;
+  border-style: solid;
+  border-color: rgb(92, 10, 10);
+  background: rgb(102, 12, 12);
+}
 
 .snow-container {
   position: absolute;
