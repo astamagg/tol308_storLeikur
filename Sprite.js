@@ -1,4 +1,4 @@
-//þarf að aðlaga að okkar, þurfum ekki wrap
+//This class is based on instruction classes by Patrick Kerr
 
 // ============
 // SPRITE STUFF

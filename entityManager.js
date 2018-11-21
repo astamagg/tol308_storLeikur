@@ -10,8 +10,8 @@
 var entityManager = {
 
 _runner:[],   
-_powerChanger: [],
-_stillPowerChanger: [],
+_powerChanger: [],     //power changers that move with a random x position
+_stillPowerChanger: [], //power changers that logically need to be drawn on the floor
 
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
@@ -71,7 +71,6 @@ deferredSetup : function () {
 
 update: function(du) {
     countdown.update(du);
-   // this._runner[0].update(du);
 
     for(var c = 0; c < this._categories.length; c++) {
         var aCategory = this._categories[c];
@@ -89,7 +88,6 @@ update: function(du) {
             }
         }
     }
-    //TimeChanger.update(du);
 },
 
 render: function(ctx) {
@@ -103,9 +101,6 @@ render: function(ctx) {
         //debug.text(".", debugX + i * 10, debugY);
 
     }
-    
-   // this._runner[0].render(ctx);
-   // drawClock(ctx);
 },
 }
 entityManager.deferredSetup();
