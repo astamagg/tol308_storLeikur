@@ -21,6 +21,7 @@ function Runner(descr) {
   // Set normal drawing scale, and warp state off
   this._scale = 1;
   //this.frameCount = 0;
+  spatialManager.register(this);
 }
 
 Runner.prototype = new Entity();
@@ -88,6 +89,7 @@ Runner.prototype.handleKeys = function(){
 };
 
 Runner.prototype.update = function(du) {
+  //spatialManager.(this);
 
   this.handleKeys(); 
   this.updateInterval -= du;
@@ -124,6 +126,13 @@ Runner.prototype.update = function(du) {
       this.updateInterval = 30; 
   }
     //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
+    var entityHit = this.isColliding();
+    if(entityHit) {
+     // var type = entityHit.getPowerType();
+      util.reactToPowerChanger(entityHit);
+      entityHit.kill();
+      spatialManager.unregister(entityHit);
+    }
 
 };
 
@@ -185,6 +194,10 @@ Runner.prototype.halt = function() {
   this.velX = 0;
   this.velY = 0;
 };
+
+Runner.prototype.getPos = function() {
+  return {posX : this.cx, posY : this.cy};
+}
 
 //teikna ramma á spritesheet
 Runner.prototype.render = function(ctx) {

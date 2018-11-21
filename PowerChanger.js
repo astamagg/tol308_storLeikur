@@ -12,7 +12,6 @@ PowerChanger.prototype.innerSetUp = function() {
     //find the power changer, that is what effect it has if the runner hits it
     var ID = Math.floor(util.randRange(0,8));
     this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
-    console.log(this.sprite);
     this.powerChange = g_sprites.powerUpsDowns[ID].powerChange; 
     this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     //sprite, height, width and the initial placement and velocity of the entity
@@ -73,29 +72,38 @@ PowerChanger.prototype.randomVelocity = function() {
 };
 
 PowerChanger.prototype.update = function(du) {
+
     if(!this.drawTimeChanger) {
         this.frameCounter++;
     }
 
     if(this.frameCounter > this.frameMax && g_powerChangerCounter < 4) {
+       // spatialManager.unregister(this);
+        spatialManager.register(this);
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
         this.frameMax = util.randRange(0, 2500);
         this.frameCounter = 0;
+       // spatialManager.register(this);
     }
 
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     }
 
-    if(this.cx < -30) {
+    if(this.cx < -30 || this._isDeadNow) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
-}
+
+};
+
+PowerChanger.prototype.getPos = function() {
+    return {posX : this.cx, posY : this.cy};
+};
 
 PowerChanger.prototype.render = function(ctx) {
     if(this.drawTimeChanger) {
         ctx.drawImage(this.sprite.image, this.cx, this.cy);
     }
-}
+};
