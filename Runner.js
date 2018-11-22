@@ -188,6 +188,10 @@ Runner.prototype.getHeight = function() {
   return this.height;
 };
 
+Runner.prototype.getSpeed = function() {
+  return this.speed;
+};
+
 Runner.prototype.reset = function() {
   this.setPos(this.reset_cx, this.reset_cy);
   this.roomX = this.reset_cx;
