@@ -49,6 +49,7 @@ PowerChanger.prototype.speedAndPlacement = function() {
     this.width = this.sprite.width;
 
     this.velX = this.randomVelocity();  //choosing a random velocity
+    console.log('entityManager', entityManager._runner[0].getSpeed());
 
     //original placement
     this.cx = g_ctx.canvas.width + 10;
@@ -64,8 +65,8 @@ PowerChanger.prototype.drawLogic = function() {
 
 //generate a random velocity for the entity 
 PowerChanger.prototype.randomVelocity = function() {
-    var MIN_SPEED = 60,
-    MAX_SPEED = 110;
+    var MIN_SPEED = entityManager._runner[0].getSpeed() + 100;
+    var MAX_SPEED = entityManager._runner[0].getSpeed() + 200;
 
     var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
     return speed;

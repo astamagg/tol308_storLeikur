@@ -17,7 +17,9 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     this.id = this.getEntityID();   //get the id 
     //because the runner doesn't move when it reaches the middle the other things have to move
-    this.velX = this.randomVelocity(); 
+    //this.velX = this.randomVelocity(); 
+    this.velX = entityManager._runner[0].getSpeed() - 3;
+    console.log('velX', this.velX);
 
     this.width = this.sprite.width;
     this.height = this.sprite.height;
@@ -35,15 +37,6 @@ StillPowerChanger.prototype.innerSetUp = function() {
 
     this.drawLogic();
 
-};
-
-//compute a random velocity
-StillPowerChanger.prototype.randomVelocity = function() {
-    var MIN_SPEED = 60,
-    MAX_SPEED = 110;
-
-    var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
-    return speed;
 };
 
 StillPowerChanger.prototype.getHeight = function() {
@@ -91,7 +84,7 @@ StillPowerChanger.prototype.update = function(du) {
     }
 
     //if it as reached beyond the frame or was hit by the user it should disappear
-    if(this.cx < -30 || this._isDeadNow) {
+    if(this.cx < -150 || this._isDeadNow) {
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
