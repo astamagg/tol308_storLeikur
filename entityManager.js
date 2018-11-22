@@ -61,15 +61,12 @@ generateStillPowerChangers: function(descr) {
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
-<<<<<<< HEAD
- },
-=======
+
 },
 
 generatePat: function(descr) {
     this._pat.push(new Pat(descr));
 },
->>>>>>> 3f50f5900ab42ee1e0d00e7f85b932a8d10aae0d
 
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
