@@ -67,6 +67,7 @@ Entity.prototype.getPos = function() {
   this._isDeadNow = false;
 };
 
+//We create a new entityID for the object
 Entity.prototype.getNewEntityID = function() {
   var newEntityID = _nextEntityID;
 
@@ -81,6 +82,7 @@ Entity.prototype.setPos = function(cx, cy) {
   this.cy = cy;
 };
 
+//getters for various values found within an entity
 Entity.prototype.getRadius = function() {
   return 0;
 };
@@ -109,10 +111,12 @@ Entity.prototype.getEntityID = function() {
   return this.entityID;
 };
 
+//change the value for an entity if it is to be killed
 Entity.prototype.kill = function() {
   this._isDeadNow = true;
 };
 
+//check the space to see whether to entities will collide in the next update
 Entity.prototype.findHitEntity = function() {
   var pos = this.getPos();
   return spatialManager.findEntityInRange(

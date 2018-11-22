@@ -18,4 +18,6 @@ Background.prototype.draw = function(ctx) {
     ctx.drawImage(this.image, 0, 0, restWidth, g_canvas.height, firstImageWidth, 0, restWidth, g_canvas.height);
 }
 
-Background.prototype.update = function(du) {}
+Background.prototype.update = function(du) {
+    //calling the draw function again redrawing it at the new location
+}

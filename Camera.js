@@ -1,4 +1,4 @@
-
+//constructor for an arpitrary rectangle
 function Rectangle(x, y, w, h) {
     this.left = x;
     this.top = y;
@@ -9,6 +9,7 @@ function Rectangle(x, y, w, h) {
     this.bottom = (this.top + this.height);
 }
 
+//check whether a given object is inside the rectangle
 Rectangle.prototype.isInside = function(r) {
     return (r.left <= this.left && 
             r.right >= this.right &&
@@ -16,6 +17,7 @@ Rectangle.prototype.isInside = function(r) {
             r.bottom >= this.bottom);
 }
 
+//setter for x value based on placement and width
 Rectangle.prototype.setX = function(x) {
     this.left = x;
     this.right = (this.left + this.width);
