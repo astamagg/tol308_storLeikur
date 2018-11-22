@@ -61,7 +61,7 @@ StillPowerChanger.prototype.getPowerType = function() {
 //deciding when to start drawing the entity
 StillPowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 1000);
+    this.frameMax = util.randRange(0, 2000);
     this.drawTimeChanger = false;
 };
 
@@ -76,7 +76,7 @@ StillPowerChanger.prototype.update = function(du) {
         //add to the space to check collision
         spatialManager.register(this);
         this.drawTimeChanger = true;
-        this.frameMax = util.randRange(0, 1000);
+        this.frameMax = util.randRange(0, 2000);
         this.frameCounter = 0;
         g_stillPowerChangerCounter++;
     }
@@ -86,7 +86,8 @@ StillPowerChanger.prototype.update = function(du) {
     }
 
     //if it as reached beyond the frame or was hit by the user it should disappear
-    if(this.cx < -150 || this._isDeadNow) {
+    if(this.cx < -150) {
+        console.log('fór inn í if');
         g_stillPowerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
