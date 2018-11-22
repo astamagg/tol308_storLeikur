@@ -117,15 +117,10 @@ Runner.prototype.update = function(du) {
     this.computeSubStep(this.updateInterval);
       //hvað er hvert skref mikil x færsla?
       //placeholder if settning til þess að stelpan birtist aftur
-      //calculates how much we move in each step
-      //placeholder for the runner to appear again
-      if(this.cx > 1700 ){
-        this.reset();
-      }
-      else {
-        this.cx += this.speed;
-        this.roomX += this.speed;
-      }
+
+      this.roomX += this.speed;
+      this.cx = (this.roomX-this.width/2) - g_camera.xView;
+
       this.updateInterval = 30; 
   }
 
@@ -210,15 +205,12 @@ Runner.prototype.getPos = function() {
 
 //teikna ramma á spritesheet
 Runner.prototype.render = function(ctx) {
-  const drawX = (this.roomX-this.width/2) - g_camera.xView;
-  this.cx = drawX;  //move the runner to the center and have it's placement their
-  //drawFrame(ctx, X gildi á ramma, Y gildi á ramma, x staðsettning á canvas, y staðsettning á canvas  )
   
   //change color of hair when the power up appears
   if(this.isPowered){
-    this.sprite.drawFrame(ctx,this.poweredLoops[this.currentLoop][this.currentLoopIndex], this.currentLoop, drawX, this.cy);
+    this.sprite.drawFrame(ctx,this.poweredLoops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
   }else{
-    this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, drawX, this.cy);
+    this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
   }
 };
 

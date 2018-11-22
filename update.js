@@ -58,6 +58,13 @@ var g_isUpdatePaused = false;
 function shouldSkipUpdate() {
     if (eatKey(KEY_PAUSE)) {
         g_isUpdatePaused = !g_isUpdatePaused;
+
+        if (g_isUpdatePaused) {
+            g_music.pause();
+        } else {
+            g_music.play();
+        }
+        
     }
     return g_isUpdatePaused && !eatKey(KEY_STEP);    
 }
