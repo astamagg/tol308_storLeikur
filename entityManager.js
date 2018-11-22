@@ -9,7 +9,8 @@
 
 var entityManager = {
 
-_runner:[],   
+_pat: [],
+_runner:[],
 _powerChanger: [],     //power changers that move with a random x position
 _stillPowerChanger: [], //power changers that logically need to be drawn on the floor
 
@@ -41,6 +42,7 @@ init: function() {
     this.generateRunner();
     this._generatePowerChangers();
     this._generateStillPowerChangers();
+    this.generatePat();
 },
 // PUBLIC METHODS
 
@@ -59,14 +61,18 @@ generateStillPowerChangers: function(descr) {
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
-  },
+},
+
+generatePat: function(descr) {
+    this._pat.push(new Pat(descr));
+},
 
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._runner, this._powerChanger, this._stillPowerChanger]; 
+    this._categories = [this._runner, this._powerChanger, this._stillPowerChanger, this._pat]; 
 },
 
 update: function(du) {

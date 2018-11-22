@@ -1,6 +1,7 @@
 
 var countdown = {
 _time: 60,  //time in seconds
+_patCountdown: 60,
 _timeString: "01:00",   //string to be rendered
 updateCount: 0, //frame count
 
@@ -9,8 +10,13 @@ update:function() {
     //change the value every 60 updates
     if(this.updateCount === 60) {
         this._time = this._time - 1; //change the time value
+        this._patCountdown = this._patCountdown - 1;
         this.updateCount = 1;   
         this.timeToMinutes();   //change to minutes
+    }
+
+    if (this._patCountdown === 0) {
+        entityManager._pat[0].startWalkingIn();
     }
     this.checkGameState();   //check if the game is over
 },
