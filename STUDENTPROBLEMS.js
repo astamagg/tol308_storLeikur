@@ -41,7 +41,6 @@ var g_gameOver = false;
 var g_theStory = true;
 var g_WINNER = false;
 var g_instructions = false;
-var isPlaying = false;
 
 var g_buttonsFrontPage = [
 
