@@ -220,7 +220,7 @@ Runner.prototype.computeSubStep = function(du) {
       this.currentLoopIndex++;
     }
   
-    //loppa í hring til þess að gera animation og færa stelpuna um x distance
+    //loop in a circle to animate and move the runner a distance x
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
       this.currentLoopIndex = 0; 
     }
