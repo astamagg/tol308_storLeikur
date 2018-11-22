@@ -8,6 +8,9 @@ var ctxBackground = g_background.getContext('2d');
 var ctx = g_canvas.getContext('2d');
 var g_camera;
 var g_music;
+var g_jumpSound;
+var g_powerDown;
+var g_powerUp;
 
 var g_powerUpsAndDown = {
   timeIncrease: 1,
