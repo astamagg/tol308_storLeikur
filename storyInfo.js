@@ -76,7 +76,7 @@ function instructionGame (ctx) {
 
     // instruction text
     ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-    ctx.fillRect(100, 100, canvas.width/2+200, canvas.height/1.6);
+    ctx.fillRect(60, 60, canvas.width/2+235, canvas.height/1.5);
 
     ctx.textAlign = "center";
     ctx.font = '10px Courier';
@@ -84,22 +84,20 @@ function instructionGame (ctx) {
 
     // Because canvas fillText doesen't support multi-line we must style the text
     // like this.
-    ctx.fillText("Press key A to go left"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5-15);
     
     ctx.fillText("Press key D to go right"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5);
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5-5);
 
     ctx.fillText("Press key S to go down"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+15);
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+10);
 
-    ctx.fillText("Press key W to jump"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+30);
+    ctx.fillText("Press key SPACE to jump"
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+25);
 
     // Power ups instruction
     ctx.font = '15px Courier';
     ctx.fillText("Power Ups and Power Downs"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+50);
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+45);
 
     // BED
     ctx.fillStyle = 'red';
@@ -128,47 +126,47 @@ function instructionGame (ctx) {
     // CANDY
    ctx.fillStyle = 'yellow';
    ctx.fillText("Candy -> Oh no you found candy and you couldn’t"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+190);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5-5);
    ctx.fillText("resist eating it. You’ll use the adrenaline"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+205);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+10);
    ctx.fillText("from the sugar rush to get faster. But soon"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+220);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+25);
    ctx.fillText("the sugar rush will be over and you’ll get"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+235);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+40);
    ctx.fillText("even more tired than before and therefore run"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+250);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+55);
    ctx.fillText("slower."
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+265);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+70);
 
     // PIAZZA
    ctx.fillStyle = 'green';
    ctx.fillText("Piazza -> Patrick gave the class extra time"
-            ,ctx.canvas.width/1.4, ctx.canvas.height/5-10);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+90);
    ctx.fillText("to submit the assignment!"
-            ,ctx.canvas.width/1.3, ctx.canvas.height/5+5);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+105);
 
     // COFFEE
    ctx.fillStyle = 'green';
    ctx.fillText("Coffee -> Caffeine!! You drank a cup of coffee"
-            ,ctx.canvas.width/1.3, ctx.canvas.height/5+25);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+135);
    ctx.fillText("and can now run faster"
-            ,ctx.canvas.width/1.3, ctx.canvas.height/5+40);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+150);
 
     // SPOTIFY
    ctx.fillStyle = 'green';
    ctx.fillText("Spotify -> YES! Your favourite song comes up!"
-             ,ctx.canvas.width/1.3, ctx.canvas.height/5+60);
+             ,ctx.canvas.width/1.4, ctx.canvas.height/5+170);
    ctx.fillText("The tempo of the song speeds you up."
-             ,ctx.canvas.width/1.3, ctx.canvas.height/5+75);
+             ,ctx.canvas.width/1.4, ctx.canvas.height/5+185);
 
     // BEER
    ctx.fillStyle = 'red';
    ctx.fillText("Beer -> Oh no… your friend gave you a beer."
-            ,ctx.canvas.width/1.3, ctx.canvas.height/5+95);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+205);
    ctx.fillText("The beer calms you down which makes you run"
-            ,ctx.canvas.width/1.3, ctx.canvas.height/5+110);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+220);
    ctx.fillText("slower."
-            ,ctx.canvas.width/1.3, ctx.canvas.height/5+125);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+235);
     
     // Go back button
     if (g_buttonInstruction.contains(g_mouseX, g_mouseY)){

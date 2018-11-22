@@ -26,7 +26,7 @@ Rectangle.prototype.setX = function(x) {
 
 // Camera constructor
 
-function Camera(xView, roomWidth, roomHeight)
+function Camera(xView, roomHeight)
 {
     // position of camera (left-top coordinate)
     this.xView = xView || 0;
@@ -42,13 +42,15 @@ function Camera(xView, roomWidth, roomHeight)
     this.viewportRect = new Rectangle(this.xView, 0, this.wView, this.hView);				
                         
     // rectangle that represents the world's boundary (room's boundary)
-    this.roomRect = new Rectangle(0, 0, roomWidth, roomHeight);
+    this.roomRect = new Rectangle(0, 0, Number.MAX_SAFE_INTEGER, roomHeight);
     
 }
 
 Camera.prototype.update = function()
 {
+
     const runner = entityManager._runner[0];
+
     // keep following the player
     if (runner.roomX - this.xView  + this.xDeadZone > this.wView) {
         this.xView = runner.roomX - (this.wView - this.xDeadZone);
@@ -59,16 +61,12 @@ Camera.prototype.update = function()
     // update viewportRect
     this.viewportRect.setX(this.xView);
     
-    // don't let camera leaves the room's boundary
-    if(!this.viewportRect.isInside(this.roomRect))
-    {
-        if(this.viewportRect.left < this.roomRect.left) {
-            this.xView = this.roomRect.left;
-        }
+    const cameraMovingUpToMiddle = this.viewportRect.left < this.roomRect.left;
 
-        if(this.viewportRect.right > this.roomRect.right) {
-            this.xView = this.roomRect.right - this.wView;
-        }
+    // don't move camera in the beginning
+    if (cameraMovingUpToMiddle)
+    {
+        this.xView = this.roomRect.left;
     }
     
 }	

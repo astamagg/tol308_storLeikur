@@ -77,7 +77,7 @@ var g_buttonInstruction = new Button({
     width : 200,
     height : 40,
     x : g_canvas.width/2 - 100,
-    y : g_canvas.height/1.1
+    y : g_canvas.height/1.15
 });
 
 var g_buttonGameOver = new Button({
@@ -93,7 +93,7 @@ var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
-var isPlaying = true;
+var g_patIsShowing = false;
 
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
@@ -114,24 +114,39 @@ var TOGGLE_MUTE = 'M'.charCodeAt(0);
 
 function toggleMusic() {
 
-    if (isPlaying) {
+    if (g_music.paused) {
+        console.log('PLAY');
         g_music.play();
     } else {
+        console.log('PAUSE');
         g_music.pause();
     }
-
-    if (eatKey(TOGGLE_MUTE)) isPlaying = !isPlaying;
 }
 
+function onStartedPlaying() {
+    g_music.play();
+}
 
 function updateSimulation(du) {
     
     processDiagnostics();
     if (typeof g_camera === 'undefined') { return }
     if (typeof g_music === 'undefined') { return }
+
     if (!g_theStory && !g_instructions) {
         entityManager.update(du);
-        g_camera.update(du);
+
+        if (isPlaying == false) {
+            isPlaying = true;
+            onStartedPlaying();
+        }
+    } else {
+        isPlaying == false;
+        g_music.pause();
+    }
+
+    if (eatKey(TOGGLE_MUTE)) {
+        toggleMusic();
     }
 
     // Prevent perpetual firing!
@@ -186,7 +201,6 @@ function renderSimulation(ctx) {
         
         if (!g_theStory && !g_instructions) {
             entityManager.render(ctx);
-            toggleMusic();
 
             if (g_renderSpatialDebug) spatialManager.render(ctx);
             
@@ -291,9 +305,10 @@ function setUpPowerUps() {
 }
 
 function preloadDone() {
-    g_camera = new Camera(/*x start*/0, g_images.background.width, g_images.background.height);
+    g_camera = new Camera(/*x start*/0, g_images.background.height);
 
     g_music = new Audio('src/sounds/gametrack.mp3');
+    g_music.loop = true;
 
     setUpPowerUps();
     

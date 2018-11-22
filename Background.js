@@ -8,19 +8,14 @@ function Background(image) {
 }
 
 Background.prototype.draw = function(ctx) {
-    // offset point to crop the image
-    const sx = g_camera.xView;
-    // console.log(g_camera);
-    // dimensions of cropped image			
-    let sWidth =  ctx.canvas.width;
-    let sHeight = ctx.canvas.height;
+    // Draw the camera's view wrapped to this.image.width...
 
-    // if cropped image is smaller than canvas we need to change the source dimensions
-    if(this.image.width - sx < sWidth) {
-        sWidth = this.image.width - sx;
-    }
+    const cameraLocationInImage = g_camera.xView % this.image.width;
 
-    ctx.drawImage(this.image, sx, 0, sWidth, sHeight, 0, 0, sWidth, sHeight);
+    const firstImageWidth = this.image.width - cameraLocationInImage;
+    const restWidth = g_canvas.width - firstImageWidth;
+    ctx.drawImage(this.image, cameraLocationInImage, 0, firstImageWidth, g_canvas.height, 0, 0, firstImageWidth, g_canvas.height);
+    ctx.drawImage(this.image, 0, 0, restWidth, g_canvas.height, firstImageWidth, 0, restWidth, g_canvas.height);
 }
 
 Background.prototype.update = function(du) {
