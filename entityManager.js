@@ -9,7 +9,8 @@
 
 var entityManager = {
 
-_runner:[],   
+_pat: [],
+_runner:[],
 _powerChanger: [],     //power changers that move with a random x position
 _stillPowerChanger: [], //power changers that logically need to be drawn on the floor
 
@@ -22,7 +23,7 @@ _forEachOf: function(aCategory, fn) {
 //Generate power changers that move
 _generatePowerChangers : function() {
     var i,
-        NUM_POWERCHANGERS = 32;
+        NUM_POWERCHANGERS = 150;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generatePowerChangers();
     }
@@ -31,7 +32,7 @@ _generatePowerChangers : function() {
 //generate power changers that stay still
 _generateStillPowerChangers: function() {
     var i,
-        NUM_POWERCHANGERS = 3;
+        NUM_POWERCHANGERS = 6;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generateStillPowerChangers();
     }
@@ -41,6 +42,7 @@ init: function() {
     this.generateRunner();
     this._generatePowerChangers();
     this._generateStillPowerChangers();
+    this.generatePat();
 },
 // PUBLIC METHODS
 
@@ -59,14 +61,22 @@ generateStillPowerChangers: function(descr) {
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
+<<<<<<< HEAD
  },
+=======
+},
+
+generatePat: function(descr) {
+    this._pat.push(new Pat(descr));
+},
+>>>>>>> 3f50f5900ab42ee1e0d00e7f85b932a8d10aae0d
 
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
     //bæta við okkar flokkum
-    this._categories = [this._runner, this._powerChanger, this._stillPowerChanger]; 
+    this._categories = [this._runner, this._powerChanger, this._stillPowerChanger, this._pat]; 
 },
 
 

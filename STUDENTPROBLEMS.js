@@ -236,7 +236,8 @@ function requestPreloads() {
         backgroundFrontPage : "src/backgroundFrontPage.png",
         desk: "src/desk.png",
         chair: "src/chair.png",
-        bed: "src/bedtile(54x54).png"
+        bed: "src/bedtile(54x54).png",
+        pat: "src/pat (49x62).png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -317,7 +318,7 @@ function preloadDone() {
     //breyta líka í okkar
 
     g_sprites.runner  = new Sprite(g_images.spritesheet);
-
+    g_sprites.pat = new Sprite(g_images.pat);
   
     entityManager.init();
 

@@ -16,13 +16,16 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
     this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     this.id = this.getEntityID();   //get the id 
+
     //because the runner doesn't move when it reaches the middle the other things have to move
-    this.velX = this.randomVelocity(); 
+    //this.velX = this.randomVelocity(); 
+    this.velX = entityManager._runner[0].getSpeed() - 3;
 
     this.width = this.sprite.width;
     this.height = this.sprite.height;
 
     this.cx = g_ctx.canvas.width + 10;
+    this.x = this.cx - this.width;
    
     //decide between the three static power ups because they need different placements
     if(ID === 8) {
@@ -35,15 +38,6 @@ StillPowerChanger.prototype.innerSetUp = function() {
 
     this.drawLogic();
 
-};
-
-//compute a random velocity
-StillPowerChanger.prototype.randomVelocity = function() {
-    var MIN_SPEED = 60,
-    MAX_SPEED = 110;
-
-    var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
-    return speed;
 };
 
 StillPowerChanger.prototype.getHeight = function() {
@@ -67,7 +61,7 @@ StillPowerChanger.prototype.getPowerType = function() {
 //deciding when to start drawing the entity
 StillPowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 5000);
+    this.frameMax = util.randRange(0, 1500);
     this.drawTimeChanger = false;
 };
 
@@ -78,12 +72,13 @@ StillPowerChanger.prototype.update = function(du) {
         this.frameCounter++;
     }
     //start drawing it at a certain space count
-    if(this.frameCounter > this.frameMax) {
+    if(this.frameCounter > this.frameMax && g_stillPowerChangerCounter < 1) {
         //add to the space to check collision
         spatialManager.register(this);
         this.drawTimeChanger = true;
-        this.frameMax = util.randRange(0, 6000);
+        this.frameMax = util.randRange(0, 1500);
         this.frameCounter = 0;
+        g_stillPowerChangerCounter++;
     }
 
     if(this.drawTimeChanger) {
@@ -91,8 +86,8 @@ StillPowerChanger.prototype.update = function(du) {
     }
 
     //if it as reached beyond the frame or was hit by the user it should disappear
-    if(this.cx < -30 || this._isDeadNow) {
-        g_powerChangerCounter--;
+    if(this.cx < -150 || this._isDeadNow) {
+        g_stillPowerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
 

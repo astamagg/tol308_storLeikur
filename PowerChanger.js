@@ -20,6 +20,8 @@ PowerChanger.prototype.innerSetUp = function() {
     //get the entity ID
 
     this.drawLogic();  //when to start drawing the entity
+
+    this.y = this.cy - this.height;
 };
 
 //return the height of the entity
@@ -58,14 +60,14 @@ PowerChanger.prototype.speedAndPlacement = function() {
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = Math.floor(util.randRange(0, 2500));
+    this.frameMax = Math.floor(util.randRange(0, 8000));
     this.drawTimeChanger = false;
 };
 
 //generate a random velocity for the entity 
 PowerChanger.prototype.randomVelocity = function() {
-    var MIN_SPEED = 60,
-    MAX_SPEED = 110;
+    var MIN_SPEED = entityManager._runner[0].getSpeed() + 300;
+    var MAX_SPEED = entityManager._runner[0].getSpeed() + 400;
 
     var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
     return speed;
@@ -79,13 +81,13 @@ PowerChanger.prototype.update = function(du) {
 
     //draw a new power changer if frame count is reached and the number of
     // power changers already in the frame is less than four
-    if(this.frameCounter > this.frameMax && g_powerChangerCounter < 3) {
+    if(this.frameCounter > this.frameMax && g_powerChangerCounter < 2) {
         //once they are drawn the spatial manager need to know about them for collision
         spatialManager.register(this);  
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
         //reseting the frame max and the fram counter
-        this.frameMax = util.randRange(0, 3000);
+        this.frameMax = util.randRange(0, 8000);
         this.frameCounter = 0;
     }
 

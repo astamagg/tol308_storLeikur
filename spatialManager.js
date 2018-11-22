@@ -61,12 +61,13 @@ var spatialManager = {
     for (var ID in this._entities) {
       //return if I am comparing the entity to itself
       
+      //þarf að geta náð í this.y úr runner til þess að upphafsstilla þar
       if(this._entities[ID].empty) {
         continue;
       }
       if (
-        posX === this._entities[ID].getPos().posX &&
-        posY === this._entities[ID].getPos().posY
+        posX === this._entities[ID].getColPos().posX &&
+        posY === this._entities[ID].getColPos().posY
       ) {
         continue;
       }
@@ -77,10 +78,10 @@ var spatialManager = {
           posY,
           width,
           height,
-          this._entities[ID].getPos().posX ,
-          this._entities[ID].getPos().posY,
-          this._entities[ID].height,
-          this._entities[ID].width,
+          this._entities[ID].getColPos().posX ,
+          this._entities[ID].getColPos().posY,
+          this._entities[ID].getHeight(),
+          this._entities[ID].getWidth(),
         )
       ) {
         return this._entities[ID];
@@ -94,8 +95,8 @@ var spatialManager = {
     ctx.strokeStyle = 'red';
     for (var ID in this._entities) {
       var e = this._entities[ID];
-
-      ctx.strokeRect(e.getPos().posX, e.getPos().posY, e.getWidth(), e.getHeight());
+      
+      ctx.strokeRect(e.getColPos().posX, e.getColPos().posY, e.getWidth(), e.getHeight());
     }
     ctx.strokeStyle = oldStyle;
   },
