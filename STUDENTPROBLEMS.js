@@ -245,63 +245,63 @@ var g_sprites = {};
 //initialize all the power ups and downs as sprites.
 //done in a function for clarity
 function setUpPowerUps() {
-  g_sprites.powerUpsDowns = [
-    {
-      sprite: new Sprite(g_images.piazza),
-      powerChange: 10,
-      powerType: 'timeChanger',
-    },
-    {
-      sprite: new Sprite(g_images.netflix),
-      powerChange: 10,
-      powerType: 'timeChanger',
-    },
-    {
-      sprite: new Sprite(g_images.energydrink),
-      powerChange: 1.75,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.coffee),
-      powerChange: 1.5,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.spotify),
-      powerChange: 1.25,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.candy),
-      powerChange: 2,
-      powerType: 'candy',
-    },
-    {
-      sprite: new Sprite(g_images.beer),
-      powerChange: 0.5,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.youtube),
-      powerChange: 3,
-      powerType: 'timeChanger',
-    },
-    {
-      sprite: new Sprite(g_images.chair),
-      powerChange: 0.75,
-      powerType: 'crash',
-    },
-    {
-      sprite: new Sprite(g_images.desk),
-      powerChange: 0.5,
-      powerType: 'crash',
-    },
-    {
-      sprite: new Sprite(g_images.bed),
-      powerChange: 0,
-      powerType: 'dead',
-    },
-  ];
+  
+    g_sprites.powerUpsDowns = [
+        {
+            sprite: new Sprite(g_images.piazza),
+            powerChange: 10,
+            powerType: "timeChangerUp",
+        },
+        {
+            sprite: new Sprite(g_images.netflix),
+            powerChange: 10,
+            powerType: "timeChangerDown",
+        },
+        {
+            sprite: new Sprite(g_images.energydrink),
+            powerChange: 1.75,
+            powerType: "speedChanger",
+        },
+        {   
+            sprite: new Sprite(g_images.coffee),
+            powerChange: 1.5,
+            powerType: "speedChanger"
+        },
+        {
+            sprite: new Sprite(g_images.spotify),
+            powerChange: 1.25,
+            powerType: "speedChanger",
+        },
+        {
+            sprite: new Sprite(g_images.candy),
+            powerChange: 2,
+            powerType: "candy",
+        },
+        {
+            sprite: new Sprite(g_images.beer),
+            powerChange: 0.5,
+            powerType: "speedChanger",
+        },
+        {
+            sprite: new Sprite(g_images.youtube),
+            powerChange: 3,
+            powerType: "timeChangerDown",
+        },
+        {
+            sprite: new Sprite(g_images.chair),
+            powerChange: 0.75,
+            powerType: "crash",
+        },
+        {
+            sprite: new Sprite(g_images.desk),
+            powerChange: 0.5,
+            powerType: "crash",
+        },
+        {
+            sprite: new Sprite(g_images.bed),
+            powerChange: 0,
+            powerType: "dead",
+        },];
 }
 
 function preloadDone() {

@@ -10,12 +10,11 @@ StillPowerChanger.prototype = new Entity();
 
 StillPowerChanger.prototype.innerSetUp = function() {
      //find the power changer, that is what effect it has if the runner hits it
-    var ID = Math.floor(util.randRange(8,11));
+    this.ID = Math.floor(util.randRange(8,11));
 
-    this.powerChange = g_sprites.powerUpsDowns[ID].powerChange;
-    this.sprite = this.sprite || g_sprites.powerUpsDowns[ID].sprite;
-    this.powerType = g_sprites.powerUpsDowns[ID].powerType;
-    this.id = this.getEntityID();   //get the id 
+    this.powerChange = g_sprites.powerUpsDowns[this.ID].powerChange;
+    this.sprite = this.sprite || g_sprites.powerUpsDowns[this.ID].sprite;
+    this.powerType = g_sprites.powerUpsDowns[this.ID].powerType;
 
     //because the runner doesn't move when it reaches the middle the other things have to move
     //this.velX = this.randomVelocity(); 
@@ -28,12 +27,13 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.x = this.cx - this.width;
    
     //decide between the three static power ups because they need different placements
-    if(ID === 8) {
+    if(this.ID === 8) {
         this.cy = 315;
-    } else if(ID === 9) {
+    } else if(this.ID === 9) {
         this.cy = 295;
     } else {
         this.cy = 345;
+        this.width = this.width/2;
     }
 
     this.drawLogic();
@@ -63,6 +63,14 @@ StillPowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
     this.frameMax = util.randRange(0, 2000);
     this.drawTimeChanger = false;
+};
+
+StillPowerChanger.prototype.getColPos = function() {
+    if(this.ID === 10) {
+        var currX = this.getPos().posX + this.width/2;
+        return {posX: currX, posY: this.cy};
+    }
+    return {posX: this.cx, posY: this.cy};
 };
 
 

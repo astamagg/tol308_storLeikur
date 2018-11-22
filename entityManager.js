@@ -61,7 +61,6 @@ generateStillPowerChangers: function(descr) {
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
-
 },
 
 generatePat: function(descr) {
@@ -81,18 +80,19 @@ reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
     if(type === "speedChanger") {
-      console.log('bla');
-      console.log("runner",this._runner[0]);
-      
-      this._runner[0].speedChange(change);
-      console.log(change);
-      
+      //this._runner[0].speedChange(change);      
       //entityManager.speedChange(change);
       //breyttu runner speed
     }
-    if(type === "timeChanger") {
+    if(type === "candy") {
+        this._runner[0].powerUp(change);      
+        //entityManager.speedChange(change);
+        //breyttu runner speed
+      }
+    if(type === "timeChangerUp" || type === "timeChangerDown") {
       console.log('fór inn í time changer');
       //breyttu klukkunni sem birtist
+      countdown.changeTime(entity);
     }
     if(type === "dead") {
       console.log('fórum inn í dead')
