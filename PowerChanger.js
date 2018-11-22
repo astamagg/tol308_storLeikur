@@ -64,8 +64,8 @@ PowerChanger.prototype.drawLogic = function() {
 
 //generate a random velocity for the entity 
 PowerChanger.prototype.randomVelocity = function() {
-    var MIN_SPEED = entityManager._runner[0].getSpeed() + 100;
-    var MAX_SPEED = entityManager._runner[0].getSpeed() + 200;
+    var MIN_SPEED = entityManager._runner[0].getSpeed() + 250;
+    var MAX_SPEED = entityManager._runner[0].getSpeed() + 300;
 
     var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
     return speed;
