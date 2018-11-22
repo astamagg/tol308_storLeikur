@@ -39,7 +39,7 @@ var spatialManager = {
   },
 
   register: function(entity) {
-    var pos = entity.getPos();
+    //var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
 
     //add the value to the ID of the entity
@@ -60,6 +60,7 @@ var spatialManager = {
     //The closest entity gets hit by the runner
     for (var ID in this._entities) {
       //return if I am comparing the entity to itself
+     // console.log('this.height:', height);
       
       //þarf að geta náð í this.y úr runner til þess að upphafsstilla þar
       if(this._entities[ID].empty) {

@@ -15,7 +15,6 @@ PowerChanger.prototype.innerSetUp = function() {
     this.powerChange = g_sprites.powerUpsDowns[ID].powerChange; 
     this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     //sprite, height, width and the initial placement and velocity of the entity
-    this.id = this.getEntityID();
     this.speedAndPlacement();
     //get the entity ID
 
@@ -70,7 +69,7 @@ PowerChanger.prototype.speedAndPlacement = function() {
 //when to start drawing the entity
 PowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = Math.floor(util.randRange(0, 8000));
+    this.frameMax = Math.floor(util.randRange(0, 4500));
     this.drawTimeChanger = false;
 };
 
@@ -97,7 +96,7 @@ PowerChanger.prototype.update = function(du) {
         this.drawTimeChanger = true;
         g_powerChangerCounter++;
         //reseting the frame max and the fram counter
-        this.frameMax = util.randRange(0, 8000);
+        this.frameMax = util.randRange(0, 4500);
         this.frameCounter = 0;
     }
 
