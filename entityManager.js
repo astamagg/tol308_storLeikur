@@ -71,7 +71,6 @@ generatePat: function(descr) {
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    //bæta við okkar flokkum
     this._categories = [this._runner, this._powerChanger, this._stillPowerChanger, this._pat]; 
 },
 
@@ -79,36 +78,29 @@ deferredSetup : function () {
 reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
-    if(type === "speedChanger") {
-       // console.log("type", type);
-        
+    //change the runners speed and affect the time logic of the game
+    if(type === "speedChanger") { 
         this._runner[0].speedChange(change);   
         countdown.speedChange(change);
-      //entityManager.speedChange(change);
-      //breyttu runner speed
     }
+    //makes the runner indestructable and then slows her down
     if(type === "candy") {
         this._runner[0].powerUp(change);     
         countdown.speedChange(change); 
-        //entityManager.speedChange(change);
-        //breyttu runner speed
-      }
+    }
+    //change the value of the tme the runner has left
     if(type === "timeChangerUp" || type === "timeChangerDown") {
-     // console.log('fór inn í time changer');
-      //breyttu klukkunni sem birtist
       countdown.changeTime(entity);
     }
+    //landing on the bed ends the game
     if(type === "dead") {
-     // console.log('fórum inn í dead')
       //game over
     }
+    //crashing into a chair or a desk causes the runner to blink and slow down
     if(type === "crash") {
         this._runner[0].speedChange(change); 
         this._runner[0].blinking = true;
         countdown.speedChange(change);
-
-     // console.log('fór inn í crash');
-      //hafa áhrif á hraðann.
     }
 },
 

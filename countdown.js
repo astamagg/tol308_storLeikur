@@ -37,8 +37,9 @@ update:function() {
     //count how long the power effect should appear for
     if(this.powerCatch) {
         this.powerTime++;
-        if(this.powerTime > 35) {
+        if(this.powerTime > 25) {
             this.powerCatch = false;
+            this.powerTime = 0;
         }
     }
 
