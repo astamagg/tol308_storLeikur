@@ -53,7 +53,7 @@ var g_buttonsFrontPage = [
     width: 200,
     height: 40,
     x: g_canvas.width / 2 - 100,
-    y: g_canvas.height / 1.2 - 80,
+    y: g_canvas.height / 1.2 - 85,
     onClick: function() {
       g_theStory = false;
     },
@@ -65,7 +65,7 @@ var g_buttonsFrontPage = [
     width: 200,
     height: 40,
     x: g_canvas.width / 2 - 100,
-    y: g_canvas.height / 1.1 - 60,
+    y: g_canvas.height / 1.1 - 65,
     onClick: function() {
       g_theStory = false;
       g_instructions = true;
@@ -79,7 +79,7 @@ var g_buttonInstruction = new Button({
   width: 200,
   height: 40,
   x: g_canvas.width / 2 - 100,
-  y: g_canvas.height / 1.15,
+  y: g_canvas.height / 1.15 + 5,
 });
 
 var g_buttonGameOver = new Button({
