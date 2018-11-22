@@ -21,7 +21,8 @@ function Runner(descr) {
   // Set normal drawing scale, and warp state off
   this._scale = 1;
 
-  this.y = this.cy - this.height;
+  this.blinking = false;
+  this.blinkingCount = 20;
   //since the runner is the one colliding with the other things we always need
   //to be aware of their placement
   spatialManager.register(this);
@@ -118,14 +119,11 @@ Runner.prototype.powerUp = function(change){
 };
 
 Runner.prototype.speedChange = function(change){
-  console.log("number",change);
   this.animationSpeed *= change;
-  console.log("speed",this.animationSpeed);  
 
   var that = this;
   setTimeout(function() {
       that.animationSpeed = that.normalSpeed;
-      console.log("after timeout", that.animationSpeed);
     }, 5000);
 };
 
@@ -221,8 +219,7 @@ Runner.prototype.computeSubStep = function(du) {
       this.currentLoop = 2;
       this.currentLoopIndex++;
     }
-    
-
+  
     //loppa í hring til þess að gera animation og færa stelpuna um x distance
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
       this.currentLoopIndex = 0; 
@@ -262,14 +259,34 @@ Runner.prototype.getColPos = function() {
   return {posX: this.cx, posY: currY};
 }
 
+Runner.prototype.blinkingRender = function(ctx) {
+  ctx.save();
+  ctx.globalAlpha = 0.3;
+  this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
+  ctx.restore();
+  this.blinkingCount--;  
+
+  if(this.blinkingCount < 0) {
+    this.blinking = false;
+    this.blinkingCount = 20;
+  }
+};
+
 //teikna ramma á spritesheet
 Runner.prototype.render = function(ctx) {
-  
+  this.sprite.image.style.opacity = 0.2;
+
   //change color of hair when the power up appears
   if(this.isPowered){
     this.sprite.drawFrame(ctx,this.poweredLoops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
   }else if(!this.isPowered){
-    this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
+    //check whether she hit a chair or a desk, then she slows down and blinks
+    if(this.blinking) {
+      this.blinkingRender(ctx);
+    } else {
+      this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
+    }
   }
+  
 };
 

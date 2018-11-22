@@ -80,9 +80,10 @@ reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
     if(type === "speedChanger") {
-        console.log("type", type);
+       // console.log("type", type);
         
-       this._runner[0].speedChange(change);      
+        this._runner[0].speedChange(change);   
+        countdown.speedChange(change);
       //entityManager.speedChange(change);
       //breyttu runner speed
     }
@@ -92,16 +93,19 @@ reactToPowerChanger: function(entity) {
         //breyttu runner speed
       }
     if(type === "timeChangerUp" || type === "timeChangerDown") {
-      console.log('fór inn í time changer');
+     // console.log('fór inn í time changer');
       //breyttu klukkunni sem birtist
       countdown.changeTime(entity);
     }
     if(type === "dead") {
-      console.log('fórum inn í dead')
+     // console.log('fórum inn í dead')
       //game over
     }
     if(type === "crash") {
-      console.log('fór inn í crash');
+        this._runner[0].speedChange(change); 
+        this._runner[0].blinking = true;
+
+     // console.log('fór inn í crash');
       //hafa áhrif á hraðann.
     }
 },
