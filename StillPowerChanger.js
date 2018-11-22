@@ -19,7 +19,6 @@ StillPowerChanger.prototype.innerSetUp = function() {
     //because the runner doesn't move when it reaches the middle the other things have to move
     //this.velX = this.randomVelocity(); 
     this.velX = entityManager._runner[0].getSpeed() - 3;
-    console.log('velX', this.velX);
 
     this.width = this.sprite.width;
     this.height = this.sprite.height;

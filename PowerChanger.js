@@ -49,7 +49,6 @@ PowerChanger.prototype.speedAndPlacement = function() {
     this.width = this.sprite.width;
 
     this.velX = this.randomVelocity();  //choosing a random velocity
-    console.log('entityManager', entityManager._runner[0].getSpeed());
 
     //original placement
     this.cx = g_ctx.canvas.width + 10;
