@@ -93,36 +93,35 @@ Runner.prototype.handleKeys = function(){
   }
 };
 
+//react to candy powerUp 
+//hair color changes, runner and song speeds up for 5 sek
 Runner.prototype.powerUp = function(change){
      this.isPowered = true;
-     this.animationSpeed *= change;
+     this.animationSpeed = 50;
      g_music.playbackRate = 1.5;
      var that = this;
+     //power down after 5 sek
+     //runner and song slows down, hair back to normal
+     //change sprite loop
     setTimeout(function(){
-      console.log("powerDown");
-      console.log(that);
       that.isPowered = false;
-      that.animationSpeed = that.normalSpeed;
-      g_music.playbackRate = 1;
+      that.currentLoop = 2;
+      that.currentLoopIndex = 0;
+      that.animationSpeed = 10;
+      g_music.playbackRate = 0.75;
+      //set to normal values after 5 sek
+      setTimeout(function(){        
+        that.animationSpeed = that.normalSpeed;
+        g_music.playbackRate = 1;
+      }, 5000);
     }, 5000);
-}
-/*
-Runner.prototype.powerDown = function(){
-    console.log("powerdown");
-    console.log(this.isPowered);
-    console.log(this);
-    
-    this.isPowered = false;
-    this.animationSpeed = this.normalSpeed;
-    g_music.playbackRate = 1;
-}*/
+};
 
 Runner.prototype.speedChange = function(type, change){
-    this.runningSpeed *= change;
-    g_music.playbackRate = 1.5;
+    this.animationSpeed *= change;
   setTimeout(function() {
-      this.runningSpeed = this.normalSpeed;
-    }, 8000);
+      this.animationSpeed = this.normalSpeed;
+    }, 5000);
 };
 
 Runner.prototype.update = function(du) {
@@ -130,6 +129,7 @@ Runner.prototype.update = function(du) {
   this.handleKeys(); 
   this.updateInterval -= du;
   this.cy += this.y_velocity;
+
   if(this.isCrouching) this.height = 60;
   else this.height = 80;
 
@@ -146,7 +146,6 @@ Runner.prototype.update = function(du) {
     this.y_velocity = 0; 
   }
 
-
   //How often do we want to change the fram
   var updateTresh = this.animationSpeed;
 
@@ -154,11 +153,9 @@ Runner.prototype.update = function(du) {
   if (this.updateInterval < updateTresh) {
     this.computeSubStep(this.updateInterval);
       //hvað er hvert skref mikil x færsla?
-      //placeholder if settning til þess að stelpan birtist aftur
-
+      //placeholder if settning til þess að stelpan birtist aftur      
       this.roomX += this.speed;
       this.cx = (this.roomX-this.width/2) - g_camera.xView;
-
       this.updateInterval = 30; 
   }
 
@@ -199,7 +196,6 @@ Runner.prototype.computeSubStep = function(du) {
     if(!this.isCrouching && !this.isJumping){
       this.currentLoop = 3;
       this.currentLoopIndex++;
-
     }
     if (this.currentLoopIndex >= this.poweredLoops[this.currentLoop].length) {
       this.currentLoopIndex = 0; 
@@ -267,7 +263,7 @@ Runner.prototype.render = function(ctx) {
   //change color of hair when the power up appears
   if(this.isPowered){
     this.sprite.drawFrame(ctx,this.poweredLoops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
-  }else{
+  }else if(!this.isPowered){
     this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
   }
 };
