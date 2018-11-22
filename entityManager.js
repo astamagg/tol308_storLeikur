@@ -89,9 +89,10 @@ reactToPowerChanger: function(entity) {
         //entityManager.speedChange(change);
         //breyttu runner speed
       }
-    if(type === "timeChanger") {
+    if(type === "timeChangerUp" || type === "timeChangerDown") {
       console.log('fór inn í time changer');
       //breyttu klukkunni sem birtist
+      countdown.changeTime(entity);
     }
     if(type === "dead") {
       console.log('fórum inn í dead')

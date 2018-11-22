@@ -252,12 +252,12 @@ function setUpPowerUps() {
         {
             sprite: new Sprite(g_images.piazza),
             powerChange: 10,
-            powerType: "timeChanger",
+            powerType: "timeChangerUp",
         },
         {
             sprite: new Sprite(g_images.netflix),
             powerChange: 10,
-            powerType: "timeChanger",
+            powerType: "timeChangerDown",
         },
         {
             sprite: new Sprite(g_images.energydrink),
@@ -287,7 +287,7 @@ function setUpPowerUps() {
         {
             sprite: new Sprite(g_images.youtube),
             powerChange: 3,
-            powerType: "timeChanger",
+            powerType: "timeChangerDown",
         },
         {
             sprite: new Sprite(g_images.chair),

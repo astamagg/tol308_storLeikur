@@ -15,7 +15,6 @@ PowerChanger.prototype.innerSetUp = function() {
     this.powerChange = g_sprites.powerUpsDowns[ID].powerChange; 
     this.powerType = g_sprites.powerUpsDowns[ID].powerType;
     //sprite, height, width and the initial placement and velocity of the entity
-    this.id = this.getEntityID();
     this.speedAndPlacement();
     //get the entity ID
 

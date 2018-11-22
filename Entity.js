@@ -40,7 +40,6 @@ Entity.prototype.setup = function(descr) {
 
   // Get my (unique) spatial ID
   this._spatialID = spatialManager.getNewSpatialID();
-  this.entityID = this.getNewEntityID();
 
   // I am not dead yet!
   this._isDeadNow = false;
@@ -65,15 +64,6 @@ Entity.prototype.getPos = function() {
 
   // I am not dead yet!
   this._isDeadNow = false;
-};
-
-//We create a new entityID for the object
-Entity.prototype.getNewEntityID = function() {
-  var newEntityID = _nextEntityID;
-
-  _nextEntityID += 1;
-
-  return newEntityID;
 };
 
 //getters and setters for the features of the entity
@@ -105,10 +95,6 @@ Entity.prototype.getPowerType = function() {
 
 Entity.prototype.getSpatialID = function() {
   return this._spatialID;
-};
-
-Entity.prototype.getEntityID = function() {
-  return this.entityID;
 };
 
 //change the value for an entity if it is to be killed
