@@ -259,6 +259,7 @@ Runner.prototype.getColPos = function() {
   return {posX: this.cx, posY: currY};
 }
 
+//if the runner is suppose to blink, change the opacity for a certain amount of time
 Runner.prototype.blinkingRender = function(ctx) {
   ctx.save();
   ctx.globalAlpha = 0.3;
@@ -266,13 +267,14 @@ Runner.prototype.blinkingRender = function(ctx) {
   ctx.restore();
   this.blinkingCount--;  
 
+  //if the blinking count is zero she should stop being transparent
   if(this.blinkingCount < 0) {
     this.blinking = false;
     this.blinkingCount = 20;
   }
 };
 
-//teikna ramma á spritesheet
+//draw a frame from the spritesheet
 Runner.prototype.render = function(ctx) {
   this.sprite.image.style.opacity = 0.2;
 
