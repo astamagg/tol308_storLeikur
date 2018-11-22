@@ -19,9 +19,19 @@ PowerChanger.prototype.innerSetUp = function() {
     this.speedAndPlacement();
     //get the entity ID
 
+    // remember reset position
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
+
     this.drawLogic();  //when to start drawing the entity
 
     this.y = this.cy - this.height;
+};
+
+// reset the powerchangers
+PowerChanger.prototype.reset = function() {
+    this.cx = this.reset_cx;
+    this.cy = this.reset_cy;
 };
 
 //return the height of the entity

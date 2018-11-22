@@ -1,9 +1,21 @@
 
 var countdown = {
 _time: 60,  //time in seconds
-_patCountdown: 60,
+_patCountdown: 50,
 _timeString: "01:00",   //string to be rendered
 updateCount: 0, //frame count
+
+_reset_time: this._time,
+_reset_patCountdown: this._patCountdown,
+_reset_timeString: this._timeString,
+reset_updateCount: this.updateCount,
+
+reset:function() {
+    this._time = this._reset_time;
+    this._patCountdown = this._reset_patCountdown;
+    this._timeString = this._reset_timeString;
+    this.updateCount = this.reset_updateCount;
+},
 
 update:function() {
     this.updateCount++;

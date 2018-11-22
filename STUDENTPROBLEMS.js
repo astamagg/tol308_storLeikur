@@ -72,6 +72,37 @@ var g_buttonsFrontPage = [
 
 ];
 
+var g_buttonsGameOver = [
+
+    new Button({
+        text : 'Start new game',
+        color : 'red',
+        width : 200,
+        height : 40,
+        x : 400,
+        y : 100,
+        onClick : function () {
+            entityManager.reset();
+            g_gameOver = false;
+            g_theStory = false;
+            g_instructions = false;
+        }
+    }),
+
+    new Button({
+        text : 'Go Back to Menu',
+        color : 'red',
+        width : 200,
+        height : 40,
+        x : 100,
+        y : 100,
+        onClick : function () {
+            g_theStory = true;
+        }
+    }),
+
+];
+
 var g_buttonInstruction = new Button({
     text : 'Go back',
     color : 'red',
@@ -79,15 +110,6 @@ var g_buttonInstruction = new Button({
     height : 40,
     x : g_canvas.width/2 - 100,
     y : g_canvas.height/1.15
-});
-
-var g_buttonGameOver = new Button({
-    text : 'New game',
-    color : 'red',
-    width : 200,
-    height : 40,
-    x : 100,
-    y : 100
 });
 
 var g_allowMixedActions = true;
@@ -134,22 +156,25 @@ function updateSimulation(du) {
     if (typeof g_camera === 'undefined') { return }
     if (typeof g_music === 'undefined') { return }
 
-    if (!g_theStory && !g_instructions) {
-        entityManager.update(du);
-
-        if (isPlaying == false) {
-            isPlaying = true;
-            onStartedPlaying();
+    if (!g_gameOver || !g_WINNER) {
+        if (!g_theStory && !g_instructions) {
+            console.log('fór inn í þetta if');
+            entityManager.update(du);
+    
+            if (isPlaying == false) {
+                isPlaying = true;
+                onStartedPlaying();
+            }
+        } else {
+            isPlaying == false;
+            g_music.pause();
         }
-    } else {
-        isPlaying == false;
-        g_music.pause();
+    
+        if (eatKey(TOGGLE_MUTE)) {
+            toggleMusic();
+        }
     }
-
-    if (eatKey(TOGGLE_MUTE)) {
-        toggleMusic();
-    }
-
+ 
     // Prevent perpetual firing!
    // eatKey(Ship.prototype.KEY_FIRE);
 }
@@ -188,6 +213,9 @@ function renderSimulation(ctx) {
     if (typeof g_camera === 'undefined') { return }
 
     if (g_gameOver || g_WINNER) {
+        for (let i=0; i<g_buttonsGameOver.length; i++) { 
+            g_buttonsGameOver[i].render(ctx);
+        }
         gameOver(ctx);
     } else {
         if (g_theStory) {
@@ -303,6 +331,10 @@ function setUpPowerUps() {
             sprite: new Sprite(g_images.bed),
             powerChange: 0,
             powerType: "dead",
+        },{
+            sprite: new Sprite(g_images.pat),
+            powerChange: 0,
+            powerType: "pat",
         },];
 }
 
@@ -318,7 +350,6 @@ function preloadDone() {
     //breyta líka í okkar
 
     g_sprites.runner  = new Sprite(g_images.spritesheet);
-    g_sprites.pat = new Sprite(g_images.pat);
   
     entityManager.init();
 

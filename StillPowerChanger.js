@@ -26,6 +26,10 @@ StillPowerChanger.prototype.innerSetUp = function() {
 
     this.cx = g_ctx.canvas.width + 10;
     this.x = this.cx - this.width;
+
+    // Remember reset positions
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
    
     //decide between the three static power ups because they need different placements
     if(ID === 8) {
@@ -38,6 +42,12 @@ StillPowerChanger.prototype.innerSetUp = function() {
 
     this.drawLogic();
 
+};
+
+// Reset the still powerchangers
+StillPowerChanger.prototype.reset = function() {
+    this.cx = this.reset_cx;
+    this.cy = this.reset_cy;
 };
 
 StillPowerChanger.prototype.getHeight = function() {

@@ -33,6 +33,19 @@ Runner.prototype.rememberResets = function() {
   // Remember my reset positions
   this.reset_cx = this.cx;
   this.reset_cy = this.cy;
+  this.reset_roomX = this.roomX;
+  this.reset_speed = this.speed;
+};
+
+Runner.prototype.reset = function() {
+  this.cx = this.reset_cx;
+  this.cy = this.reset_cy;
+  this.roomX = this.reset_roomX;
+  this.speed = this.reset_speed;
+  this.isPowered = false;
+  this.currentLoop = 2;
+  this.isCrouching = false;
+  this.isJumping = false;
 };
 
 

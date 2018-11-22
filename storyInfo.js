@@ -51,18 +51,6 @@ function theStory (ctx) {
             g_buttonsFrontPage[i].onClick();
         }
     }
-
-    // Temporary while testing
-    if (keys[KEY_G]) {
-        g_theStory = false;
-        g_gameOver = true;
-    }
-
-    // Temporary while testing
-    if (keys[KEY_W]) {
-        g_theStory = false;
-        g_WINNER = true;
-    }
 }
 
 function instructionGame (ctx) {
@@ -184,28 +172,25 @@ function instructionGame (ctx) {
 
 function gameOver (ctx) {
    // Clear the game
-   ctx.fillStyle = "black";
-   ctx.fillRect(0, 0, canvas.width, canvas.height);
+   ctx.drawImage(g_images.background,0,700, g_canvas.width, g_canvas.height);
 
+   // title text
+   ctx.textAlign = "center";
    ctx.font = '50px Courier';
-   ctx.fillStyle = 'yellow';
+   ctx.fillStyle = 'black';
 
    // style and write the gameOver-text
    ctx.textAlign = "center";
    if(g_gameOver) {
-      ctx.fillText('Game over',ctx.canvas.width/2, ctx.canvas.height/2);
+      ctx.fillText('You Lost',ctx.canvas.width/2, ctx.canvas.height/2);
    } else if (g_WINNER){
-      ctx.fillText("WINNER!",ctx.canvas.width/2, ctx.canvas.height/2);
+      ctx.fillText("YOU WON!!",ctx.canvas.width/2, ctx.canvas.height/2);
    }
-   ctx.font = '15px Courier';
-  ctx.fillText("If you wan't to start a NEW GAME press G",ctx.canvas.width/2, ctx.canvas.height/2+50);
 
-   // reset everything if press KEY_SPACE and start a new game
-   if(keys[KEY_SPACE]) {
-       // no longer gameOver/winner
-       g_gameOver = false;
-       g_WINNER = false;
-
-       // TODO : reset everything
-   }
+   // start game and information button
+   for (let i = 0; i < g_buttonsGameOver; i++) {
+        if (g_buttonsGameOver[i].contains(g_mouseX, g_mouseY)) {
+            g_buttonsGameOver[i].onClick();
+        }
+    }
 }

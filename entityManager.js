@@ -76,31 +76,59 @@ deferredSetup : function () {
     this._categories = [this._runner, this._powerChanger, this._stillPowerChanger, this._pat]; 
 },
 
+reset: function() {
+
+    countdown.reset();
+
+    for (let i = 0; i < this._runner.length; i++) {
+        this._runner[i].reset();
+    }
+
+    for (let i = 0; i < this._powerChanger.length; i++) {
+        this._powerChanger[i].reset();
+    }
+
+    for (let i = 0; i < this.stillPowerChanger.length; i++) {
+        this._stillPowerChanger[i].reset();
+    }
+
+    for (let i = 0; i < this._pat.length; i++) {
+        this._pat[i].reset();
+    }
+},
+
 
 reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
     if(type === "speedChanger") {
-      console.log('bla');
-      console.log("runner",this._runner[0]);
+      //console.log('bla');
+      //console.log("runner",this._runner[0]);
       
       this._runner[0].speedChange(change);
-      console.log(change);
+      //console.log(change);
       
       //entityManager.speedChange(change);
       //breyttu runner speed
     }
     if(type === "timeChanger") {
-      console.log('fór inn í time changer');
+      //console.log('fór inn í time changer');
       //breyttu klukkunni sem birtist
     }
     if(type === "dead") {
-      console.log('fórum inn í dead')
-      //game over
+      //console.log('fórum inn í dead')
+      g_gameOver = true;
+      isPlaying = false;
     }
     if(type === "crash") {
-      console.log('fór inn í crash');
+      //console.log('fór inn í crash');
       //hafa áhrif á hraðann.
+    }
+    if(type === "pat") {
+        //console.log('fór inn í pat');
+        this._runner[0].speed = 0;
+        g_WINNER = true;
+        isPlaying = false;
     }
 },
 
