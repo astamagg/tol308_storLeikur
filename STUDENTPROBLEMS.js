@@ -261,17 +261,17 @@ function setUpPowerUps() {
         },
         {
             sprite: new Sprite(g_images.energydrink),
-            powerChange: 1.75,
+            powerChange: 1.2,
             powerType: "speedChanger",
         },
         {   
             sprite: new Sprite(g_images.coffee),
-            powerChange: 1.5,
+            powerChange: 1.1,
             powerType: "speedChanger"
         },
         {
             sprite: new Sprite(g_images.spotify),
-            powerChange: 1.25,
+            powerChange: 1.1,
             powerType: "speedChanger",
         },
         {

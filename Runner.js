@@ -117,10 +117,15 @@ Runner.prototype.powerUp = function(change){
     }, 5000);
 };
 
-Runner.prototype.speedChange = function(type, change){
-    this.animationSpeed *= change;
+Runner.prototype.speedChange = function(change){
+  console.log("number",change);
+  this.animationSpeed *= change;
+  console.log("speed",this.animationSpeed);  
+
+  var that = this;
   setTimeout(function() {
-      this.animationSpeed = this.normalSpeed;
+      that.animationSpeed = that.normalSpeed;
+      console.log("after timeout", that.animationSpeed);
     }, 5000);
 };
 

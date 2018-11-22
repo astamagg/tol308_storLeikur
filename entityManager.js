@@ -80,7 +80,9 @@ reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
     if(type === "speedChanger") {
-       //this._runner[0].speedChange(change);      
+        console.log("type", type);
+        
+       this._runner[0].speedChange(change);      
       //entityManager.speedChange(change);
       //breyttu runner speed
     }
