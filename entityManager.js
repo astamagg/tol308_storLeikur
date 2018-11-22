@@ -23,7 +23,7 @@ _forEachOf: function(aCategory, fn) {
 //Generate power changers that move
 _generatePowerChangers : function() {
     var i,
-        NUM_POWERCHANGERS = 150;
+        NUM_POWERCHANGERS = 30;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generatePowerChangers();
     }
@@ -32,7 +32,7 @@ _generatePowerChangers : function() {
 //generate power changers that stay still
 _generateStillPowerChangers: function() {
     var i,
-        NUM_POWERCHANGERS = 6;
+        NUM_POWERCHANGERS = 30;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generateStillPowerChangers();
     }
@@ -61,10 +61,6 @@ generateStillPowerChangers: function(descr) {
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
-<<<<<<< HEAD
-
-=======
->>>>>>> powerChanges
 },
 
 generatePat: function(descr) {
@@ -98,6 +94,7 @@ reactToPowerChanger: function(entity) {
     if(type === "timeChanger") {
       console.log('fór inn í time changer');
       //breyttu klukkunni sem birtist
+      countdown.changeTime(entity);
     }
     if(type === "dead") {
       console.log('fórum inn í dead')
