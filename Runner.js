@@ -97,17 +97,25 @@ Runner.prototype.powerUp = function(change){
      this.isPowered = true;
      this.animationSpeed *= change;
      g_music.playbackRate = 1.5;
-      setTimeout(this.powerDown, 5000);
+     var that = this;
+    setTimeout(function(){
+      console.log("powerDown");
+      console.log(that);
+      that.isPowered = false;
+      that.animationSpeed = that.normalSpeed;
+      g_music.playbackRate = 1;
+    }, 5000);
 }
-
+/*
 Runner.prototype.powerDown = function(){
     console.log("powerdown");
     console.log(this.isPowered);
+    console.log(this);
     
     this.isPowered = false;
     this.animationSpeed = this.normalSpeed;
     g_music.playbackRate = 1;
-}
+}*/
 
 Runner.prototype.speedChange = function(type, change){
     this.runningSpeed *= change;
@@ -156,7 +164,10 @@ Runner.prototype.update = function(du) {
 
   this.cy = this.getPos().posY;
     //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
-  var entityHit = this.isColliding();
+  if(this.isPowered){
+  }else {
+    var entityHit = this.isColliding();
+  }    
   //the runner hit another entity
   if(entityHit) {
     //react accordingly to it's affect
