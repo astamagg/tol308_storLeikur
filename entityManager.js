@@ -65,41 +65,52 @@ var entityManager = {
     this._pat.push(new Pat(descr));
   },
 
+  // Some things must be deferred until after initial construction
+  // i.e. thing which need `this` to be defined.
+  //
+  deferredSetup: function() {
+    this._categories = [
+      this._runner,
+      this._powerChanger,
+      this._stillPowerChanger,
+      this._pat,
+    ];
+  },
 
-// Some things must be deferred until after initial construction
-// i.e. thing which need `this` to be defined.
-//
-deferredSetup : function () {
-    this._categories = [this._runner, this._powerChanger, this._stillPowerChanger, this._pat]; 
-},
-
-
-reactToPowerChanger: function(entity) {
+  reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
+
+    // Play right reactionary sound
+    if (type === 'timeChangerUp' || (type === 'speedChanger' && change >= 1)) {
+      g_powerUpSound.play();
+    }
+    if (type === 'timeChangerDown' || (type === 'speedChanger' && change < 1)) {
+      g_powerDownSound.play();
+    }
     //change the runners speed and affect the time logic of the game
-    if(type === "speedChanger") { 
-        this._runner[0].speedChange(change);   
-        countdown.speedChange(change);
+    if (type === 'speedChanger') {
+      this._runner[0].speedChange(change);
+      countdown.speedChange(change);
     }
     //makes the runner indestructable and then slows her down
-    if(type === "candy") {
-        this._runner[0].powerUp(change);     
-        countdown.speedChange(change); 
+    if (type === 'candy') {
+      this._runner[0].powerUp(change);
+      countdown.speedChange(change);
     }
     //change the value of the tme the runner has left
-    if(type === "timeChangerUp" || type === "timeChangerDown") {
+    if (type === 'timeChangerUp' || type === 'timeChangerDown') {
       countdown.changeTime(entity);
     }
     //landing on the bed ends the game
-    if(type === "dead") {
+    if (type === 'dead') {
       //game over
     }
     //crashing into a chair or a desk causes the runner to blink and slow down
-    if(type === "crash") {
-        this._runner[0].speedChange(change); 
-        this._runner[0].blinking = true;
-        countdown.speedChange(change);
+    if (type === 'crash') {
+      this._runner[0].speedChange(change);
+      this._runner[0].blinking = true;
+      countdown.speedChange(change);
     }
   },
 
