@@ -116,9 +116,14 @@ Entity.prototype.kill = function() {
   this._isDeadNow = true;
 };
 
+Entity.prototype.getColPos = function() {
+  return this.getPos();
+}
+
 //check the space to see whether to entities will collide in the next update
 Entity.prototype.findHitEntity = function() {
-  var pos = this.getPos();
+  var pos = this.getColPos(); 
+  
   return spatialManager.findEntityInRange(
     pos.posX,
     pos.posY,

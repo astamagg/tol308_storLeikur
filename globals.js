@@ -16,6 +16,7 @@ var g_ctx = g_canvas.getContext("2d");
 var g_background = document.getElementById("backgroundColorCanvas");
 var g_ctxBackground = g_canvas.getContext("2d");
 var g_powerChangerCounter = 0;  //counts the number of power changers in a frame
+var g_stillPowerChangerCounter = 0;
 
 
 // The "nominal interval" is the one that all of our time-based units are
