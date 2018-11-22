@@ -61,15 +61,11 @@ generateStillPowerChangers: function(descr) {
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
-<<<<<<< HEAD
- },
-=======
 },
 
 generatePat: function(descr) {
     this._pat.push(new Pat(descr));
 },
->>>>>>> 3f50f5900ab42ee1e0d00e7f85b932a8d10aae0d
 
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
@@ -84,15 +80,15 @@ reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
     if(type === "speedChanger") {
-      console.log('bla');
-      console.log("runner",this._runner[0]);
-      
-      this._runner[0].speedChange(change);
-      console.log(change);
-      
+      //this._runner[0].speedChange(change);      
       //entityManager.speedChange(change);
       //breyttu runner speed
     }
+    if(type === "candy") {
+        this._runner[0].powerUp(change);      
+        //entityManager.speedChange(change);
+        //breyttu runner speed
+      }
     if(type === "timeChanger") {
       console.log('fór inn í time changer');
       //breyttu klukkunni sem birtist

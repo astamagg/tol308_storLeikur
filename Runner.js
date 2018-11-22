@@ -51,7 +51,7 @@ Runner.prototype.totalDistance = 0;
 Runner.prototype.isPowered = false;
 //animations from spritesheet frames
 Runner.prototype.loops = [[0],[0],[0,1,2,3,4]]; //crouch, jump, walk
-Runner.prototype.poweredLoops = [[1,2,3,4],[1,2,3,4],[],[0,1,2,3,4]]; ///powered- crouch, jump, walk
+Runner.prototype.poweredLoops = [[1,2,3,4,5],[1,2,3,4,5],[],[0,1,2,3,4]]; ///powered- crouch, jump, walk
 
 //animation update speed and interval (running speed)
 Runner.prototype.speed = 10;
@@ -66,7 +66,8 @@ Runner.prototype.isJumping = false;
 Runner.prototype.isCrouching = false;
 
 //speeds
-Runner.prototype.runningSpeed = 25;  //normal = 20-25?  
+Runner.prototype.normalSpeed = 25;
+Runner.prototype.animationSpeed = 25;  //normal = 20-25?  
 Runner.prototype.jumpingSpeed = -10;
 Runner.prototype.gravity = 1;
 var jumpCounter = 0;  // how long the jump button can be pressed down
@@ -92,15 +93,28 @@ Runner.prototype.handleKeys = function(){
   }
 };
 
+Runner.prototype.powerUp = function(change){
+     this.isPowered = true;
+     this.animationSpeed *= change;
+     g_music.playbackRate = 1.5;
+      setTimeout(this.powerDown, 5000);
+}
+
+Runner.prototype.powerDown = function(){
+    console.log("powerdown");
+    console.log(this.isPowered);
+    
+    this.isPowered = false;
+    this.animationSpeed = this.normalSpeed;
+    g_music.playbackRate = 1;
+}
+
 Runner.prototype.speedChange = function(type, change){
-  if(type === "candy"){
     this.runningSpeed *= change;
     g_music.playbackRate = 1.5;
   setTimeout(function() {
-      this.runningSpeed = 25;
-      g_music.playbackRate = 1;
+      this.runningSpeed = this.normalSpeed;
     }, 8000);
-  }
 };
 
 Runner.prototype.update = function(du) {
@@ -110,9 +124,6 @@ Runner.prototype.update = function(du) {
   this.cy += this.y_velocity;
   if(this.isCrouching) this.height = 60;
   else this.height = 80;
-
-  //How often do we want to change the fram
-  var updateTresh = this.runningSpeed;
 
   if (this.isJumping) {
     this.y_velocity += this.gravity;
@@ -126,6 +137,10 @@ Runner.prototype.update = function(du) {
     this.cy = 270; 
     this.y_velocity = 0; 
   }
+
+
+  //How often do we want to change the fram
+  var updateTresh = this.animationSpeed;
 
   
   if (this.updateInterval < updateTresh) {
@@ -161,18 +176,23 @@ Runner.prototype.computeSubStep = function(du) {
   if(this.isPowered){
     if(this.isCrouching){
       this.currentLoop = 0;
+      this.currentLoopIndex++;
+
     }
     if(this.isJumping){
       this.currentLoop = 1;
+      this.currentLoopIndex++;
+
     }
     //if not crouching or jumping set to walk animation
     if(!this.isCrouching && !this.isJumping){
       this.currentLoop = 3;
+      this.currentLoopIndex++;
+
     }
     if (this.currentLoopIndex >= this.poweredLoops[this.currentLoop].length) {
       this.currentLoopIndex = 0; 
     }
-    this.currentLoopIndex++;
 
   }else{
     if(this.isCrouching){
