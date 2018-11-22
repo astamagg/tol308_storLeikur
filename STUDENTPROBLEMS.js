@@ -9,8 +9,8 @@ var ctx = g_canvas.getContext('2d');
 var g_camera;
 var g_music;
 var g_jumpSound;
-var g_powerDown;
-var g_powerUp;
+var g_powerDownSound;
+var g_powerUpSound;
 
 var g_powerUpsAndDown = {
   timeIncrease: 1,
@@ -53,7 +53,7 @@ var g_buttonsFrontPage = [
     width: 200,
     height: 40,
     x: g_canvas.width / 2 - 100,
-    y: g_canvas.height / 1.2 - 80,
+    y: g_canvas.height / 1.2 - 85,
     onClick: function() {
       g_theStory = false;
     },
@@ -65,7 +65,7 @@ var g_buttonsFrontPage = [
     width: 200,
     height: 40,
     x: g_canvas.width / 2 - 100,
-    y: g_canvas.height / 1.1 - 60,
+    y: g_canvas.height / 1.1 - 65,
     onClick: function() {
       g_theStory = false;
       g_instructions = true;
@@ -79,7 +79,7 @@ var g_buttonInstruction = new Button({
   width: 200,
   height: 40,
   x: g_canvas.width / 2 - 100,
-  y: g_canvas.height / 1.15,
+  y: g_canvas.height / 1.15 + 5,
 });
 
 var g_buttonGameOver = new Button({
@@ -118,9 +118,15 @@ function toggleMusic() {
   if (g_music.paused) {
     console.log('PLAY');
     g_music.play();
+    g_jumpSound.volume = 0.4;
+    g_powerDownSound.volume = 0.4;
+    g_powerUpSound.volume = 0.4;
   } else {
     console.log('PAUSE');
     g_music.pause();
+    g_jumpSound.volume = 0;
+    g_powerDownSound.volume = 0;
+    g_powerUpSound.volume = 0;
   }
 }
 
@@ -230,75 +236,78 @@ var g_sprites = {};
 //initialize all the power ups and downs as sprites.
 //done in a function for clarity
 function setUpPowerUps() {
-  
-    g_sprites.powerUpsDowns = [
-        {
-            sprite: new Sprite(g_images.piazza),
-            powerChange: 10,
-            powerType: "timeChangerUp",
-        },
-        {
-            sprite: new Sprite(g_images.netflix),
-            powerChange: 10,
-            powerType: "timeChangerDown",
-        },
-        {
-            sprite: new Sprite(g_images.energydrink),
-            powerChange: 1.2,
-            powerType: "speedChanger",
-        },
-        {   
-            sprite: new Sprite(g_images.coffee),
-            powerChange: 1.1,
-            powerType: "speedChanger"
-        },
-        {
-            sprite: new Sprite(g_images.spotify),
-            powerChange: 1.1,
-            powerType: "speedChanger",
-        },
-        {
-            sprite: new Sprite(g_images.candy),
-            powerChange: 2,
-            powerType: "candy",
-        },
-        {
-            sprite: new Sprite(g_images.beer),
-            powerChange: 0.5,
-            powerType: "speedChanger",
-        },
-        {
-            sprite: new Sprite(g_images.youtube),
-            powerChange: 3,
-            powerType: "timeChangerDown",
-        },
-        {
-            sprite: new Sprite(g_images.chair),
-            powerChange: 0.75,
-            powerType: "crash",
-        },
-        {
-            sprite: new Sprite(g_images.desk),
-            powerChange: 0.5,
-            powerType: "crash",
-        },
-        {
-            sprite: new Sprite(g_images.bed),
-            powerChange: 0,
-            powerType: "dead",
-        },];
+  g_sprites.powerUpsDowns = [
+    {
+      sprite: new Sprite(g_images.piazza),
+      powerChange: 10,
+      powerType: 'timeChangerUp',
+    },
+    {
+      sprite: new Sprite(g_images.netflix),
+      powerChange: 10,
+      powerType: 'timeChangerDown',
+    },
+    {
+      sprite: new Sprite(g_images.energydrink),
+      powerChange: 1.2,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.coffee),
+      powerChange: 1.1,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.spotify),
+      powerChange: 1.1,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.candy),
+      powerChange: 2,
+      powerType: 'candy',
+    },
+    {
+      sprite: new Sprite(g_images.beer),
+      powerChange: 0.5,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.youtube),
+      powerChange: 3,
+      powerType: 'timeChangerDown',
+    },
+    {
+      sprite: new Sprite(g_images.chair),
+      powerChange: 0.75,
+      powerType: 'crash',
+    },
+    {
+      sprite: new Sprite(g_images.desk),
+      powerChange: 0.5,
+      powerType: 'crash',
+    },
+    {
+      sprite: new Sprite(g_images.bed),
+      powerChange: 0,
+      powerType: 'dead',
+    },
+  ];
 }
 
 function preloadDone() {
   g_camera = new Camera(/*x start*/ 0, g_images.background.height);
 
+  // Game music and reactionary sounds added
   g_music = new Audio('src/sounds/gametrack.mp3');
   g_music.loop = true;
-
   g_jumpSound = new Audio('src/sounds/bump.mp3');
-  g_jumpSound.volume = 0.1;
-  g_powerDown = new Audio('src/sounds/powerdown.mp3');
-  g_powerUp = new Audio('src/sounds/powerup.mp3');
+  g_powerDownSound = new Audio('src/sounds/powerdown.mp3');
+  g_powerUpSound = new Audio('src/sounds/powerup.mp3');
+  g_music.volume = 0.8;
+  g_jumpSound.volume = 0.4;
+  g_powerDownSound.volume = 0.4;
+  g_powerUpSound.volume = 0.4;
 
   setUpPowerUps();
 
