@@ -68,7 +68,7 @@ Sprite.prototype.drawWrappedCentredAt = function (ctx, cx, cy, rotation) {
     this.drawWrappedVerticalCentredAt(ctx, cx - sw, cy, rotation);
     this.drawWrappedVerticalCentredAt(ctx, cx + sw, cy, rotation);
 };
-
+/*
 Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, rotation) {
 
     // Get "screen height"
@@ -80,4 +80,4 @@ Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, rotation)
     // Top and Bottom wraps
     this.drawCentredAt(ctx, cx, cy - sh, rotation);
     this.drawCentredAt(ctx, cx, cy + sh, rotation);
-};
+};*/

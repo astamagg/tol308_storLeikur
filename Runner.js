@@ -21,7 +21,8 @@ function Runner(descr) {
   // Set normal drawing scale, and warp state off
   this._scale = 1;
 
-  this.y = this.cy - this.height;
+  this.blinking = false;
+  this.blinkingCount = 20;
   //since the runner is the one colliding with the other things we always need
   //to be aware of their placement
   spatialManager.register(this);
@@ -217,7 +218,8 @@ Runner.prototype.computeSubStep = function(du) {
       this.currentLoopIndex++;
     }
 
-    //loppa í hring til þess að gera animation og færa stelpuna um x distance
+  
+    //loop in a circle to animate and move the runner a distance x
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
       this.currentLoopIndex = 0;
     }
@@ -256,24 +258,47 @@ Runner.prototype.getColPos = function() {
   return { posX: this.cx, posY: currY };
 };
 
-//teikna ramma á spritesheet
-Runner.prototype.render = function(ctx) {
-  //change color of hair when the power up appears
-  if (this.isPowered) {
-    this.sprite.drawFrame(
-      ctx,
-      this.poweredLoops[this.currentLoop][this.currentLoopIndex],
-      this.currentLoop,
-      this.cx,
-      this.cy
-    );
-  } else if (!this.isPowered) {
-    this.sprite.drawFrame(
-      ctx,
-      this.loops[this.currentLoop][this.currentLoopIndex],
-      this.currentLoop,
-      this.cx,
-      this.cy
-    );
+//if the runner is suppose to blink, change the opacity for a certain amount of time
+Runner.prototype.blinkingRender = function(ctx) {
+  ctx.save();
+  ctx.globalAlpha = 0.3;
+  this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
+  ctx.restore();
+  this.blinkingCount--;  
+
+  //if the blinking count is zero she should stop being transparent
+  if(this.blinkingCount < 0) {
+    this.blinking = false;
+    this.blinkingCount = 20;
   }
+};
+
+//draw a frame from the spritesheet
+Runner.prototype.render = function(ctx) {
+
+  this.sprite.image.style.opacity = 0.2;
+
+  //change color of hair when the power up appears
+  if(this.isPowered){
+    this.sprite.drawFrame(
+      ctx,
+      this.poweredLoops[this.currentLoop][this.currentLoopIndex], 
+      this.currentLoop, 
+      this.cx, 
+      this.cy
+    );
+  }else if(!this.isPowered){
+    //check whether she hit a chair or a desk, then she slows down and blinks
+    if(this.blinking) {
+      this.blinkingRender(ctx);
+    } else {
+      this.sprite.drawFrame(
+        ctx, 
+        this.loops[this.currentLoop][this.currentLoopIndex], 
+        this.currentLoop, 
+        this.cx, 
+        this.cy);
+    }
+  }
+  
 };

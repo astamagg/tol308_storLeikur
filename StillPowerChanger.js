@@ -95,7 +95,6 @@ StillPowerChanger.prototype.update = function(du) {
 
     //if it as reached beyond the frame or was hit by the user it should disappear
     if(this.cx < -150) {
-        console.log('fór inn í if');
         g_stillPowerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
