@@ -22,7 +22,7 @@ _forEachOf: function(aCategory, fn) {
 //Generate power changers that move
 _generatePowerChangers : function() {
     var i,
-        NUM_POWERCHANGERS = 150;
+        NUM_POWERCHANGERS = 30;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generatePowerChangers();
     }
@@ -31,7 +31,7 @@ _generatePowerChangers : function() {
 //generate power changers that stay still
 _generateStillPowerChangers: function() {
     var i,
-        NUM_POWERCHANGERS = 6;
+        NUM_POWERCHANGERS = 30;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
         this.generateStillPowerChangers();
     }

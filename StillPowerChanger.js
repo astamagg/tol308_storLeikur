@@ -61,7 +61,7 @@ StillPowerChanger.prototype.getPowerType = function() {
 //deciding when to start drawing the entity
 StillPowerChanger.prototype.drawLogic = function() {
     this.frameCounter = 0;
-    this.frameMax = util.randRange(0, 1500);
+    this.frameMax = util.randRange(0, 1000);
     this.drawTimeChanger = false;
 };
 
@@ -76,7 +76,7 @@ StillPowerChanger.prototype.update = function(du) {
         //add to the space to check collision
         spatialManager.register(this);
         this.drawTimeChanger = true;
-        this.frameMax = util.randRange(0, 1500);
+        this.frameMax = util.randRange(0, 1000);
         this.frameCounter = 0;
         g_stillPowerChangerCounter++;
     }
