@@ -116,13 +116,10 @@ Runner.prototype.update = function(du) {
     this.computeSubStep(this.updateInterval);
       //hvað er hvert skref mikil x færsla?
       //placeholder if settning til þess að stelpan birtist aftur
-      if(this.cx > 1700 ){
-        this.reset();
-      }
-      else {
-        this.cx += this.speed;
-        this.roomX += this.speed;
-      }
+
+      this.roomX += this.speed;
+      this.cx = (this.roomX-this.width/2) - g_camera.xView;
+
       this.updateInterval = 30; 
   }
     //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
@@ -201,7 +198,6 @@ Runner.prototype.getPos = function() {
 
 //teikna ramma á spritesheet
 Runner.prototype.render = function(ctx) {
-  this.cx = (this.roomX-this.width/2) - g_camera.xView;
   //drawFrame(ctx, X gildi á ramma, Y gildi á ramma, x staðsettning á canvas, y staðsettning á canvas)
   
   if(this.isPowered){
