@@ -1,21 +1,21 @@
-"use strict";
+'use strict';
 /* jshint browser: true, devel: true, globalstrict: true */
 
-var g_canvas = document.getElementById("myCanvas");
-var g_background = document.getElementById("backgroundCanvas");
+var g_canvas = document.getElementById('myCanvas');
+var g_background = document.getElementById('backgroundCanvas');
 
-var ctxBackground = g_background.getContext("2d");
-var ctx = g_canvas.getContext("2d");
+var ctxBackground = g_background.getContext('2d');
+var ctx = g_canvas.getContext('2d');
 var g_camera;
 var g_music;
 
 var g_powerUpsAndDown = {
-    "timeIncrease": 1,
-    "timeDecrease": 2,
-    "speedIncrease": 3,
-    "speedDecrease": 4,
-    "floorPowers": 5,
-}
+  timeIncrease: 1,
+  timeDecrease: 2,
+  speedIncrease: 3,
+  speedDecrease: 4,
+  floorPowers: 5,
+};
 
 // =================
 // RENDER SIMULATION
@@ -29,10 +29,10 @@ var g_powerUpsAndDown = {
 // It then delegates the game-specific logic to `gameRender`
 
 function createInitialRunner() {
-    entityManager.generateRunner({
-      cx: 50,
-      cy: 270,
-    });
+  entityManager.generateRunner({
+    cx: 50,
+    cy: 270,
+  });
 }
 
 // Button
@@ -44,50 +44,48 @@ var g_instructions = false;
 var isPlaying = false;
 
 var g_buttonsFrontPage = [
+  new Button({
+    text: 'Start new game',
+    color: 'red',
+    width: 200,
+    height: 40,
+    x: g_canvas.width / 2 - 100,
+    y: g_canvas.height / 1.2 - 80,
+    onClick: function() {
+      g_theStory = false;
+    },
+  }),
 
-    new Button({
-        text : 'Start new game',
-        color : 'red',
-        width : 200,
-        height : 40,
-        x : g_canvas.width/2 - 100,
-        y : g_canvas.height/1.2 - 80,
-        onClick : function () {
-            g_theStory = false;
-        }
-    }),
-
-    new Button({
-        text : 'Instructions',
-        color : 'red',
-        width : 200,
-        height : 40,
-        x : g_canvas.width/2 - 100,
-        y : g_canvas.height/1.1 - 60,
-        onClick : function () {
-            g_theStory = false;
-            g_instructions = true;
-        }
-    }),
-
+  new Button({
+    text: 'Instructions',
+    color: 'red',
+    width: 200,
+    height: 40,
+    x: g_canvas.width / 2 - 100,
+    y: g_canvas.height / 1.1 - 60,
+    onClick: function() {
+      g_theStory = false;
+      g_instructions = true;
+    },
+  }),
 ];
 
 var g_buttonInstruction = new Button({
-    text : 'Go back',
-    color : 'red',
-    width : 200,
-    height : 40,
-    x : g_canvas.width/2 - 100,
-    y : g_canvas.height/1.15
+  text: 'Go back',
+  color: 'red',
+  width: 200,
+  height: 40,
+  x: g_canvas.width / 2 - 100,
+  y: g_canvas.height / 1.15,
 });
 
 var g_buttonGameOver = new Button({
-    text : 'New game',
-    color : 'red',
-    width : 200,
-    height : 40,
-    x : 100,
-    y : 100
+  text: 'New game',
+  color: 'red',
+  width: 200,
+  height: 40,
+  x: 100,
+  y: 100,
 });
 
 var g_allowMixedActions = true;
@@ -99,7 +97,7 @@ var g_patIsShowing = false;
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 
-var KEY_HALT  = keyCode('H');
+var KEY_HALT = keyCode('H');
 var KEY_RESET = keyCode('R');
 
 var KEY_0 = keyCode('0');
@@ -114,48 +112,50 @@ var KEY_W = keyCode('W');
 var TOGGLE_MUTE = 'M'.charCodeAt(0);
 
 function toggleMusic() {
-
-    if (g_music.paused) {
-        console.log('PLAY');
-        g_music.play();
-    } else {
-        console.log('PAUSE');
-        g_music.pause();
-    }
+  if (g_music.paused) {
+    console.log('PLAY');
+    g_music.play();
+  } else {
+    console.log('PAUSE');
+    g_music.pause();
+  }
 }
 
 function onStartedPlaying() {
-    g_music.play();
+  g_music.play();
 }
 
 function updateSimulation(du) {
-    
-    processDiagnostics();
-    if (typeof g_camera === 'undefined') { return }
-    if (typeof g_music === 'undefined') { return }
+  processDiagnostics();
+  if (typeof g_camera === 'undefined') {
+    return;
+  }
+  if (typeof g_music === 'undefined') {
+    return;
+  }
 
-    if (!g_theStory && !g_instructions) {
-        entityManager.update(du);
+  if (!g_theStory && !g_instructions) {
+    entityManager.update(du);
 
-        if (isPlaying == false) {
-            isPlaying = true;
-            onStartedPlaying();
-        }
-    } else {
-        isPlaying == false;
-        g_music.pause();
+    if (isPlaying == false) {
+      isPlaying = true;
+      onStartedPlaying();
     }
+  } else {
+    isPlaying == false;
+    g_music.pause();
+  }
 
-    if (eatKey(TOGGLE_MUTE)) {
-        toggleMusic();
-    }
+  if (eatKey(TOGGLE_MUTE)) {
+    toggleMusic();
+  }
 
-    // Prevent perpetual firing!
-   // eatKey(Ship.prototype.KEY_FIRE);
+  // Prevent perpetual firing!
+  // eatKey(Ship.prototype.KEY_FIRE);
 }
 
 function processDiagnostics() {
-/*
+  /*
     if (eatKey(KEY_MIXED))
         g_allowMixedActions = !g_allowMixedActions;
 
@@ -171,46 +171,41 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleRocks();*/
 
-    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
-
+  if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 }
 
-
-
 function gatherInputs() {
-    // Nothing to do here!
-    // The event handlers do everything we need for now.
+  // Nothing to do here!
+  // The event handlers do everything we need for now.
 }
 
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-    if (typeof g_camera === 'undefined') { return }
+  if (typeof g_camera === 'undefined') {
+    return;
+  }
 
-    if (g_gameOver || g_WINNER) {
-        gameOver(ctx);
-    } else {
-        if (g_theStory) {
-            theStory(ctx);
-            for (let i=0; i<g_buttonsFrontPage.length; i++) { 
-                g_buttonsFrontPage[i].render(ctx);
-            }
-        } else if (g_instructions) {
-            instructionGame(ctx);
-            g_buttonInstruction.render(ctx);
-        }
-        
-        if (!g_theStory && !g_instructions) {
-            entityManager.render(ctx);
-
-            if (g_renderSpatialDebug) spatialManager.render(ctx);
-            
-        }
+  if (g_gameOver || g_WINNER) {
+    gameOver(ctx);
+  } else {
+    if (g_theStory) {
+      theStory(ctx);
+      for (let i = 0; i < g_buttonsFrontPage.length; i++) {
+        g_buttonsFrontPage[i].render(ctx);
+      }
+    } else if (g_instructions) {
+      instructionGame(ctx);
+      g_buttonInstruction.render(ctx);
     }
 
+    if (!g_theStory && !g_instructions) {
+      entityManager.render(ctx);
 
+      if (g_renderSpatialDebug) spatialManager.render(ctx);
+    }
+  }
 }
-
 
 // =============
 // PRELOAD STUFF
@@ -220,27 +215,26 @@ var g_images = {};
 var g_background = {};
 
 function requestPreloads() {
-    
-    var requiredImages = {
-        background: "src/background/background(2100x400).png",
-        spritesheet : "src/girlspritesheet.png",
-        coffee: "src/coffee.png",
-        energydrink: "src/energydrink.png",
-        piazza: "src/piazza.png",
-        spotify: "src/spotify.png",
-        candy: "src/candy.png",
-        youtube: "src/youtube.png",
-        netflix: "src/netflix.png",
-        beer: "src/beer.png",
-        youtube: "src/youtube.png",
-        backgroundFrontPage : "src/backgroundFrontPage.png",
-        desk: "src/desk.png",
-        chair: "src/chair.png",
-        bed: "src/bedtile(54x54).png",
-        pat: "src/pat (49x62).png"
-    };
+  var requiredImages = {
+    background: 'src/background/background(2100x400).png',
+    spritesheet: 'src/girlspritesheet.png',
+    coffee: 'src/coffee.png',
+    energydrink: 'src/energydrink.png',
+    piazza: 'src/piazza.png',
+    spotify: 'src/spotify.png',
+    candy: 'src/candy.png',
+    youtube: 'src/youtube.png',
+    netflix: 'src/netflix.png',
+    beer: 'src/beer.png',
+    youtube: 'src/youtube.png',
+    backgroundFrontPage: 'src/backgroundFrontPage.png',
+    desk: 'src/desk.png',
+    chair: 'src/chair.png',
+    bed: 'src/bedtile(54x54).png',
+    pat: 'src/pat (49x62).png',
+  };
 
-    imagesPreload(requiredImages, g_images, preloadDone);
+  imagesPreload(requiredImages, g_images, preloadDone);
 }
 
 var g_sprites = {};
@@ -248,81 +242,87 @@ var g_sprites = {};
 //initialize all the power ups and downs as sprites.
 //done in a function for clarity
 function setUpPowerUps() {
-    g_sprites.powerUpsDowns = [
-        {
-            sprite: new Sprite(g_images.piazza),
-            powerChange: 10,
-            powerType: "timeChanger",
-        },
-        {
-            sprite: new Sprite(g_images.netflix),
-            powerChange: 10,
-            powerType: "timeChanger",
-        },
-        {
-            sprite: new Sprite(g_images.energydrink),
-            powerChange: 1.75,
-            powerType: "speedChanger",
-        },
-        {   
-            sprite: new Sprite(g_images.coffee),
-            powerChange: 1.5,
-            powerType: "speedChanger"
-        },
-        {
-            sprite: new Sprite(g_images.spotify),
-            powerChange: 1.25,
-            powerType: "speedChanger",
-        },
-        {
-            sprite: new Sprite(g_images.candy),
-            powerChange: 2,
-            powerType: "candy",
-        },
-        {
-            sprite: new Sprite(g_images.beer),
-            powerChange: 0.5,
-            powerType: "speedChanger",
-        },
-        {
-            sprite: new Sprite(g_images.youtube),
-            powerChange: 3,
-            powerType: "timeChanger",
-        },
-        {
-            sprite: new Sprite(g_images.chair),
-            powerChange: 0.75,
-            powerType: "crash",
-        },
-        {
-            sprite: new Sprite(g_images.desk),
-            powerChange: 0.5,
-            powerType: "crash",
-        },
-        {
-            sprite: new Sprite(g_images.bed),
-            powerChange: 0,
-            powerType: "dead",
-        },];
+  g_sprites.powerUpsDowns = [
+    {
+      sprite: new Sprite(g_images.piazza),
+      powerChange: 10,
+      powerType: 'timeChanger',
+    },
+    {
+      sprite: new Sprite(g_images.netflix),
+      powerChange: 10,
+      powerType: 'timeChanger',
+    },
+    {
+      sprite: new Sprite(g_images.energydrink),
+      powerChange: 1.75,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.coffee),
+      powerChange: 1.5,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.spotify),
+      powerChange: 1.25,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.candy),
+      powerChange: 2,
+      powerType: 'candy',
+    },
+    {
+      sprite: new Sprite(g_images.beer),
+      powerChange: 0.5,
+      powerType: 'speedChanger',
+    },
+    {
+      sprite: new Sprite(g_images.youtube),
+      powerChange: 3,
+      powerType: 'timeChanger',
+    },
+    {
+      sprite: new Sprite(g_images.chair),
+      powerChange: 0.75,
+      powerType: 'crash',
+    },
+    {
+      sprite: new Sprite(g_images.desk),
+      powerChange: 0.5,
+      powerType: 'crash',
+    },
+    {
+      sprite: new Sprite(g_images.bed),
+      powerChange: 0,
+      powerType: 'dead',
+    },
+  ];
 }
 
 function preloadDone() {
-    g_camera = new Camera(/*x start*/0, g_images.background.height);
+  g_camera = new Camera(/*x start*/ 0, g_images.background.height);
 
-    g_music = new Audio('src/sounds/gametrack.mp3');
-    g_music.loop = true;
+  g_music = new Audio('src/sounds/gametrack.mp3');
+  g_music.loop = true;
 
-    setUpPowerUps();
-    
-    g_background = new Background(g_images.background);
-    //breyta líka í okkar
+  g_jumpSound = new Audio('src/sounds/bump.mp3');
+  g_jumpSound.volume = 0.1;
+  g_powerDown = new Audio('src/sounds/powerdown.mp3');
+  g_powerUp = new Audio('src/sounds/powerup.mp3');
 
-    g_sprites.runner  = new Sprite(g_images.spritesheet);
-    g_sprites.pat = new Sprite(g_images.pat);
-  
-    entityManager.init();
+  setUpPowerUps();
 
-    main.init();
+  g_background = new Background(g_images.background);
+  //breyta líka í okkar
+
+  g_sprites.runner = new Sprite(g_images.spritesheet);
+  g_sprites.pat = new Sprite(g_images.pat);
+
+  entityManager.init();
+
+  main.init();
 }
 // Kick it off
 requestPreloads();
