@@ -88,7 +88,8 @@ reactToPowerChanger: function(entity) {
       //breyttu runner speed
     }
     if(type === "candy") {
-        this._runner[0].powerUp(change);      
+        this._runner[0].powerUp(change);     
+        countdown.speedChange(change); 
         //entityManager.speedChange(change);
         //breyttu runner speed
       }
@@ -104,6 +105,7 @@ reactToPowerChanger: function(entity) {
     if(type === "crash") {
         this._runner[0].speedChange(change); 
         this._runner[0].blinking = true;
+        countdown.speedChange(change);
 
      // console.log('fór inn í crash');
       //hafa áhrif á hraðann.
