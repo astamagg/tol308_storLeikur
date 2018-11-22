@@ -20,7 +20,8 @@ function Runner(descr) {
   this.sprite = g_sprites.runner;
   // Set normal drawing scale, and warp state off
   this._scale = 1;
-  
+
+  this.y = this.cy - this.height;
   //since the runner is the one colliding with the other things we always need
   //to be aware of their placement
   spatialManager.register(this);
@@ -163,6 +164,9 @@ Runner.prototype.computeSubStep = function(du) {
   }else{
     if(this.isCrouching){
       this.currentLoop = 0;
+      this.height = 60;
+    } else {
+      this.height = 80;
     }
     if(this.isJumping){
       this.currentLoop = 1;
@@ -172,6 +176,7 @@ Runner.prototype.computeSubStep = function(du) {
       this.currentLoop = 2;
       this.currentLoopIndex++;
     }
+    
 
     //loppa í hring til þess að gera animation og færa stelpuna um x distance
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
@@ -205,6 +210,11 @@ Runner.prototype.halt = function() {
 
 Runner.prototype.getPos = function() {
   return {posX : this.cx, posY : this.cy};
+}
+
+Runner.prototype.getColPos = function() {
+  var currY = this.getPos().posY + (this.isCrouching*(20));
+  return {posX: this.cx, posY: currY};
 }
 
 //teikna ramma á spritesheet

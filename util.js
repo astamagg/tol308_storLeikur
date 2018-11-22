@@ -141,21 +141,21 @@ var util = {
   reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
-    console.log('type', type);
+   // console.log('type', type);
     if(type === "speedChanger") {
-      console.log('fór inn í speed changer');
+     // console.log('fór inn í speed changer');
       //breyttu runner speed
     }
     if(type === "timeChanger") {
-      console.log('fór inn í time changer');
+     // console.log('fór inn í time changer');
       //breyttu klukkunni sem birtist
     }
     if(type === "dead") {
-      console.log('fórum inn í dead')
+    //  console.log('fórum inn í dead')
       //game over
     }
     if(type === "crash") {
-      console.log('fór inn í crash');
+     // console.log('fór inn í crash');
       //hafa áhrif á hraðann.
     }
   }
