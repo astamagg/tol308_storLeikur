@@ -74,6 +74,7 @@ var NOMINAL_GRAVITY = 1;
 var JUMP_ACCELERATION = NOMINAL_GRAVITY * 15; // the bigger this number the higher the jump
 
 
+
 Runner.prototype.handleKeys = function(){
   if (keys[this.KEY_CROUCH]) {
     this.isCrouching = true;   
@@ -90,11 +91,24 @@ Runner.prototype.handleKeys = function(){
   }
 };
 
+Runner.prototype.speedChange = function(type, change){
+  if(type === "candy"){
+    this.runningSpeed *= change;
+    g_music.playbackRate = 1.5;
+  setTimeout(function() {
+      this.runningSpeed = 25;
+      g_music.playbackRate = 1;
+    }, 8000);
+  }
+};
+
 Runner.prototype.update = function(du) {
 
   this.handleKeys(); 
   this.updateInterval -= du;
   this.cy += this.y_velocity;
+  if(this.isCrouching) this.height = 60;
+  else this.height = 80;
 
   //How often do we want to change the fram
   var updateTresh = this.runningSpeed;
@@ -124,14 +138,13 @@ Runner.prototype.update = function(du) {
       this.updateInterval = 30; 
   }
 
-  this.cx = this.getPos().posX;
   this.cy = this.getPos().posY;
     //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
   var entityHit = this.isColliding();
   //the runner hit another entity
   if(entityHit) {
     //react accordingly to it's affect
-    util.reactToPowerChanger(entityHit);
+    entityManager.reactToPowerChanger(entityHit);
     //kill the entity
     entityHit.kill();
     //unregister it from the spatial manager

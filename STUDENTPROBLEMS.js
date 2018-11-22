@@ -250,52 +250,52 @@ function setUpPowerUps() {
     g_sprites.powerUpsDowns = [
         {
             sprite: new Sprite(g_images.piazza),
-            powerChange: 5,
+            powerChange: 10,
             powerType: "timeChanger",
         },
         {
             sprite: new Sprite(g_images.netflix),
-            powerChange: -5,
+            powerChange: 10,
             powerType: "timeChanger",
         },
         {
             sprite: new Sprite(g_images.energydrink),
-            powerChange: 3,
+            powerChange: 1.75,
             powerType: "speedChanger",
         },
         {   
             sprite: new Sprite(g_images.coffee),
-            powerChange: 3,
+            powerChange: 1.5,
             powerType: "speedChanger"
         },
         {
             sprite: new Sprite(g_images.spotify),
-            powerChange: 3,
+            powerChange: 1.25,
             powerType: "speedChanger",
         },
         {
             sprite: new Sprite(g_images.candy),
-            powerChange: 3,
+            powerChange: 2,
             powerType: "candy",
         },
         {
             sprite: new Sprite(g_images.beer),
-            powerChange: -3,
+            powerChange: 0.5,
             powerType: "speedChanger",
         },
         {
             sprite: new Sprite(g_images.youtube),
-            powerChange: -3,
-            powerType: "speedChanger",
+            powerChange: 3,
+            powerType: "timeChanger",
         },
         {
             sprite: new Sprite(g_images.chair),
-            powerChange: -3,
+            powerChange: 0.75,
             powerType: "crash",
         },
         {
             sprite: new Sprite(g_images.desk),
-            powerChange: -3,
+            powerChange: 0.5,
             powerType: "crash",
         },
         {

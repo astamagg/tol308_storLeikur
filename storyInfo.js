@@ -79,95 +79,102 @@ function instructionGame (ctx) {
     ctx.fillRect(60, 60, canvas.width/2+235, canvas.height/1.5);
 
     ctx.textAlign = "center";
-    ctx.font = '10px Courier';
+    ctx.font = '15px Courier';
     ctx.fillStyle = 'white';
 
     // Because canvas fillText doesen't support multi-line we must style the text
     // like this.
     
-    ctx.fillText("Press key D to go right"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5-5);
-
-    ctx.fillText("Press key S to go down"
+    ctx.fillText("Press key S to crouch"
             ,ctx.canvas.width/3.5, ctx.canvas.height/5+10);
 
     ctx.fillText("Press key SPACE to jump"
             ,ctx.canvas.width/3.5, ctx.canvas.height/5+25);
 
     // Power ups instruction
-    ctx.font = '15px Courier';
+    ctx.font = '17px Courier';
     ctx.fillText("Power Ups and Power Downs"
             ,ctx.canvas.width/3.5, ctx.canvas.height/5+45);
 
     // BED
-    ctx.fillStyle = 'red';
-    ctx.font = '10px Courier';
-    ctx.fillText("Your bed -> Game over because you have."
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+70);
-    ctx.fillText("fallen asleep."
+   ctx.fillStyle = 'red';
+    ctx.font = '12px Courier';
+    ctx.fillText("YOUR BED -> You fall assleep and miss" 
+            ,ctx.canvas.width/3.2, ctx.canvas.height/5+70);
+    ctx.fillText("the deadline. GAME OVER."
             ,ctx.canvas.width/3.5, ctx.canvas.height/5+85);
 
     // NETFLIX
    ctx.fillStyle = 'red';
-   ctx.fillText("Netflix -> You couldn’t resist the temptation"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+105);
-   ctx.fillText("of watching one episode from your favourite"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+120);
-   ctx.fillText("TV show."
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+135);   
+   ctx.fillText("NETFLIX -> You couldn’t resist the "
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+190);
+   ctx.fillText("temptation of watching one episode"
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+205);
+   ctx.fillText("of your favourite show. Loose 20 min."
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+220);  
+        
+    // BEER
+    ctx.fillStyle = 'red';
+    ctx.fillText("BEER -> Your friend gave you a beer."
+         ,ctx.canvas.width/3.5, ctx.canvas.height/5+105);
+    ctx.fillText("The beer calms you down which makes"
+         ,ctx.canvas.width/3.5, ctx.canvas.height/5+120);   
+    ctx.fillText("you run 2x slower untill you sober up."
+         ,ctx.canvas.width/3.5, ctx.canvas.height/5+135);   
+
+
+     // YOUTUBE
+   ctx.fillStyle = 'red';
+   ctx.fillText("YOUTUBE -> You watch a funny cat video."
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+155);
+   ctx.fillText("Time flies by and you loose 10 min."
+            ,ctx.canvas.width/3.5, ctx.canvas.height/5+170);
+
+     
 
     // ENERGY DRINK
-   ctx.fillStyle = 'red';
+   ctx.fillStyle = 'green';
    ctx.fillText("Energy drink -> You drank an energy drink"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+155);
+            ,ctx.canvas.width/1.4, ctx.canvas.height/5+205);
    ctx.fillText("and can now run faster!"
-            ,ctx.canvas.width/3.5, ctx.canvas.height/5+170);   
+   ,ctx.canvas.width/1.4, ctx.canvas.height/5+220);
+
 
     // CANDY
    ctx.fillStyle = 'yellow';
-   ctx.fillText("Candy -> Oh no you found candy and you couldn’t"
+   ctx.fillText("CANDY -> Oh no you found candy and you"
             ,ctx.canvas.width/1.4, ctx.canvas.height/5-5);
-   ctx.fillText("resist eating it. You’ll use the adrenaline"
+   ctx.fillText("couldn’t resist eating it. The adrenaline"
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+10);
-   ctx.fillText("from the sugar rush to get faster. But soon"
+   ctx.fillText("from the sugar rush gives you super speed" 
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+25);
-   ctx.fillText("the sugar rush will be over and you’ll get"
+   ctx.fillText(" and you become unstoppable! But once"
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+40);
-   ctx.fillText("even more tired than before and therefore run"
+   ctx.fillText("the sugar high wears off you crash"
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+55);
-   ctx.fillText("slower."
+   ctx.fillText("and become even. slower than before."
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+70);
 
     // PIAZZA
    ctx.fillStyle = 'green';
-   ctx.fillText("Piazza -> Patrick gave the class extra time"
+   ctx.fillText("PIAZZA -> Patrick extends the deadline."
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+90);
-   ctx.fillText("to submit the assignment!"
+   ctx.fillText("You gain 10 min!"
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+105);
 
     // COFFEE
    ctx.fillStyle = 'green';
-   ctx.fillText("Coffee -> Caffeine!! You drank a cup of coffee"
+   ctx.fillText("COFFEE -> You drank a cup of coffee"
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+135);
-   ctx.fillText("and can now run faster"
+   ctx.fillText("and can now run 1x faster!"
             ,ctx.canvas.width/1.4, ctx.canvas.height/5+150);
 
     // SPOTIFY
    ctx.fillStyle = 'green';
-   ctx.fillText("Spotify -> YES! Your favourite song comes up!"
+   ctx.fillText("SPOTIFY ->Your favourite song comes on!"
              ,ctx.canvas.width/1.4, ctx.canvas.height/5+170);
-   ctx.fillText("The tempo of the song speeds you up."
+   ctx.fillText("The tempo of the song speeds you up 1.5x."
              ,ctx.canvas.width/1.4, ctx.canvas.height/5+185);
-
-    // BEER
-   ctx.fillStyle = 'red';
-   ctx.fillText("Beer -> Oh no… your friend gave you a beer."
-            ,ctx.canvas.width/1.4, ctx.canvas.height/5+205);
-   ctx.fillText("The beer calms you down which makes you run"
-            ,ctx.canvas.width/1.4, ctx.canvas.height/5+220);
-   ctx.fillText("slower."
-            ,ctx.canvas.width/1.4, ctx.canvas.height/5+235);
-    
     // Go back button
     if (g_buttonInstruction.contains(g_mouseX, g_mouseY)){
         g_instructions = false;

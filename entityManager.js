@@ -59,7 +59,7 @@ generateStillPowerChangers: function(descr) {
 
 generateRunner: function(descr) {
     this._runner.push(new Runner(descr));
-  },
+ },
 
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
@@ -67,6 +67,34 @@ generateRunner: function(descr) {
 deferredSetup : function () {
     //bæta við okkar flokkum
     this._categories = [this._runner, this._powerChanger, this._stillPowerChanger]; 
+},
+
+
+reactToPowerChanger: function(entity) {
+    var type = entity.getPowerType();
+    var change = entity.getPowerChanger();
+    if(type === "speedChanger") {
+      console.log('bla');
+      console.log("runner",this._runner[0]);
+      
+      this._runner[0].speedChange(change);
+      console.log(change);
+      
+      //entityManager.speedChange(change);
+      //breyttu runner speed
+    }
+    if(type === "timeChanger") {
+      console.log('fór inn í time changer');
+      //breyttu klukkunni sem birtist
+    }
+    if(type === "dead") {
+      console.log('fórum inn í dead')
+      //game over
+    }
+    if(type === "crash") {
+      console.log('fór inn í crash');
+      //hafa áhrif á hraðann.
+    }
 },
 
 update: function(du) {
@@ -107,6 +135,8 @@ render: function(ctx) {
 
     }
 },
+
+
 }
 entityManager.deferredSetup();
 
