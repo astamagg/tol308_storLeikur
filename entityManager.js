@@ -143,11 +143,15 @@ var entityManager = {
     if(type === "pat") {
         console.log('fór inn í pat');
         this._runner[0].speed = 0;
+        this._runner[0].animationSpeed = 0;
+        this._runner[0].changeSprite();
+        console.log("eftir að við köllum");
         
         setTimeout(function() {
           setGameState('winner');
-        }, 3000);
+        }, 6000);
     }
+    
 },
 
   update: function(du) {

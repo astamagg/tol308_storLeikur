@@ -274,6 +274,7 @@ function requestPreloads() {
     chair: 'src/chair.png',
     bed: 'src/bedtile(54x54).png',
     pat: 'src/pat (49x62).png',
+    endSprite: 'src/spritesheet-ending(70x80).png',
   };
 
   imagesPreload(requiredImages, g_images, preloadDone);
@@ -343,7 +344,8 @@ function setUpPowerUps() {
             sprite: new Sprite(g_images.pat),
             powerChange: 0,
             powerType: "pat",
-        },];
+        },
+    ];
 }
 
 function preloadDone() {
@@ -366,6 +368,8 @@ function preloadDone() {
   //breyta líka í okkar
 
   g_sprites.runner = new Sprite(g_images.spritesheet);
+
+  g_sprites.endSprite = new Sprite(g_images.endSprite);
   
   entityManager.init();
 

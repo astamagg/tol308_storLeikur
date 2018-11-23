@@ -30,12 +30,22 @@ Sprite.prototype.drawAt = function (ctx, x, y) {
                   x, y);
 };
 
-Sprite.prototype.drawFrame = function(ctx, frameX, frameY, canvasX, canvasY) {
+//Draw runner based on the current frame in the animation 
+//Manually inserting height value as 80 so that crouching won't change it
+Sprite.prototype.drawFrame = function(ctx, frameX, frameY, canvasX, canvasY, height, width) {
     ctx.drawImage(this.image,
-                  frameX * 64, frameY * 80, 64, 80, 
-                  canvasX, canvasY, 64, 80);
+                  frameX * width, frameY * 80, width, 80, 
+                  canvasX, canvasY, width, 80);
   }
 
+  Sprite.prototype.drawEnd = function(ctx,  canvasX, canvasY, height, width) {
+      console.log("draw stuff");
+      for(var i = 0; i<10; i++ ){
+        ctx.drawImage(g_images.endSprite,
+                    i * width, 0, width, height, 
+                    canvasX, canvasY, width, height);
+      }
+  }
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
     if (rotation === undefined) rotation = 0;

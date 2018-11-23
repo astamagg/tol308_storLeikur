@@ -30,6 +30,18 @@ function Runner(descr) {
 
 Runner.prototype = new Entity();
 
+Runner.prototype.changeSprite = function() {
+  console.log("Fór inní changeSprite");
+  
+  this.endState = true;
+  this.currentLoop = 0;
+  this.currentLoopIndex = 0;
+  //this.sprite = g_sprites.endSprite;
+
+  //console.log("this.image: ",this.image);
+  
+};
+
 Runner.prototype.rememberResets = function() {
   // Remember my reset positions
   this.reset_cx = this.cx;
@@ -47,6 +59,7 @@ Runner.prototype.reset = function() {
   this.currentLoop = 2;
   this.isCrouching = false;
   this.isJumping = false;
+  this.endState = false;
 
   this.setPos(this.reset_cx, this.reset_cy);
   this.halt();
@@ -91,8 +104,8 @@ Runner.prototype.normalSpeed = 25;
 Runner.prototype.animationSpeed = 25; //normal = 20-25?
 Runner.prototype.jumpingSpeed = -10;
 Runner.prototype.gravity = 1;
-var jumpCounter = 0; // how long the jump button can be pressed down
-var ground = 270;
+
+const ground = 270;
 var NOMINAL_GRAVITY = 1;
 var JUMP_ACCELERATION = NOMINAL_GRAVITY * 15; // the bigger this number the higher the jump
 
@@ -106,9 +119,6 @@ Runner.prototype.handleKeys = function() {
     this.y_velocity -= JUMP_ACCELERATION;
     this.isJumping = true;
     g_jumpSound.play();
-
-    //TODO bæta við lengra jump-i ef við höldum inni
-    //með því að nota jumpCounter
   }
 };
 
@@ -122,10 +132,11 @@ Runner.prototype.powerUp = function(change) {
     g_music.playbackRate = 1.25;  
   }
   
+  //handle correct this entity as setTimeout else calls the window 
   var that = this;
+
   //power down after 5 sek
   //runner and song slows down, hair back to normal
-  //change sprite loop
   setTimeout(function() {
     that.isPowered = false;
     that.currentLoop = 2;
@@ -146,15 +157,13 @@ Runner.prototype.powerUp = function(change) {
   }, 5000);
 };
 
+//Change running speed according power up/down's 
 Runner.prototype.speedChange = function(change) {
-  //console.log('number', change);
   this.animationSpeed *= change;
-  //console.log('speed', this.animationSpeed);
-
   var that = this;
+  //reset to normal after 5 sek
   setTimeout(function() {
     that.animationSpeed = that.normalSpeed;
-    //console.log('after timeout', that.animationSpeed);
   }, 5000);
 };
 
@@ -163,8 +172,8 @@ Runner.prototype.update = function(du) {
   this.updateInterval -= du;
   this.cy += this.y_velocity;
 
-  if (this.isCrouching) this.height = 60;
-  else this.height = 80;
+  if (this.isCrouching) {this.height = 60;
+    }else{this.height = 80;}
 
   if (this.isJumping) {
     this.y_velocity += this.gravity;
@@ -178,25 +187,27 @@ Runner.prototype.update = function(du) {
     this.y_velocity = 0;
   }
 
-  //How often do we want to change the fram
+  //How often we change the frame on the spritesheet
   var updateTresh = this.animationSpeed;
 
   if (this.updateInterval < updateTresh) {
     this.computeSubStep(this.updateInterval);
-    //hvað er hvert skref mikil x færsla?
-    //placeholder if settning til þess að stelpan birtist aftur
+    //update the rooms xpos according to the speed of the runner
+    //update the runners xpos according to the room and camera
     this.roomX += this.speed;
     this.cx = this.roomX - this.width / 2 - g_camera.xView;
     this.updateInterval = 30;
   }
 
   this.cy = this.getPos().posY;
-  //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
+
+  //turn off collision if candy powerup and we are not at the end
   if (this.isPowered && !g_patIsShowing) {
   } else {
     var entityHit = this.isColliding();
   }
-  //the runner hit another entity
+
+  //Check for collision between runner and other entities 
   if (entityHit) {
     //react accordingly to it's affect
     entityManager.reactToPowerChanger(entityHit);
@@ -207,10 +218,12 @@ Runner.prototype.update = function(du) {
   }
 };
 
-//Færa spritesheet ramma um eitt skref
+//Spritesheet magic, set the correct loop and incrementation acoording to movements
+//and powerup's 
 Runner.prototype.computeSubStep = function(du) {
   this.cy += this.y_velocity;
 
+  //Change loops to coloured hair for candy powerup
   if (this.isPowered) {
     if (this.isCrouching) {
       this.currentLoop = 0;
@@ -228,12 +241,11 @@ Runner.prototype.computeSubStep = function(du) {
     if (this.currentLoopIndex >= this.poweredLoops[this.currentLoop].length) {
       this.currentLoopIndex = 0;
     }
+
+  //Normal values for spritesheet
   } else {
     if (this.isCrouching) {
       this.currentLoop = 0;
-      this.height = 60;
-    } else {
-      this.height = 80;
     }
     if (this.isJumping) {
       this.currentLoop = 1;
@@ -243,14 +255,14 @@ Runner.prototype.computeSubStep = function(du) {
       this.currentLoop = 2;
       this.currentLoopIndex++;
     }
-
-    //loop in a circle to animate and move the runner a distance x
+    //loop in a circle to animate movement
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
       this.currentLoopIndex = 0;
     }
   }
 };
 
+//Getters
 Runner.prototype.getWidth = function() {
   return this.width;
 };
@@ -263,21 +275,16 @@ Runner.prototype.getSpeed = function() {
   return this.speed;
 };
 
-/*Runner.prototype.reset = function() {
-  this.setPos(this.reset_cx, this.reset_cy);
-  this.roomX = this.reset_cx;
-  this.halt();
-};*/
+Runner.prototype.getPos = function() {
+  return { posX: this.cx, posY: this.cy };
+};
 
 Runner.prototype.halt = function() {
   this.velX = 0;
   this.velY = 0;
 };
 
-Runner.prototype.getPos = function() {
-  return { posX: this.cx, posY: this.cy };
-};
-
+//Collision detection for special values if the runner is crouching
 Runner.prototype.getColPos = function() {
   var currY = this.getPos().posY + this.isCrouching * 20;
   return { posX: this.cx, posY: currY };
@@ -308,16 +315,28 @@ Runner.prototype.blinkingRender = function(ctx) {
 Runner.prototype.render = function(ctx) {
   this.sprite.image.style.opacity = 0.2;
 
+  if(this.endState){
+    //console.log("endState");    
+      this.sprite.drawEnd(
+        ctx,
+        this.cx,
+        this.cy,
+        70,
+        80 
+        )
+      }
   //change color of hair when the power up appears
-  if (this.isPowered) {
+  else if (this.isPowered && !this.endState) {
     this.sprite.drawFrame(
       ctx,
       this.poweredLoops[this.currentLoop][this.currentLoopIndex],
       this.currentLoop,
       this.cx,
-      this.cy
+      this.cy,
+      this.height,
+      this.width
     );
-  } else if (!this.isPowered) {
+  } else if (!this.isPowered && !this.endState) {
     //check whether she hit a chair or a desk, then she slows down and blinks
     if (this.blinking) {
       this.blinkingRender(ctx);
@@ -327,7 +346,9 @@ Runner.prototype.render = function(ctx) {
         this.loops[this.currentLoop][this.currentLoopIndex],
         this.currentLoop,
         this.cx,
-        this.cy
+        this.cy,
+        this.height,
+        this.width
       );
     }
   }
