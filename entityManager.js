@@ -95,6 +95,7 @@ var entityManager = {
     this._stillPowerChanger = [];
 
     g_stillPowerChangerCounter = 0;
+    g_powerChangerCounter = 0;
     this._generatePowerChangers();
     this._generateStillPowerChangers();
     console.log(this._stillPowerChanger);
