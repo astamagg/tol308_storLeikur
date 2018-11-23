@@ -81,10 +81,15 @@ var entityManager = {
 
     countdown.reset();
 
+
     for (let i = 0; i < this._runner.length; i++) {
         this._runner[i].reset();
     }
-/*
+
+    for (let i = 0; i < this._pat.length; i++) {
+      this._pat[i].reset();
+    }
+    /*
     for (let i = 0; i < this._powerChanger.length; i++) {
         this._powerChanger[i].reset();
     }
@@ -95,9 +100,6 @@ var entityManager = {
     this._generatePowerChangers();
     this._generateStillPowerChangers();
 
-    for (let i = 0; i < this._pat.length; i++) {
-        this._pat[i].reset();
-    }
   },
   reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
@@ -137,8 +139,11 @@ var entityManager = {
     }
     if(type === "pat") {
         //console.log('fór inn í pat');
-        // this._runner[0].speed = 0;
-        setGameState('winner');
+        this._runner[0].speed = 0;
+
+        setTimeout(function() {
+            setGameState('winner');
+        }, 5000);
     }
 },
 
