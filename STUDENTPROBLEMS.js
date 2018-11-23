@@ -50,7 +50,6 @@ var isPlaying = false;
 var gameState = 'story';
 
 function setGameState(state) {
-    //console.log(state);
 
     if (state === 'story') {
         g_gameOver = false;

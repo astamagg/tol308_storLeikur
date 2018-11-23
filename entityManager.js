@@ -87,19 +87,16 @@ var entityManager = {
 
     for (let i = 0; i < this._pat.length; i++) {
       this._pat[i].reset();
-  }
-/*
-    for (let i = 0; i < this._powerChanger.length; i++) {
-        this._powerChanger[i].reset();
     }
 
-    for (let i = 0; i < this._stillPowerChanger.length; i++) {
-        this._stillPowerChanger[i].reset();
-    }*/
     this._generatePowerChangers();
     this._generateStillPowerChangers();
+    
+    this._powerChanger = [];
+    this._stillPowerChanger = [];
 
   },
+
   reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
@@ -127,7 +124,6 @@ var entityManager = {
     }
     //landing on the bed ends the game
     if(type === "dead") {
-      //console.log('fórum inn í dead')
       setGameState('gameOver');
     }
     //crashing into a chair or a desk causes the runner to blink and slow down

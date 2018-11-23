@@ -8,6 +8,13 @@ function StillPowerChanger(descr) {
 
 StillPowerChanger.prototype = new Entity();
 
+
+StillPowerChanger.prototype.reset = function() {
+    spatialManager.unregister(this);
+    g_stillPowerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
+};
+
 StillPowerChanger.prototype.innerSetUp = function() {
      //find the power changer, that is what effect it has if the runner hits it
     this.ID = Math.floor(util.randRange(8,11));
@@ -84,8 +91,12 @@ StillPowerChanger.prototype.getColPos = function() {
 
 
 StillPowerChanger.prototype.update = function(du) {
-    if(!this.drawTimeChanger) {
-        this.frameCounter++;
+    if(!g_patIsShowing) {
+        if(!this.drawTimeChanger) {
+            this.frameCounter++;
+        }
+    } else {
+        this.frameCounter = 0;
     }
     //start drawing it at a certain space count
     if(this.frameCounter > this.frameMax && g_stillPowerChangerCounter < 1) {

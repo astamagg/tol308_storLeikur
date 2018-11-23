@@ -8,6 +8,12 @@ function PowerChanger(descr) {
 
 PowerChanger.prototype = new Entity();
 
+PowerChanger.prototype.reset = function() {
+    spatialManager.unregister(this);
+    g_powerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
+};
+
 PowerChanger.prototype.innerSetUp = function() {
     //find the power changer, that is what effect it has if the runner hits it
     var ID = Math.floor(util.randRange(0,8));
@@ -83,10 +89,13 @@ PowerChanger.prototype.randomVelocity = function() {
 };
 
 PowerChanger.prototype.update = function(du) {
-    //console.log('g_pat ', g_patIsShowing);
-    
-    if(!this.drawTimeChanger) {
-        this.frameCounter++;
+
+    if(!g_patIsShowing) {
+        if(!this.drawTimeChanger) {
+            this.frameCounter++;
+        }
+    } else {
+        this.frameCounter = 0;
     }
     //draw a new power changer if frame count is reached and the number of
     // power changers already in the frame is less than four

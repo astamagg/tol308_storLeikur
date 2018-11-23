@@ -1,16 +1,16 @@
 
 var countdown = {
 _time: 60,  //time in seconds
-_patCountdown: 10,
+_patCountdown: 50,
 _timeString: "01:00",   //string to be rendered
 _patCount: 1,
 updateCount: 1, //frame count
 powerTime: 0,
 powerCatch: false,
 powerChangeString: "",
-_patCountThreshold: 10,
+_patCountThreshold: 50,
 _updateThreshold: 60,
-PAT_TIME_CONSTANT: 10,
+PAT_TIME_CONSTANT: 50,
 
 reset:function() {
     this._time = 60;  //time in seconds
@@ -27,55 +27,66 @@ reset:function() {
 },
 
 update:function() {
-    this.updateCount++;
-    this._patCount++;
-
-    //change the value every 60 updates
-    if(this.updateCount === this._updateThreshold) {
-        this._time = this._time - 1; //change the time value
-        this.updateCount = 1;   
-        this.timeToMinutes();   //change to minutes
-    }
-
-    //check whether to decrease the time of the inner logic of the game
-    if(this._patCount > this._patCountThreshold) {
-        this._patCountdown = this._patCountdown - 1;
-        this._patCount = 1;
-    }
-
-    //have pat walk in at the end
-    if (this._patCountdown === 0) {
-        console.log('fór inn í pat countdown');
-        entityManager._pat[0].startWalkingIn();
-    }
-    this.checkGameState();   //check if the game is over
+    if(!g_patIsShowing) {
+        this.updateCount++;
+        this._patCount++;
     
-    //count how long the power effect should appear for
-    if(this.powerCatch) {
-        this.powerTime++;
-        if(this.powerTime > 25) {
-            this.powerCatch = false;
-            this.powerTime = 0;
+        //change the value every 60 updates
+        if(this.updateCount === this._updateThreshold) {
+            this._time = this._time - 1; //change the time value
+            this.updateCount = 1;   
+            this.timeToMinutes();   //change to minutes
         }
-    }
-
-    if(this._time < 0 && this._patCountdown > 0) {
-        setGameState('gameOver')
+    
+        //check whether to decrease the time of the inner logic of the game
+        if(this._patCount > this._patCountThreshold) {
+            this._patCountdown = this._patCountdown - 1;
+            this._patCount = 1;
+        }
+    
+        //have pat walk in at the end
+        if (this._patCountdown === 0) {
+            entityManager._pat[0].startWalkingIn();
+        }
+        this.checkGameState();   //check if the game is over
+        
+        //count how long the power effect should appear for
+        if(this.powerCatch) {
+            this.powerTime++;
+            if(this.powerTime > 25) {
+                this.powerCatch = false;
+                this.powerTime = 0;
+            }
+        }
+    
+        if(this._time < 0 && this._patCountdown > 0) {
+            setGameState('gameOver')
+        }
+    } else {
+        this._timeString = "Turn in the assignment!!";
     }
 },
 
 //rendering the clock
 render:function(ctx) {
-    ctx.font = "50px Courier";
-    ctx.fillStyle = "black";
-    var width = g_canvas.width/2;
-    ctx.fillText(this._timeString, width, 100);
+    if(!g_patIsShowing) {
+        ctx.font = "50px Courier";
+        ctx.fillStyle = "black";
+        var width = g_canvas.width/2;
+        ctx.fillText(this._timeString, width, 100);
 
-    //adding the time change to the screen eftir powerUp/powerDown catch
-    if(this.powerCatch) {
-        g_ctx.font = "20px Courier";
-        g_ctx.fillStyle = "red";
-        g_ctx.fillText(this.powerChangeString, g_canvas.width/2 + 80, 50);
+        //adding the time change to the screen eftir powerUp/powerDown catch
+        if(this.powerCatch) {
+            g_ctx.font = "20px Courier";
+            g_ctx.fillStyle = "red";
+            g_ctx.fillText(this.powerChangeString, g_canvas.width/2 + 80, 50);
+        }
+    } else {
+        ctx.font = "20px Courier";
+        ctx.fillStyle = "black";
+        var width = g_canvas.width/2;
+        ctx.fillText(this._timeString, width, 100);
+
     }
 },
 
