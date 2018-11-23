@@ -4,7 +4,7 @@
 // SPRITE STUFF
 // ============
 
-"use strict";
+'use strict';
 
 /* jshint browser: true, devel: true, globalstrict: true */
 
@@ -13,60 +13,63 @@
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
-
 // Construct a "sprite" from the given `image`,
 //
 function Sprite(image) {
-    this.image = image;
-    this.width = image.width;
-    this.height = image.height;
-    this.scale = 1;
+  this.image = image;
+  this.width = image.width;
+  this.height = image.height;
+  this.scale = 1;
 
-    this.y = this.cy - this.height;
+  this.y = this.cy - this.height;
 }
 
-Sprite.prototype.drawAt = function (ctx, x, y) {
-    ctx.drawImage(this.image, 
-                  x, y);
+Sprite.prototype.drawAt = function(ctx, x, y) {
+  ctx.drawImage(this.image, x, y);
 };
 
 Sprite.prototype.drawFrame = function(ctx, frameX, frameY, canvasX, canvasY) {
-    ctx.drawImage(this.image,
-                  frameX * 64, frameY * 80, 64, 80, 
-                  canvasX, canvasY, 64, 80);
-  }
+  ctx.drawImage(
+    this.image,
+    frameX * 64,
+    frameY * 80,
+    64,
+    80,
+    canvasX,
+    canvasY,
+    64,
+    80
+  );
+};
 
+Sprite.prototype.drawCentredAt = function(ctx, cx, cy, rotation) {
+  if (rotation === undefined) rotation = 0;
 
-Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
-    if (rotation === undefined) rotation = 0;
-    
-    var w = this.width,
-        h = this.height;
+  var w = this.width,
+    h = this.height;
 
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(rotation);
-    ctx.scale(this.scale, this.scale);
-    
-    // drawImage expects "top-left" coords, so we offset our destination
-    // coords accordingly, to draw our sprite centred at the origin
-    ctx.drawImage(this.image, 
-                  -w/2, -h/2);
-    
-    ctx.restore();
-};  
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(rotation);
+  ctx.scale(this.scale, this.scale);
 
-Sprite.prototype.drawWrappedCentredAt = function (ctx, cx, cy, rotation) {
-    
-    // Get "screen width"
-    var sw = g_canvas.width;
-    
-    // Draw primary instance
-    this.drawWrappedVerticalCentredAt(ctx, cx, cy, rotation);
-    
-    // Left and Right wraps
-    this.drawWrappedVerticalCentredAt(ctx, cx - sw, cy, rotation);
-    this.drawWrappedVerticalCentredAt(ctx, cx + sw, cy, rotation);
+  // drawImage expects "top-left" coords, so we offset our destination
+  // coords accordingly, to draw our sprite centred at the origin
+  ctx.drawImage(this.image, -w / 2, -h / 2);
+
+  ctx.restore();
+};
+
+Sprite.prototype.drawWrappedCentredAt = function(ctx, cx, cy, rotation) {
+  // Get "screen width"
+  var sw = g_canvas.width;
+
+  // Draw primary instance
+  this.drawWrappedVerticalCentredAt(ctx, cx, cy, rotation);
+
+  // Left and Right wraps
+  this.drawWrappedVerticalCentredAt(ctx, cx - sw, cy, rotation);
+  this.drawWrappedVerticalCentredAt(ctx, cx + sw, cy, rotation);
 };
 /*
 Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, rotation) {
