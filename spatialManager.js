@@ -51,21 +51,19 @@ var spatialManager = {
     //unregister with the the index of the entity in the array
     var index = this._entities.indexOf(entity);
 
-    if(index === -1) return;
+    if (index === -1) return;
     this._entities.splice(index, 1);
-    
   },
 
   findEntityInRange: function(posX, posY, width, height) {
     //All the entities are rectangels. Every entity is checked against the runner
     //The closest entity gets hit by the runner
     for (var ID in this._entities) {
-      //return if I am comparing the entity to itself
-      
-      //þarf að geta náð í this.y úr runner til þess að upphafsstilla þar
-      if(this._entities[ID].empty) {
+      //skip if it's an empty entity
+      if (this._entities[ID].empty) {
         continue;
       }
+      //skip if I am comparing the entity to itself
       if (
         posX === this._entities[ID].getColPos().posX &&
         posY === this._entities[ID].getColPos().posY
@@ -79,10 +77,10 @@ var spatialManager = {
           posY,
           width,
           height,
-          this._entities[ID].getColPos().posX ,
+          this._entities[ID].getColPos().posX,
           this._entities[ID].getColPos().posY,
           this._entities[ID].getHeight(),
-          this._entities[ID].getWidth(),
+          this._entities[ID].getWidth()
         )
       ) {
         return this._entities[ID];
@@ -96,8 +94,13 @@ var spatialManager = {
     ctx.strokeStyle = 'red';
     for (var ID in this._entities) {
       var e = this._entities[ID];
-      
-      ctx.strokeRect(e.getColPos().posX, e.getColPos().posY, e.getWidth(), e.getHeight());
+
+      ctx.strokeRect(
+        e.getColPos().posX,
+        e.getColPos().posY,
+        e.getWidth(),
+        e.getHeight()
+      );
     }
     ctx.strokeStyle = oldStyle;
   },
