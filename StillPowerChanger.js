@@ -8,6 +8,13 @@ function StillPowerChanger(descr) {
 
 StillPowerChanger.prototype = new Entity();
 
+
+StillPowerChanger.prototype.reset = function() {
+    spatialManager.unregister(this);
+    g_stillPowerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
+};
+
 StillPowerChanger.prototype.innerSetUp = function() {
      //find the power changer, that is what effect it has if the runner hits it
     this.ID = Math.floor(util.randRange(8,11));

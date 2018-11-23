@@ -81,7 +81,6 @@ var entityManager = {
 
     countdown.reset();
 
-
     for (let i = 0; i < this._runner.length; i++) {
         this._runner[i].reset();
     }
@@ -89,18 +88,19 @@ var entityManager = {
     for (let i = 0; i < this._pat.length; i++) {
       this._pat[i].reset();
     }
-    /*
+    
     for (let i = 0; i < this._powerChanger.length; i++) {
         this._powerChanger[i].reset();
     }
 
     for (let i = 0; i < this._stillPowerChanger.length; i++) {
         this._stillPowerChanger[i].reset();
-    }*/
-    this._generatePowerChangers();
-    this._generateStillPowerChangers();
+    }
+    this._powerChanger = [];
+    this._stillPowerChanger = [];
 
   },
+
   reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();

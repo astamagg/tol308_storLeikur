@@ -8,6 +8,12 @@ function PowerChanger(descr) {
 
 PowerChanger.prototype = new Entity();
 
+PowerChanger.prototype.reset = function() {
+    spatialManager.unregister(this);
+    g_powerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
+};
+
 PowerChanger.prototype.innerSetUp = function() {
     //find the power changer, that is what effect it has if the runner hits it
     var ID = Math.floor(util.randRange(0,8));

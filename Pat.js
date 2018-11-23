@@ -63,11 +63,9 @@ Pat.prototype.update = function (du) {
         this.cx -= this.speed * du;
         if (this.cx <= g_canvas.width - (this.sprite.width/2) - 50) {
             this.isWalkingIn = false;
-            console.log("Pat is showing"+ g_patIsShowing);
             g_patIsShowing = true;
         }
     }
-    console.log('g_pat: ', g_patIsShowing);
 };
 
 Pat.prototype.render = function () {
