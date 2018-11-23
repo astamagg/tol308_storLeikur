@@ -123,35 +123,19 @@ var g_buttonsFrontPage = [
   }),
 ];
 
-var g_buttonsGameOver = [
-
-    new Button({
-        text : 'Start new game',
-        color : 'red',
-        width : 200,
-        height : 40,
-        x : 400,
-        y : 100,
-        onClick : function () {
-            console.log('START NEW GAME FROM GAMEOVER CLICKED!');
-            entityManager.reset();
-            setGameState('playGame');
-        }
-    }),
-
-    new Button({
-        text : 'Go Back to Menu',
-        color : 'red',
-        width : 200,
-        height : 40,
-        x : 100,
-        y : 100,
-        onClick : function () {
-            setGameState('story');
-        }
-    }),
-
-];
+var g_buttonGameOver = new Button({
+    text : 'Start new game',
+    color : 'red',
+    width : 200,
+    height : 40,
+    x : g_canvas.width/2 - 100,
+    y : 100,
+    onClick : function () {
+        console.log('START NEW GAME FROM GAMEOVER CLICKED!');
+        entityManager.reset();
+        setGameState('playGame');
+    }
+});
 
 var g_buttonInstruction = new Button({
   text: 'Go back',
@@ -249,9 +233,7 @@ function renderSimulation(ctx) {
     if (typeof g_camera === 'undefined') { return }
 
     if (gameState === 'gameOver' || gameState == 'winner') {
-        for (let i=0; i<g_buttonsGameOver.length; i++) { 
-            g_buttonsGameOver[i].render(ctx);
-        }
+        g_buttonGameOver.render(ctx);
         gameOver(ctx);
     } else if (gameState === 'story') {
         theStory(ctx);
