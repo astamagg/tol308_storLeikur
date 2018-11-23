@@ -289,7 +289,6 @@ function requestPreloads() {
     netflix: 'src/netflix.png',
     beer: 'src/beer.png',
     youtube: 'src/youtube.png',
-    backgroundFrontPage: 'src/backgroundFrontPage.png',
     desk: 'src/desk.png',
     chair: 'src/chair.png',
     bed: 'src/bedtile(54x54).png',
@@ -308,27 +307,27 @@ function setUpPowerUps() {
         {
             sprite: new Sprite(g_images.piazza),
             powerChange: 10,
-            powerType: "timeChanger",
+            powerType: "timeChangerUp",
         },
         {
             sprite: new Sprite(g_images.netflix),
             powerChange: 10,
-            powerType: "timeChanger",
+            powerType: "timeChangerDown",
         },
         {
             sprite: new Sprite(g_images.energydrink),
             powerChange: 1.75,
-            powerType: "speedChanger",
+            powerType: "speedChangerUp",
         },
         {   
             sprite: new Sprite(g_images.coffee),
             powerChange: 1.5,
-            powerType: "speedChanger"
+            powerType: "speedChangerUp"
         },
         {
             sprite: new Sprite(g_images.spotify),
             powerChange: 1.25,
-            powerType: "speedChanger",
+            powerType: "speedChangerUp",
         },
         {
             sprite: new Sprite(g_images.candy),
@@ -338,12 +337,12 @@ function setUpPowerUps() {
         {
             sprite: new Sprite(g_images.beer),
             powerChange: 0.5,
-            powerType: "speedChanger",
+            powerType: "speedChangerDown",
         },
         {
             sprite: new Sprite(g_images.youtube),
             powerChange: 3,
-            powerType: "timeChanger",
+            powerType: "timeChangerDown",
         },
         {
             sprite: new Sprite(g_images.chair),

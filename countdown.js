@@ -1,27 +1,29 @@
 
 var countdown = {
 _time: 60,  //time in seconds
-_patCountdown: 10,
+_patCountdown: 50,
 _timeString: "01:00",   //string to be rendered
 _patCount: 1,
 updateCount: 1, //frame count
 powerTime: 0,
 powerCatch: false,
 powerChangeString: "",
-_patCountThreshold: 10,
+_patCountThreshold: 50,
 _updateThreshold: 60,
+PAT_TIME_CONSTANT: 50,
 
 reset:function() {
     this._time = 60;  //time in seconds
-    this._patCountdown = 10;
-    this._timeString = "01:00";  //string to be rendered
+    this._patCountdown = 50;
+    this._timeString = "01:00";   //string to be rendered
     this._patCount = 1;
     this.updateCount = 1; //frame count
     this.powerTime = 0;
     this.powerCatch = false;
     this.powerChangeString = "";
-    this._patCountThreshold = 10;
+    this._patCountThreshold = 50;
     this._updateThreshold = 60;
+    this.PAT_TIME_CONSTANT = 50;
 },
 
 update:function() {
@@ -36,8 +38,11 @@ update:function() {
     }
 
     //check whether to decrease the time of the inner logic of the game
-    if(this._patCount % this._patCountThreshold === 0) {
-        this._patCountdown -= 1;
+    console.log('patCount: ', this._patCount);
+    console.log('patCountThreshold: ', this._patCountThreshold);
+    if(this._patCount > this._patCountThreshold) {
+        this._patCountdown = this._patCountdown - 1;
+        console.log('patCount:', this._patCountdown );
         this._patCount = 1;
     }
 
@@ -117,13 +122,18 @@ checkGameState: function() {
 
 //make the countdown for the end state increase or decrease with regard to speed
 //that is count sooner down if the runner is slower, covering less ground than usually
-speedChange: function(change) {
+speedChange: function(change, type) {
     //change the counting threshold lower/higher depending on powerUp/powerDown
-    this._patCountThreshold = Math.floor((this._patCountThreshold*change));
+    var timeChange = Math.floor(change * 10);
+    if(type === 'speedChangerUp') {
+        this._patCountThreshold = this._patCountThreshold - timeChange;
+    } else if(type === 'speedChangerDown' || type === 'crash') {
+        this._patCountThreshold = this._patCountThreshold + timeChange;
+    }
     var that = this;
     //sett the time limit before changing back.
     setTimeout(function() {
-        that._patCountThreshold = that._patCountdown;
+        that._patCountThreshold = that.PAT_TIME_CONSTANT;
     }, 5000);
 }
 

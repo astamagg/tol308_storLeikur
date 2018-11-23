@@ -84,14 +84,16 @@ var entityManager = {
     for (let i = 0; i < this._runner.length; i++) {
         this._runner[i].reset();
     }
-
+/*
     for (let i = 0; i < this._powerChanger.length; i++) {
         this._powerChanger[i].reset();
     }
 
     for (let i = 0; i < this._stillPowerChanger.length; i++) {
         this._stillPowerChanger[i].reset();
-    }
+    }*/
+    this._generatePowerChangers();
+    this._generateStillPowerChangers();
 
     for (let i = 0; i < this._pat.length; i++) {
         this._pat[i].reset();
@@ -102,16 +104,16 @@ var entityManager = {
     var change = entity.getPowerChanger();
 
     // Play right reactionary sound
-    if (type === 'timeChangerUp' || (type === 'speedChanger' && change >= 1)) {
+    if (type === 'timeChangerUp' || (type === 'speedChangerUp' && change >= 1)) {
       g_powerUpSound.play();
     }
-    if (type === 'timeChangerDown' || (type === 'speedChanger' && change < 1)) {
+    if (type === 'timeChangerDown' || (type === 'speedChangerDown' && change < 1)) {
       g_powerDownSound.play();
     }
     //change the runners speed and affect the time logic of the game
-    if (type === 'speedChanger') {
+    if (type === 'speedChangerUp' || type === 'speedChangerDown') {
       this._runner[0].speedChange(change);
-      countdown.speedChange(change);
+      countdown.speedChange(change, type);
     }
     //makes the runner indestructable and then slows her down
     if (type === 'candy') {

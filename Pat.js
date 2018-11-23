@@ -25,19 +25,20 @@ Pat.prototype = new Entity();
 Pat.prototype.reset = function() {
     this.cx = this.reset_cx;
     this.cy = this.reset_cy;
-    console.log('PATTY BOY!', this.cx, this.cy);
+   // console.log('PATTY BOY!', this.cx, this.cy);
     g_patIsShowing = false;
+    spatialManager.register(this);
 };
 
 Pat.prototype.speed = 1;
 
 Pat.prototype.getWidth = function() {
-    console.log('WIDTH: ' + this.sprite.width);
+  //  console.log('WIDTH: ' + this.sprite.width);
     return this.sprite.width;
 };
 
 Pat.prototype.getHeight = function() {
-    console.log('HEIGHT: ' + this.sprite.height);
+  //  console.log('HEIGHT: ' + this.sprite.height);
     return this.sprite.height;
 };
 
