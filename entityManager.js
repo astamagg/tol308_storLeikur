@@ -90,7 +90,7 @@ var entityManager = {
     }
     
     for (let i = 0; i < this._powerChanger.length; i++) {
-        this._powerChanger[i].reset();
+      this._powerChanger[i].reset();
     }
 
     for (let i = 0; i < this._stillPowerChanger.length; i++) {
