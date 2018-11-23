@@ -1,16 +1,16 @@
 
 var countdown = {
 _time: 60,  //time in seconds
-_patCountdown: 10,
+_patCountdown: 50,
 _timeString: "01:00",   //string to be rendered
 _patCount: 1,
 updateCount: 1, //frame count
 powerTime: 0,
 powerCatch: false,
 powerChangeString: "",
-_patCountThreshold: 10,
+_patCountThreshold: 50,
 _updateThreshold: 60,
-PAT_TIME_CONSTANT: 10,
+PAT_TIME_CONSTANT: 50,
 
 reset:function() {
     this._time = 60;  //time in seconds
