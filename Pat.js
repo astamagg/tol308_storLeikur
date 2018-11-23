@@ -41,7 +41,6 @@ Pat.prototype.getWidth = function() {
 };
 
 Pat.prototype.getHeight = function() {
-
     return this.height;
 };
 

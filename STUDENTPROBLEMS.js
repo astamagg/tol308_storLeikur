@@ -130,7 +130,7 @@ var g_buttonGameOver = new Button({
     x : g_canvas.width/2 - 100,
     y : 100,
     onClick : function () {
-        console.log('START NEW GAME FROM GAMEOVER CLICKED!');
+        //console.log('START NEW GAME FROM GAMEOVER CLICKED!');
         entityManager.reset();
         setGameState('playGame');
     }
@@ -170,13 +170,13 @@ var TOGGLE_MUTE = 'M'.charCodeAt(0);
 
 function toggleMusic() {
   if (g_music.paused) {
-    console.log('PLAY');
+    //console.log('PLAY');
     g_music.play();
     g_jumpSound.volume = 0.4;
     g_powerDownSound.volume = 0.4;
     g_powerUpSound.volume = 0.4;
   } else {
-    console.log('PAUSE');
+    //console.log('PAUSE');
     g_music.pause();
     g_jumpSound.volume = 0;
     g_powerDownSound.volume = 0;

@@ -147,14 +147,14 @@ Runner.prototype.powerUp = function(change) {
 };
 
 Runner.prototype.speedChange = function(change) {
-  console.log('number', change);
+  //console.log('number', change);
   this.animationSpeed *= change;
-  console.log('speed', this.animationSpeed);
+  //console.log('speed', this.animationSpeed);
 
   var that = this;
   setTimeout(function() {
     that.animationSpeed = that.normalSpeed;
-    console.log('after timeout', that.animationSpeed);
+    //console.log('after timeout', that.animationSpeed);
   }, 5000);
 };
 

@@ -89,6 +89,7 @@ PowerChanger.prototype.randomVelocity = function() {
 };
 
 PowerChanger.prototype.update = function(du) {
+
     if(!g_patIsShowing) {
         if(!this.drawTimeChanger) {
             this.frameCounter++;
