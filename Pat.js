@@ -7,10 +7,10 @@ function Pat(descr) {
   this.sprite = this.sprite || g_sprites.powerUpsDowns[11].sprite;
   this.powerType = g_sprites.powerUpsDowns[11].powerType;
 
-  this.height = this.sprite.height * 10;
-  this.width = this.sprite.width * 2;
+  this.height = this.sprite.height;
+  this.width = this.sprite.width * 1.5;
 
-  this.cx = g_canvas.width + this.getWidth()/2;
+  this.cx = g_canvas.width + this.getWidth() * 2;
   this.cy = 320;
 
   this.isWalkingIn = false;
@@ -55,11 +55,11 @@ Pat.prototype.getPowerType = function() {
 };
 
 Pat.prototype.getPos = function() {
-    return { posX : this.cx - this.getWidth()/2.0, posY : this.cy-this.getHeight()/2.0 };
+    return { posX : this.cx - this.getWidth(), posY : this.cy-this.getHeight()/2.0 };
+   //return { posX: this.cx, posY: this.cx};
 };
 
 Pat.prototype.update = function (du) {
-    console.log(this.isWalkingIn);
     if (this.isWalkingIn) {
         this.cx -= this.speed * du;
         if (this.cx <= g_canvas.width - (this.sprite.width/2) - 50) {
@@ -67,6 +67,7 @@ Pat.prototype.update = function (du) {
             g_patIsShowing = true;
         }
     }
+    console.log('g_pat: ', g_patIsShowing);
 };
 
 Pat.prototype.render = function () {

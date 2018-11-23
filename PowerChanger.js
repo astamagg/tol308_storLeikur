@@ -83,10 +83,12 @@ PowerChanger.prototype.randomVelocity = function() {
 };
 
 PowerChanger.prototype.update = function(du) {
-    console.log('g_pat ', g_patIsShowing);
-    
-    if(!this.drawTimeChanger) {
-        this.frameCounter++;
+    if(!g_patIsShowing) {
+        if(!this.drawTimeChanger) {
+            this.frameCounter++;
+        }
+    } else {
+        this.frameCounter = 0;
     }
     //draw a new power changer if frame count is reached and the number of
     // power changers already in the frame is less than four

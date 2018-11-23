@@ -84,8 +84,12 @@ StillPowerChanger.prototype.getColPos = function() {
 
 
 StillPowerChanger.prototype.update = function(du) {
-    if(!this.drawTimeChanger) {
-        this.frameCounter++;
+    if(!g_patIsShowing) {
+        if(!this.drawTimeChanger) {
+            this.frameCounter++;
+        }
+    } else {
+        this.frameCounter = 0;
     }
     //start drawing it at a certain space count
     if(this.frameCounter > this.frameMax && g_stillPowerChangerCounter < 1) {

@@ -126,7 +126,6 @@ var entityManager = {
     }
     //landing on the bed ends the game
     if(type === "dead") {
-      //console.log('fórum inn í dead')
       setGameState('gameOver');
     }
     //crashing into a chair or a desk causes the runner to blink and slow down
@@ -136,7 +135,6 @@ var entityManager = {
         countdown.speedChange(change);
     }
     if(type === "pat") {
-        //console.log('fór inn í pat');
         // this._runner[0].speed = 0;
         setGameState('winner');
     }
