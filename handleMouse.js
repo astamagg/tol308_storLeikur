@@ -27,6 +27,9 @@ function handleButtonColor(evt) {
     let instructionButton = g_buttonInstruction.contains(
         evt.clientX - g_canvas.offsetLeft, 
         evt.clientY - g_canvas.offsetTop);
+    let gameOverButton = g_buttonGameOver.contains(
+        evt.clientX - g_canvas.offsetLeft, 
+        evt.clientY - g_canvas.offsetTop);
     
     for (let i=0; i<g_buttonsFrontPage.length; i++) {
         if (g_buttonsFrontPage[i].contains(
@@ -37,13 +40,8 @@ function handleButtonColor(evt) {
         }
     }
 
-    for (let i=0; i<g_buttonsGameOver.length; i++) {
-        if (g_buttonsGameOver[i].contains(
-            evt.clientX - g_canvas.offsetLeft, 
-            evt.clientY - g_canvas.offsetTop)) {
-            g_buttonsGameOver[i].color = 'yellow';
-            
-        }
+    if (gameOverButton) {
+        g_buttonGameOver.color = 'yellow';
     }
 
     if (instructionButton) {
@@ -55,21 +53,13 @@ function handleButtonColor(evt) {
 function handleButtonUp(evt) {
     
     g_buttonInstruction.color = 'red';
+    g_buttonGameOver.color = 'red';
 
     for (let i=0; i<g_buttonsFrontPage.length; i++) {
         if (g_buttonsFrontPage[i].contains(
             evt.clientX - g_canvas.offsetLeft, 
             evt.clientY - g_canvas.offsetTop)) {
             g_buttonsFrontPage[i].color = 'red';
-            
-        }
-    }
-
-    for (let i=0; i<g_buttonsGameOver.length; i++) {
-        if (g_buttonsGameOver[i].contains(
-            evt.clientX - g_canvas.offsetLeft, 
-            evt.clientY - g_canvas.offsetTop)) {
-            g_buttonsGameOver[i].color = 'red';
             
         }
     }

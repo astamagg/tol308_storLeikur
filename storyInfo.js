@@ -278,11 +278,10 @@ function instructionGame(ctx) {
 
 function gameOver(ctx) {
         // start game and information button
-        for (let i = 0; i < g_buttonsGameOver.length; i++) {
-                if (g_buttonsGameOver[i].contains(g_mouseX, g_mouseY)) {
-                        g_buttonsGameOver[i].onClick();
-                }
+        if (g_buttonGameOver.contains(g_mouseX, g_mouseY)) {
+                g_buttonGameOver.onClick();
         }
+        
         if (gameState !== 'gameOver' && gameState !== 'winner') { return }
         // Clear the game
         ctx.drawImage(g_images.background,0,700, g_canvas.width, g_canvas.height);
