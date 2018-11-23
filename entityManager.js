@@ -89,11 +89,20 @@ var entityManager = {
       this._pat[i].reset();
     }
 
-    this._generatePowerChangers();
-    this._generateStillPowerChangers();
+    
+    for (let i = 0; i < this._powerChanger.length; i++) {
+      this._powerChanger[i].reset();
+    }
+    
+    for (let i = 0; i < this._powerChanger.length; i++) {
+      this._stillPowerChanger[i].reset();
+    }
     
     this._powerChanger = [];
     this._stillPowerChanger = [];
+    
+    this._generatePowerChangers();
+    this._generateStillPowerChangers();
 
   },
 
