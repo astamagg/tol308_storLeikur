@@ -47,6 +47,9 @@ Runner.prototype.reset = function() {
   this.currentLoop = 2;
   this.isCrouching = false;
   this.isJumping = false;
+
+  this.setPos(this.reset_cx, this.reset_cy);
+  this.halt();
 };
 
 Runner.prototype.KEY_JUMP = ' '.charCodeAt(0);
@@ -183,6 +186,7 @@ Runner.prototype.update = function(du) {
     //hvað er hvert skref mikil x færsla?
     //placeholder if settning til þess að stelpan birtist aftur
     this.roomX += this.speed;
+    console.log("RoomX: "+ this.roomX + "Reset: "+this.reset_roomX);
     this.cx = this.roomX - this.width / 2 - g_camera.xView;
     this.updateInterval = 30;
   }
@@ -260,11 +264,11 @@ Runner.prototype.getSpeed = function() {
   return this.speed;
 };
 
-Runner.prototype.reset = function() {
+/*Runner.prototype.reset = function() {
   this.setPos(this.reset_cx, this.reset_cy);
   this.roomX = this.reset_cx;
   this.halt();
-};
+};*/
 
 Runner.prototype.halt = function() {
   this.velX = 0;

@@ -1,29 +1,29 @@
 
 var countdown = {
 _time: 60,  //time in seconds
-_patCountdown: 50,
+_patCountdown: 10,
 _timeString: "01:00",   //string to be rendered
 _patCount: 1,
 updateCount: 1, //frame count
 powerTime: 0,
 powerCatch: false,
 powerChangeString: "",
-_patCountThreshold: 50,
+_patCountThreshold: 10,
 _updateThreshold: 60,
-PAT_TIME_CONSTANT: 50,
+PAT_TIME_CONSTANT: 10,
 
 reset:function() {
     this._time = 60;  //time in seconds
-    this._patCountdown = 50;
+    this._patCountdown = 10;
     this._timeString = "01:00";   //string to be rendered
     this._patCount = 1;
     this.updateCount = 1; //frame count
     this.powerTime = 0;
     this.powerCatch = false;
     this.powerChangeString = "";
-    this._patCountThreshold = 50;
+    this._patCountThreshold = 10;
     this._updateThreshold = 60;
-    this.PAT_TIME_CONSTANT = 50;
+    this.PAT_TIME_CONSTANT = 10;
 },
 
 update:function() {

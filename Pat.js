@@ -56,7 +56,6 @@ Pat.prototype.getPowerType = function() {
 
 Pat.prototype.getPos = function() {
     return { posX : this.cx - this.getWidth(), posY : this.cy-this.getHeight()/2.0 };
-   //return { posX: this.cx, posY: this.cx};
 };
 
 Pat.prototype.update = function (du) {
@@ -64,6 +63,7 @@ Pat.prototype.update = function (du) {
         this.cx -= this.speed * du;
         if (this.cx <= g_canvas.width - (this.sprite.width/2) - 50) {
             this.isWalkingIn = false;
+            console.log("Pat is showing"+ g_patIsShowing);
             g_patIsShowing = true;
         }
     }
