@@ -128,7 +128,6 @@ var entityManager = {
     }
     //landing on the bed ends the game
     if(type === "dead") {
-      //console.log('fórum inn í dead')
       setGameState('gameOver');
     }
     //crashing into a chair or a desk causes the runner to blink and slow down

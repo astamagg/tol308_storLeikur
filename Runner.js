@@ -193,7 +193,7 @@ Runner.prototype.update = function(du) {
 
   this.cy = this.getPos().posY;
   //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
-  if (this.isPowered) {
+  if (this.isPowered && !g_patIsShowing) {
   } else {
     var entityHit = this.isColliding();
   }

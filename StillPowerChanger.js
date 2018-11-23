@@ -17,7 +17,6 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.powerType = g_sprites.powerUpsDowns[this.ID].powerType;
 
     //because the runner doesn't move when it reaches the middle the other things have to move
-    //this.velX = this.randomVelocity(); 
     this.velX = entityManager._runner[0].getSpeed() - 3;
 
     this.width = this.sprite.width;
@@ -85,9 +84,12 @@ StillPowerChanger.prototype.getColPos = function() {
 
 
 StillPowerChanger.prototype.update = function(du) {
-
-    if(!this.drawTimeChanger) {
-        this.frameCounter++;
+    if(!g_patIsShowing) {
+        if(!this.drawTimeChanger) {
+            this.frameCounter++;
+        }
+    } else {
+        this.frameCounter = 0;
     }
     //start drawing it at a certain space count
     if(this.frameCounter > this.frameMax && g_stillPowerChangerCounter < 1) {
@@ -102,13 +104,14 @@ StillPowerChanger.prototype.update = function(du) {
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     }
+    
 
     //if it as reached beyond the frame or was hit by the user it should disappear
     if(this.cx < -150) {
+        spatialManager.unregister(this);
         g_stillPowerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
-
 };
 
 StillPowerChanger.prototype.getPos = function() {
@@ -119,4 +122,5 @@ StillPowerChanger.prototype.render = function(ctx) {
     if(this.drawTimeChanger) {
         ctx.drawImage(this.sprite.image, this.cx, this.cy);
     }
+    
 };
