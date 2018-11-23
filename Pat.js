@@ -41,7 +41,6 @@ Pat.prototype.getWidth = function() {
 };
 
 Pat.prototype.getHeight = function() {
-
     return this.height;
 };
 
@@ -59,7 +58,7 @@ Pat.prototype.getPos = function() {
 };
 
 Pat.prototype.update = function (du) {
-    console.log(this.isWalkingIn);
+    //console.log(this.isWalkingIn);
     if (this.isWalkingIn) {
         this.cx -= this.speed * du;
         if (this.cx <= g_canvas.width - (this.sprite.width/2) - 50) {
