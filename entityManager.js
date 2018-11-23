@@ -77,21 +77,48 @@ var entityManager = {
     ];
   },
 
+  reset: function() {
+
+    countdown.reset();
+
+    for (let i = 0; i < this._runner.length; i++) {
+        this._runner[i].reset();
+    }
+
+    for (let i = 0; i < this._pat.length; i++) {
+      this._pat[i].reset();
+    }
+    
+    for (let i = 0; i < this._powerChanger.length; i++) {
+      this._powerChanger[i].reset();
+    }
+    
+    for (let i = 0; i < this._stillPowerChanger.length; i++) {
+      this._stillPowerChanger[i].reset();
+    }
+    
+    this._powerChanger = [];
+    this._stillPowerChanger = [];
+    
+    this._generatePowerChangers();
+    this._generateStillPowerChangers();
+  },
+
   reactToPowerChanger: function(entity) {
     var type = entity.getPowerType();
     var change = entity.getPowerChanger();
 
     // Play right reactionary sound
-    if (type === 'timeChangerUp' || (type === 'speedChanger' && change >= 1)) {
+    if (type === 'timeChangerUp' || (type === 'speedChangerUp' && change >= 1)) {
       g_powerUpSound.play();
     }
-    if (type === 'timeChangerDown' || (type === 'speedChanger' && change < 1)) {
+    if (type === 'timeChangerDown' || (type === 'speedChangerDown' && change < 1)) {
       g_powerDownSound.play();
     }
     //change the runners speed and affect the time logic of the game
-    if (type === 'speedChanger') {
+    if (type === 'speedChangerUp' || type === 'speedChangerDown') {
       this._runner[0].speedChange(change);
-      countdown.speedChange(change);
+      countdown.speedChange(change, type);
     }
     //makes the runner indestructable and then slows her down
     if (type === 'candy') {
@@ -103,16 +130,25 @@ var entityManager = {
       countdown.changeTime(entity);
     }
     //landing on the bed ends the game
-    if (type === 'dead') {
-      //game over
+    if(type === "dead") {
+      setGameState('gameOver');
     }
     //crashing into a chair or a desk causes the runner to blink and slow down
-    if (type === 'crash') {
-      this._runner[0].speedChange(change);
-      this._runner[0].blinking = true;
-      countdown.speedChange(change);
+    if(type === "crash") {
+        console.log('Fór inn í crash');
+        this._runner[0].speedChange(change); 
+        this._runner[0].blinking = true;
+        countdown.speedChange(change);
     }
-  },
+    if(type === "pat") {
+        console.log('fór inn í pat');
+        this._runner[0].speed = 0;
+        
+        setTimeout(function() {
+          setGameState('winner');
+        }, 3000);
+    }
+},
 
   update: function(du) {
     countdown.update(du);

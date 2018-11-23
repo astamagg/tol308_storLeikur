@@ -17,14 +17,12 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.powerType = g_sprites.powerUpsDowns[this.ID].powerType;
 
     //because the runner doesn't move when it reaches the middle the other things have to move
-    //this.velX = this.randomVelocity(); 
     this.velX = entityManager._runner[0].getSpeed() - 3;
 
     this.width = this.sprite.width;
     this.height = this.sprite.height;
 
     this.cx = g_ctx.canvas.width + 10;
-    this.x = this.cx - this.width;
    
     //decide between the three static power ups because they need different placements
     if(this.ID === 8) {
@@ -36,8 +34,22 @@ StillPowerChanger.prototype.innerSetUp = function() {
         this.width = this.width/2;
     }
 
+    // Remember reset positions
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
+
     this.drawLogic();
 
+};
+
+// Reset the still powerchangers
+StillPowerChanger.prototype.reset = function() {
+    this.cx = this.reset_cx;
+    this.cy = this.reset_cy;
+
+    spatialManager.unregister(this);
+    g_powerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
 };
 
 StillPowerChanger.prototype.getHeight = function() {
@@ -75,9 +87,12 @@ StillPowerChanger.prototype.getColPos = function() {
 
 
 StillPowerChanger.prototype.update = function(du) {
-
-    if(!this.drawTimeChanger) {
-        this.frameCounter++;
+    if(!g_patIsShowing) {
+        if(!this.drawTimeChanger) {
+            this.frameCounter++;
+        }
+    } else {
+        this.frameCounter = 0;
     }
     //start drawing it at a certain space count
     if(this.frameCounter > this.frameMax && g_stillPowerChangerCounter < 1) {
@@ -92,13 +107,14 @@ StillPowerChanger.prototype.update = function(du) {
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     }
+    
 
     //if it as reached beyond the frame or was hit by the user it should disappear
     if(this.cx < -150) {
+        spatialManager.unregister(this);
         g_stillPowerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }
-
 };
 
 StillPowerChanger.prototype.getPos = function() {
@@ -109,4 +125,5 @@ StillPowerChanger.prototype.render = function(ctx) {
     if(this.drawTimeChanger) {
         ctx.drawImage(this.sprite.image, this.cx, this.cy);
     }
+    
 };

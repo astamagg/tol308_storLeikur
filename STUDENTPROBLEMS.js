@@ -44,7 +44,57 @@ var g_gameOver = false;
 var g_theStory = true;
 var g_WINNER = false;
 var g_instructions = false;
+
 var isPlaying = false;
+
+var gameState = 'story';
+
+function setGameState(state) {
+
+    if (state === 'story') {
+        g_gameOver = false;
+        g_theStory = true;
+        g_WINNER = false;
+        g_instructions = false;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'gameOver') {
+        g_gameOver = true;
+        g_theStory = false;
+        g_WINNER = false;
+        g_instructions = false;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'winner') {
+        g_gameOver = false;
+        g_theStory = false;
+        g_WINNER = true;
+        g_instructions = false;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'instructions') {
+        g_gameOver = false;
+        g_theStory = false;
+        g_WINNER = false;
+        g_instructions = true;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'playGame') {
+        g_gameOver = false;
+        g_theStory = false;
+        g_WINNER = false;
+        g_instructions = false;
+
+        g_music.currentTime = 0;
+        isPlaying = true;
+        g_music.play();
+    }
+    gameState = state;
+}
 
 var g_buttonsFrontPage = [
   new Button({
@@ -55,7 +105,7 @@ var g_buttonsFrontPage = [
     x: g_canvas.width / 2 - 100,
     y: g_canvas.height / 1.2 - 85,
     onClick: function() {
-      g_theStory = false;
+      setGameState('playGame');
     },
   }),
 
@@ -67,11 +117,24 @@ var g_buttonsFrontPage = [
     x: g_canvas.width / 2 - 100,
     y: g_canvas.height / 1.1 - 65,
     onClick: function() {
-      g_theStory = false;
-      g_instructions = true;
+      setGameState('instructions');
     },
   }),
 ];
+
+var g_buttonGameOver = new Button({
+    text : 'Start new game',
+    color : 'red',
+    width : 200,
+    height : 40,
+    x : g_canvas.width/2 - 100,
+    y : 100,
+    onClick : function () {
+        //console.log('START NEW GAME FROM GAMEOVER CLICKED!');
+        entityManager.reset();
+        setGameState('playGame');
+    }
+});
 
 var g_buttonInstruction = new Button({
   text: 'Go back',
@@ -80,15 +143,6 @@ var g_buttonInstruction = new Button({
   height: 40,
   x: g_canvas.width / 2 - 100,
   y: g_canvas.height / 1.15 + 5,
-});
-
-var g_buttonGameOver = new Button({
-  text: 'New game',
-  color: 'red',
-  width: 200,
-  height: 40,
-  x: 100,
-  y: 100,
 });
 
 var g_allowMixedActions = true;
@@ -116,13 +170,13 @@ var TOGGLE_MUTE = 'M'.charCodeAt(0);
 
 function toggleMusic() {
   if (g_music.paused) {
-    console.log('PLAY');
+    //console.log('PLAY');
     g_music.play();
     g_jumpSound.volume = 0.4;
     g_powerDownSound.volume = 0.4;
     g_powerUpSound.volume = 0.4;
   } else {
-    console.log('PAUSE');
+    //console.log('PAUSE');
     g_music.pause();
     g_jumpSound.volume = 0;
     g_powerDownSound.volume = 0;
@@ -135,32 +189,32 @@ function onStartedPlaying() {
 }
 
 function updateSimulation(du) {
-  processDiagnostics();
-  if (typeof g_camera === 'undefined') {
-    return;
-  }
-  if (typeof g_music === 'undefined') {
-    return;
-  }
+    
+    processDiagnostics();
+    if (typeof g_camera === 'undefined') { return }
+    if (typeof g_music === 'undefined') { return }
 
-  if (!g_theStory && !g_instructions) {
-    entityManager.update(du);
+    if (gameState === 'gameOver' || gameState == 'winner') {
+        isPlaying = false;
+        g_music.pause();
+    } else if (gameState === 'story') {
+        isPlaying = false;
+        g_music.pause();
+    } else if (gameState === 'instructions') {
+        isPlaying = false;
+        g_music.pause();
+    } else if (gameState === 'playGame') {
+        if (eatKey(TOGGLE_MUTE)) {
+            toggleMusic();
+        }
 
-    if (isPlaying == false) {
-      isPlaying = true;
-      onStartedPlaying();
+        if (isPlaying == false) {
+            isPlaying = true;
+            onStartedPlaying();
+        }
+
+        entityManager.update(du);
     }
-  } else {
-    isPlaying == false;
-    g_music.pause();
-  }
-
-  if (eatKey(TOGGLE_MUTE)) {
-    toggleMusic();
-  }
-
-  // Prevent perpetual firing!
-  // eatKey(Ship.prototype.KEY_FIRE);
 }
 
 function processDiagnostics() {
@@ -175,29 +229,25 @@ function gatherInputs() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-  if (typeof g_camera === 'undefined') {
-    return;
-  }
+    if (typeof g_camera === 'undefined') { return }
 
-  if (g_gameOver || g_WINNER) {
-    gameOver(ctx);
-  } else {
-    if (g_theStory) {
-      theStory(ctx);
-      for (let i = 0; i < g_buttonsFrontPage.length; i++) {
-        g_buttonsFrontPage[i].render(ctx);
-      }
-    } else if (g_instructions) {
-      instructionGame(ctx);
-      g_buttonInstruction.render(ctx);
+    if (gameState === 'gameOver' || gameState == 'winner') {
+        g_buttonGameOver.render(ctx);
+        gameOver(ctx);
+    } else if (gameState === 'story') {
+        theStory(ctx);
+        for (let i=0; i<g_buttonsFrontPage.length; i++) { 
+            g_buttonsFrontPage[i].render(ctx);
+        }
+    } else if (gameState === 'instructions') {
+        instructionGame(ctx);
+        g_buttonInstruction.render(ctx);
+    } else if (gameState === 'playGame') {
+        entityManager.render(ctx);
+        if (g_renderSpatialDebug) {
+            spatialManager.render(ctx);
+        }
     }
-
-    if (!g_theStory && !g_instructions) {
-      entityManager.render(ctx);
-
-      if (g_renderSpatialDebug) spatialManager.render(ctx);
-    }
-  }
 }
 
 // =============
@@ -220,7 +270,6 @@ function requestPreloads() {
     netflix: 'src/netflix.png',
     beer: 'src/beer.png',
     youtube: 'src/youtube.png',
-    backgroundFrontPage: 'src/backgroundFrontPage.png',
     desk: 'src/desk.png',
     chair: 'src/chair.png',
     bed: 'src/bedtile(54x54).png',
@@ -235,63 +284,66 @@ var g_sprites = {};
 //initialize all the power ups and downs as sprites.
 //done in a function for clarity
 function setUpPowerUps() {
-  g_sprites.powerUpsDowns = [
-    {
-      sprite: new Sprite(g_images.piazza),
-      powerChange: 10,
-      powerType: 'timeChangerUp',
-    },
-    {
-      sprite: new Sprite(g_images.netflix),
-      powerChange: 10,
-      powerType: 'timeChangerDown',
-    },
-    {
-      sprite: new Sprite(g_images.energydrink),
-      powerChange: 1.2,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.coffee),
-      powerChange: 1.1,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.spotify),
-      powerChange: 1.1,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.candy),
-      powerChange: 2,
-      powerType: 'candy',
-    },
-    {
-      sprite: new Sprite(g_images.beer),
-      powerChange: 0.5,
-      powerType: 'speedChanger',
-    },
-    {
-      sprite: new Sprite(g_images.youtube),
-      powerChange: 3,
-      powerType: 'timeChangerDown',
-    },
-    {
-      sprite: new Sprite(g_images.chair),
-      powerChange: 0.75,
-      powerType: 'crash',
-    },
-    {
-      sprite: new Sprite(g_images.desk),
-      powerChange: 0.5,
-      powerType: 'crash',
-    },
-    {
-      sprite: new Sprite(g_images.bed),
-      powerChange: 0,
-      powerType: 'dead',
-    },
-  ];
+    g_sprites.powerUpsDowns = [
+        {
+            sprite: new Sprite(g_images.piazza),
+            powerChange: 10,
+            powerType: "timeChangerUp",
+        },
+        {
+            sprite: new Sprite(g_images.netflix),
+            powerChange: 10,
+            powerType: "timeChangerDown",
+        },
+        {
+            sprite: new Sprite(g_images.energydrink),
+            powerChange: 1.75,
+            powerType: "speedChangerUp",
+        },
+        {   
+            sprite: new Sprite(g_images.coffee),
+            powerChange: 1.5,
+            powerType: "speedChangerUp"
+        },
+        {
+            sprite: new Sprite(g_images.spotify),
+            powerChange: 1.25,
+            powerType: "speedChangerUp",
+        },
+        {
+            sprite: new Sprite(g_images.candy),
+            powerChange: 2,
+            powerType: "candy",
+        },
+        {
+            sprite: new Sprite(g_images.beer),
+            powerChange: 0.5,
+            powerType: "speedChangerDown",
+        },
+        {
+            sprite: new Sprite(g_images.youtube),
+            powerChange: 3,
+            powerType: "timeChangerDown",
+        },
+        {
+            sprite: new Sprite(g_images.chair),
+            powerChange: 0.75,
+            powerType: "crash",
+        },
+        {
+            sprite: new Sprite(g_images.desk),
+            powerChange: 0.5,
+            powerType: "crash",
+        },
+        {
+            sprite: new Sprite(g_images.bed),
+            powerChange: 0,
+            powerType: "dead",
+        },{
+            sprite: new Sprite(g_images.pat),
+            powerChange: 0,
+            powerType: "pat",
+        },];
 }
 
 function preloadDone() {
@@ -314,8 +366,7 @@ function preloadDone() {
   //breyta líka í okkar
 
   g_sprites.runner = new Sprite(g_images.spritesheet);
-  g_sprites.pat = new Sprite(g_images.pat);
-
+  
   entityManager.init();
 
   main.init();

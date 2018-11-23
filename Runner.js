@@ -34,6 +34,22 @@ Runner.prototype.rememberResets = function() {
   // Remember my reset positions
   this.reset_cx = this.cx;
   this.reset_cy = this.cy;
+  this.reset_roomX = this.roomX;
+  this.reset_speed = this.speed;
+};
+
+Runner.prototype.reset = function() {
+  this.cx = this.reset_cx;
+  this.cy = this.reset_cy;
+  this.roomX = this.reset_roomX;
+  this.speed = this.reset_speed;
+  this.isPowered = false;
+  this.currentLoop = 2;
+  this.isCrouching = false;
+  this.isJumping = false;
+
+  this.setPos(this.reset_cx, this.reset_cy);
+  this.halt();
 };
 
 Runner.prototype.KEY_JUMP = ' '.charCodeAt(0);
@@ -101,7 +117,11 @@ Runner.prototype.handleKeys = function() {
 Runner.prototype.powerUp = function(change) {
   this.isPowered = true;
   this.animationSpeed = 50;
-  g_music.playbackRate = 1.25;
+
+  if (g_music.paused === false) {
+    g_music.playbackRate = 1.25;  
+  }
+  
   var that = this;
   //power down after 5 sek
   //runner and song slows down, hair back to normal
@@ -111,24 +131,30 @@ Runner.prototype.powerUp = function(change) {
     that.currentLoop = 2;
     that.currentLoopIndex = 0;
     that.animationSpeed = 10;
-    g_music.playbackRate = 0.8;
+
+    if (g_music.paused === false) {
+      g_music.playbackRate = 0.8;
+    }
+
     //set to normal values after 5 sek
     setTimeout(function() {
       that.animationSpeed = that.normalSpeed;
-      g_music.playbackRate = 1;
+      if (g_music.paused === false) {
+        g_music.playbackRate = 1;
+      }
     }, 5000);
   }, 5000);
 };
 
 Runner.prototype.speedChange = function(change) {
-  console.log('number', change);
+  //console.log('number', change);
   this.animationSpeed *= change;
-  console.log('speed', this.animationSpeed);
+  //console.log('speed', this.animationSpeed);
 
   var that = this;
   setTimeout(function() {
     that.animationSpeed = that.normalSpeed;
-    console.log('after timeout', that.animationSpeed);
+    //console.log('after timeout', that.animationSpeed);
   }, 5000);
 };
 
@@ -166,7 +192,7 @@ Runner.prototype.update = function(du) {
 
   this.cy = this.getPos().posY;
   //bæta við this.totalDistance += du... til þess að updatea bakgrunn eftir X distance
-  if (this.isPowered) {
+  if (this.isPowered && !g_patIsShowing) {
   } else {
     var entityHit = this.isColliding();
   }
@@ -237,11 +263,11 @@ Runner.prototype.getSpeed = function() {
   return this.speed;
 };
 
-Runner.prototype.reset = function() {
+/*Runner.prototype.reset = function() {
   this.setPos(this.reset_cx, this.reset_cy);
   this.roomX = this.reset_cx;
   this.halt();
-};
+};*/
 
 Runner.prototype.halt = function() {
   this.velX = 0;

@@ -76,18 +76,6 @@ function theStory(ctx) {
       g_buttonsFrontPage[i].onClick();
     }
   }
-
-  // Temporary while testing
-  if (keys[KEY_G]) {
-    g_theStory = false;
-    g_gameOver = true;
-  }
-
-  // Temporary while testing
-  if (keys[KEY_W]) {
-    g_theStory = false;
-    g_WINNER = true;
-  }
 }
 
 function instructionGame(ctx) {
@@ -284,39 +272,32 @@ function instructionGame(ctx) {
   );
   // Go back button
   if (g_buttonInstruction.contains(g_mouseX, g_mouseY)) {
-    g_instructions = false;
-    g_theStory = true;
+    setGameState('story');
   }
 }
 
 function gameOver(ctx) {
-  // Clear the game
-  ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // start game and information button
+        if (g_buttonGameOver.contains(g_mouseX, g_mouseY)) {
+                g_buttonGameOver.onClick();
+        }
+        
+        if (gameState !== 'gameOver' && gameState !== 'winner') { return }
+        // Clear the game
+        ctx.drawImage(g_images.background,0,700, g_canvas.width, g_canvas.height);
 
-  ctx.font = '50px Courier';
-  ctx.fillStyle = 'yellow';
+        // title text
+        ctx.textAlign = "center";
+        ctx.font = '50px Courier';
+        ctx.fillStyle = 'black';
 
-  // style and write the gameOver-text
-  ctx.textAlign = 'center';
-  if (g_gameOver) {
-    ctx.fillText('Game over', ctx.canvas.width / 2, ctx.canvas.height / 2);
-  } else if (g_WINNER) {
-    ctx.fillText('WINNER!', ctx.canvas.width / 2, ctx.canvas.height / 2);
-  }
-  ctx.font = '15px Courier';
-  ctx.fillText(
-    "If you wan't to start a NEW GAME press G",
-    ctx.canvas.width / 2,
-    ctx.canvas.height / 2 + 50
-  );
+        // style and write the gameOver-text
+        ctx.textAlign = "center";
+        if(g_gameOver) {
+                ctx.fillText('You Lost',ctx.canvas.width/2, ctx.canvas.height/2);
+        } else if (g_WINNER){
+                ctx.fillText("YOU WON!!",ctx.canvas.width/2, ctx.canvas.height/2);
+        }
 
-  // reset everything if press KEY_SPACE and start a new game
-  if (keys[KEY_SPACE]) {
-    // no longer gameOver/winner
-    g_gameOver = false;
-    g_WINNER = false;
-
-    // TODO : reset everything
-  }
+   
 }

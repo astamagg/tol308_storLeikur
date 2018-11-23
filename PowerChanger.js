@@ -18,9 +18,23 @@ PowerChanger.prototype.innerSetUp = function() {
     this.speedAndPlacement();
     //get the entity ID
 
+    // remember reset position
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
+
     this.drawLogic();  //when to start drawing the entity
 
     this.y = this.cy - this.height;
+};
+
+// reset the powerchangers
+PowerChanger.prototype.reset = function() {
+    this.cx = this.reset_cx;
+    this.cy = this.reset_cy;
+
+    spatialManager.unregister(this);
+    g_powerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
 };
 
 //return the height of the entity
@@ -74,10 +88,13 @@ PowerChanger.prototype.randomVelocity = function() {
 
 PowerChanger.prototype.update = function(du) {
 
-    if(!this.drawTimeChanger) {
-        this.frameCounter++;
+    if(!g_patIsShowing) {
+        if(!this.drawTimeChanger) {
+            this.frameCounter++;
+        }
+    } else {
+        this.frameCounter = 0;
     }
-
     //draw a new power changer if frame count is reached and the number of
     // power changers already in the frame is less than four
     if(this.frameCounter > this.frameMax && g_powerChangerCounter < 2) {
@@ -89,13 +106,14 @@ PowerChanger.prototype.update = function(du) {
         this.frameMax = util.randRange(0, 4500);
         this.frameCounter = 0;
     }
-
+        
     if(this.drawTimeChanger) {
         this.cx -= this.velX * du;
     }
-
+    
     //if the powerChanger has gone beyond the frame or has hit the runner we remove it
     if(this.cx < -30 || this._isDeadNow) {
+        spatialManager.unregister(this);
         g_powerChangerCounter--;
         return entityManager.KILL_ME_NOW;
     }

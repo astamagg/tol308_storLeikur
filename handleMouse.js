@@ -40,21 +40,21 @@ function handleButtonColor(evt) {
         }
     }
 
-    if (instructionButton) {
-        g_buttonInstruction.color = 'yellow';
-    }
-
     if (gameOverButton) {
         g_buttonGameOver.color = 'yellow';
     }
 
+    if (instructionButton) {
+        g_buttonInstruction.color = 'yellow';
+    }
 }
 
 //change the color back to the original when we stop pressing
 function handleButtonUp(evt) {
     
-    g_buttonGameOver.color = 'red';
     g_buttonInstruction.color = 'red';
+    g_buttonGameOver.color = 'red';
+
     for (let i=0; i<g_buttonsFrontPage.length; i++) {
         if (g_buttonsFrontPage[i].contains(
             evt.clientX - g_canvas.offsetLeft, 

@@ -4,7 +4,6 @@ function Background(image) {
     //placeholder variables 
     this.cx = 0; 
     this.cy = 0;
-    this.scrollSpeed = 1;
 }
 
 Background.prototype.draw = function(ctx) {

@@ -7,6 +7,24 @@ function Rectangle(x, y, w, h) {
     this.height = h;
     this.right = (this.left + this.width);
     this.bottom = (this.top + this.height);
+
+    //remeber rectangle position
+    this.reset_left = this.left;
+    this.reset_top = this.top;
+    this.reset_width = this.width;
+    this.reset_height = this.height;
+    this.reset_right = this.right;
+    this.reset_bottom = this.bottom;
+
+}
+
+Rectangle.prototype.reset = function() {
+    this.left = this.reset_left;
+    this.top = this.reset_top;
+    this.width = this.reset_width;
+    this.height = this.reset_height;
+    this.right = this.reset_right;
+    this.bottom = this.reset_botton;
 }
 
 //check whether a given object is inside the rectangle
@@ -26,8 +44,7 @@ Rectangle.prototype.setX = function(x) {
 
 // Camera constructor
 
-function Camera(xView, roomHeight)
-{
+function Camera(xView, roomHeight) {
     // position of camera (left-top coordinate)
     this.xView = xView || 0;
     
@@ -36,7 +53,13 @@ function Camera(xView, roomHeight)
     
     // viewport dimensions
     this.wView = g_canvas.width;
-    this.hView = g_canvas.height;		
+    this.hView = g_canvas.height;
+    
+    // remember Camera's position
+    this.reset_wView = this.wView;
+    this.reset_hView = this.hView;
+    this.reset_xView = this.xView;
+    this.reset_xDeadZone = this.xDeadZone;
     
     // rectangle that represents the viewport
     this.viewportRect = new Rectangle(this.xView, 0, this.wView, this.hView);				
@@ -46,8 +69,7 @@ function Camera(xView, roomHeight)
     
 }
 
-Camera.prototype.update = function()
-{
+Camera.prototype.update = function() {
 
     const runner = entityManager._runner[0];
 
