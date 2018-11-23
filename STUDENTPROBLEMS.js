@@ -235,8 +235,7 @@ function updateSimulation(du) {
 }
 
 function processDiagnostics() {
-    
-    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
+  if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 }
 
 function gatherInputs() {
@@ -371,7 +370,7 @@ function preloadDone() {
   g_camera = new Camera(/*x start*/ 0, g_images.background.height);
 
   // Game music and reactionary sounds added
-  g_music = new Audio('src/sounds/gametrack.mp3');
+  g_music = new Audio('src/sounds/gametrack-xmas.mp3');
   g_music.loop = true;
   g_jumpSound = new Audio('src/sounds/bump.mp3');
   g_powerDownSound = new Audio('src/sounds/powerdown.mp3');

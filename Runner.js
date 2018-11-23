@@ -114,8 +114,9 @@ Runner.prototype.handleKeys = function() {
 Runner.prototype.powerUp = function(change) {
   this.isPowered = true;
   this.animationSpeed = 50;
+
   if (g_music.paused === false) {
-    g_music.playbackRate = 1.5;  
+    g_music.playbackRate = 1.25;  
   }
   
   var that = this;
@@ -127,8 +128,9 @@ Runner.prototype.powerUp = function(change) {
     that.currentLoop = 2;
     that.currentLoopIndex = 0;
     that.animationSpeed = 10;
+
     if (g_music.paused === false) {
-      g_music.playbackRate = 0.75;
+      g_music.playbackRate = 0.8;
     }
 
     //set to normal values after 5 sek
@@ -239,7 +241,6 @@ Runner.prototype.computeSubStep = function(du) {
       this.currentLoopIndex++;
     }
 
-  
     //loop in a circle to animate and move the runner a distance x
     if (this.currentLoopIndex >= this.loops[this.currentLoop].length) {
       this.currentLoopIndex = 0;
@@ -283,12 +284,18 @@ Runner.prototype.getColPos = function() {
 Runner.prototype.blinkingRender = function(ctx) {
   ctx.save();
   ctx.globalAlpha = 0.3;
-  this.sprite.drawFrame(ctx,this.loops[this.currentLoop][this.currentLoopIndex], this.currentLoop, this.cx, this.cy);
+  this.sprite.drawFrame(
+    ctx,
+    this.loops[this.currentLoop][this.currentLoopIndex],
+    this.currentLoop,
+    this.cx,
+    this.cy
+  );
   ctx.restore();
-  this.blinkingCount--;  
+  this.blinkingCount--;
 
   //if the blinking count is zero she should stop being transparent
-  if(this.blinkingCount < 0) {
+  if (this.blinkingCount < 0) {
     this.blinking = false;
     this.blinkingCount = 20;
   }
@@ -296,30 +303,29 @@ Runner.prototype.blinkingRender = function(ctx) {
 
 //draw a frame from the spritesheet
 Runner.prototype.render = function(ctx) {
-
   this.sprite.image.style.opacity = 0.2;
 
   //change color of hair when the power up appears
-  if(this.isPowered){
+  if (this.isPowered) {
     this.sprite.drawFrame(
       ctx,
-      this.poweredLoops[this.currentLoop][this.currentLoopIndex], 
-      this.currentLoop, 
-      this.cx, 
+      this.poweredLoops[this.currentLoop][this.currentLoopIndex],
+      this.currentLoop,
+      this.cx,
       this.cy
     );
-  }else if(!this.isPowered){
+  } else if (!this.isPowered) {
     //check whether she hit a chair or a desk, then she slows down and blinks
-    if(this.blinking) {
+    if (this.blinking) {
       this.blinkingRender(ctx);
     } else {
       this.sprite.drawFrame(
-        ctx, 
-        this.loops[this.currentLoop][this.currentLoopIndex], 
-        this.currentLoop, 
-        this.cx, 
-        this.cy);
+        ctx,
+        this.loops[this.currentLoop][this.currentLoopIndex],
+        this.currentLoop,
+        this.cx,
+        this.cy
+      );
     }
   }
-  
 };
