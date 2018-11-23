@@ -1,26 +1,27 @@
 
 var countdown = {
 _time: 60,  //time in seconds
-_patCountdown: 50,
+_patCountdown: 10,
 _timeString: "01:00",   //string to be rendered
+_patCount: 1,
 updateCount: 1, //frame count
 powerTime: 0,
 powerCatch: false,
 powerChangeString: "",
-_patCountThreshold: this._patCountdown,
+_patCountThreshold: 10,
 _updateThreshold: 60,
 
-
-_reset_time: this._time,
-_reset_patCountdown: this._patCountdown,
-_reset_timeString: this._timeString,
-reset_updateCount: this.updateCount,
-
 reset:function() {
-    this._time = this._reset_time;
-    this._patCountdown = this._reset_patCountdown;
-    this._timeString = this._reset_timeString;
-    this.updateCount = this.reset_updateCount;
+    this._time = 60;  //time in seconds
+    this._patCountdown = 10;
+    this._timeString = "01:00";  //string to be rendered
+    this._patCount = 1;
+    this.updateCount = 1; //frame count
+    this.powerTime = 0;
+    this.powerCatch = false;
+    this.powerChangeString = "";
+    this._patCountThreshold = 10;
+    this._updateThreshold = 60;
 },
 
 update:function() {
@@ -35,8 +36,8 @@ update:function() {
     }
 
     //check whether to decrease the time of the inner logic of the game
-    if(this._patCount === this._patCountThreshold) {
-        this._patCountdown = this._patCountdown - 1;
+    if(this._patCount % this._patCountThreshold === 0) {
+        this._patCountdown -= 1;
         this._patCount = 1;
     }
 
@@ -56,7 +57,7 @@ update:function() {
     }
 
     if(this._time < 0 && this._patCountdown > 0) {
-        g_gameOver = true;
+        setGameState('gameOver')
     }
 },
 

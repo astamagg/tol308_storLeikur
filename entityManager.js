@@ -85,7 +85,7 @@ reset: function() {
         this._powerChanger[i].reset();
     }
 
-    for (let i = 0; i < this.stillPowerChanger.length; i++) {
+    for (let i = 0; i < this._stillPowerChanger.length; i++) {
         this._stillPowerChanger[i].reset();
     }
 
@@ -115,8 +115,7 @@ reactToPowerChanger: function(entity) {
     //landing on the bed ends the game
     if(type === "dead") {
       //console.log('fórum inn í dead')
-      g_gameOver = true;
-      isPlaying = false;
+      setGameState('gameOver');
     }
     //crashing into a chair or a desk causes the runner to blink and slow down
     if(type === "crash") {
@@ -128,9 +127,8 @@ reactToPowerChanger: function(entity) {
     }
     if(type === "pat") {
         //console.log('fór inn í pat');
-        this._runner[0].speed = 0;
-        g_WINNER = true;
-        isPlaying = false;
+        // this._runner[0].speed = 0;
+        setGameState('winner');
     }
 },
 

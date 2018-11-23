@@ -24,14 +24,21 @@ Pat.prototype = new Entity();
 // reset Pat's position
 Pat.prototype.reset = function() {
     this.cx = this.reset_cx;
-    this.cy = this.reset_cy
+    this.cy = this.reset_cy;
+    console.log('PATTY BOY!', this.cx, this.cy);
     g_patIsShowing = false;
 };
 
 Pat.prototype.speed = 1;
 
 Pat.prototype.getWidth = function() {
+    console.log('WIDTH: ' + this.sprite.width);
     return this.sprite.width;
+};
+
+Pat.prototype.getHeight = function() {
+    console.log('HEIGHT: ' + this.sprite.height);
+    return this.sprite.height;
 };
 
 Pat.prototype.startWalkingIn = function () {
@@ -39,20 +46,12 @@ Pat.prototype.startWalkingIn = function () {
     this.cx = g_canvas.width + this.getWidth()/2;
 };
 
-Pat.prototype.getWidth = function() {
-    return this.sprite.width;
-};
-  
-Pat.prototype.getHeight = function() {
-    return this.sprite.height;
-};
-
 Pat.prototype.getPowerType = function() {
     return this.powerType;
 };
 
 Pat.prototype.getPos = function() {
-    return {posX : this.cx - this.sprite.width/2.0, posY : this.cy-this.sprite.height/2.0};
+    return {posX : this.cx - this.getWidth()/2.0, posY : this.cy-this.getHeight()/2.0};
 };
 
 Pat.prototype.update = function (du) {

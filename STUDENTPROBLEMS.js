@@ -44,7 +44,58 @@ var g_gameOver = false;
 var g_theStory = true;
 var g_WINNER = false;
 var g_instructions = false;
+
 var isPlaying = false;
+
+var gameState = 'story';
+
+function setGameState(state) {
+    console.log(state);
+
+    if (state === 'story') {
+        g_gameOver = false;
+        g_theStory = true;
+        g_WINNER = false;
+        g_instructions = false;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'gameOver') {
+        g_gameOver = true;
+        g_theStory = false;
+        g_WINNER = false;
+        g_instructions = false;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'winner') {
+        g_gameOver = false;
+        g_theStory = false;
+        g_WINNER = true;
+        g_instructions = false;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'instructions') {
+        g_gameOver = false;
+        g_theStory = false;
+        g_WINNER = false;
+        g_instructions = true;
+
+        isPlaying = false;
+        g_music.pause();
+    } else if (state === 'playGame') {
+        g_gameOver = false;
+        g_theStory = false;
+        g_WINNER = false;
+        g_instructions = false;
+
+        g_music.currentTime = 0;
+        isPlaying = true;
+        g_music.play();
+    }
+    gameState = state;
+}
 
 var g_buttonsFrontPage = [
   new Button({
@@ -55,7 +106,7 @@ var g_buttonsFrontPage = [
     x: g_canvas.width / 2 - 100,
     y: g_canvas.height / 1.2 - 85,
     onClick: function() {
-      g_theStory = false;
+      setGameState('playGame');
     },
   }),
 
@@ -67,8 +118,7 @@ var g_buttonsFrontPage = [
     x: g_canvas.width / 2 - 100,
     y: g_canvas.height / 1.1 - 65,
     onClick: function() {
-      g_theStory = false;
-      g_instructions = true;
+      setGameState('instructions');
     },
   }),
 ];
@@ -83,10 +133,9 @@ var g_buttonsGameOver = [
         x : 400,
         y : 100,
         onClick : function () {
+            console.log('START NEW GAME FROM GAMEOVER CLICKED!');
             entityManager.reset();
-            g_gameOver = false;
-            g_theStory = false;
-            g_instructions = false;
+            setGameState('playGame');
         }
     }),
 
@@ -98,7 +147,7 @@ var g_buttonsGameOver = [
         x : 100,
         y : 100,
         onClick : function () {
-            g_theStory = true;
+            setGameState('story');
         }
     }),
 
@@ -162,27 +211,27 @@ function updateSimulation(du) {
     if (typeof g_camera === 'undefined') { return }
     if (typeof g_music === 'undefined') { return }
 
-    if (!g_gameOver || !g_WINNER) {
-        if (!g_theStory && !g_instructions) {
-            console.log('fór inn í þetta if');
-            entityManager.update(du);
-    
-            if (isPlaying == false) {
-                isPlaying = true;
-                onStartedPlaying();
-            }
-        } else {
-            isPlaying == false;
-            g_music.pause();
-        }
-    
+    if (gameState === 'gameOver' || gameState == 'winner') {
+        isPlaying = false;
+        g_music.pause();
+    } else if (gameState === 'story') {
+        isPlaying = false;
+        g_music.pause();
+    } else if (gameState === 'instructions') {
+        isPlaying = false;
+        g_music.pause();
+    } else if (gameState === 'playGame') {
         if (eatKey(TOGGLE_MUTE)) {
             toggleMusic();
         }
+
+        if (isPlaying == false) {
+            isPlaying = true;
+            onStartedPlaying();
+        }
+
+        entityManager.update(du);
     }
- 
-    // Prevent perpetual firing!
-   // eatKey(Ship.prototype.KEY_FIRE);
 }
 
 function processDiagnostics() {
@@ -200,34 +249,24 @@ function gatherInputs() {
 function renderSimulation(ctx) {
     if (typeof g_camera === 'undefined') { return }
 
-    if (g_gameOver || g_WINNER) {
+    if (gameState === 'gameOver' || gameState == 'winner') {
         for (let i=0; i<g_buttonsGameOver.length; i++) { 
             g_buttonsGameOver[i].render(ctx);
         }
         gameOver(ctx);
-    } else {
-        if (g_theStory) {
-            theStory(ctx);
-            for (let i=0; i<g_buttonsFrontPage.length; i++) { 
-                g_buttonsFrontPage[i].render(ctx);
-            }
-        } else if (g_instructions) {
-            instructionGame(ctx);
-            g_buttonInstruction.render(ctx);
+    } else if (gameState === 'story') {
+        theStory(ctx);
+        for (let i=0; i<g_buttonsFrontPage.length; i++) { 
+            g_buttonsFrontPage[i].render(ctx);
         }
-        
-        if (!g_theStory && !g_instructions) {
-            entityManager.render(ctx);
-
-            if (g_renderSpatialDebug) spatialManager.render(ctx);
-            
+    } else if (gameState === 'instructions') {
+        instructionGame(ctx);
+        g_buttonInstruction.render(ctx);
+    } else if (gameState === 'playGame') {
+        entityManager.render(ctx);
+        if (g_renderSpatialDebug) {
+            spatialManager.render(ctx);
         }
-    }
-
-    if (!g_theStory && !g_instructions) {
-      entityManager.render(ctx);
-
-      if (g_renderSpatialDebug) spatialManager.render(ctx);
     }
 }
 

@@ -114,7 +114,10 @@ Runner.prototype.handleKeys = function() {
 Runner.prototype.powerUp = function(change) {
   this.isPowered = true;
   this.animationSpeed = 50;
-  g_music.playbackRate = 1.5;
+  if (g_music.paused === false) {
+    g_music.playbackRate = 1.5;  
+  }
+  
   var that = this;
   //power down after 5 sek
   //runner and song slows down, hair back to normal
@@ -124,11 +127,16 @@ Runner.prototype.powerUp = function(change) {
     that.currentLoop = 2;
     that.currentLoopIndex = 0;
     that.animationSpeed = 10;
-    g_music.playbackRate = 0.75;
+    if (g_music.paused === false) {
+      g_music.playbackRate = 0.75;
+    }
+
     //set to normal values after 5 sek
     setTimeout(function() {
       that.animationSpeed = that.normalSpeed;
-      g_music.playbackRate = 1;
+      if (g_music.paused === false) {
+        g_music.playbackRate = 1;
+      }
     }, 5000);
   }, 5000);
 };
