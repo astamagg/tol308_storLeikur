@@ -1,16 +1,16 @@
 
 var countdown = {
 _time: 60,  //time in seconds
-_patCountdown: 50,
+_patCountdown: 10,
 _timeString: "01:00",   //string to be rendered
 _patCount: 1,
 updateCount: 1, //frame count
 powerTime: 0,
 powerCatch: false,
 powerChangeString: "",
-_patCountThreshold: 50,
+_patCountThreshold: 10,
 _updateThreshold: 60,
-PAT_TIME_CONSTANT: 50,
+PAT_TIME_CONSTANT: 10,
 
 reset:function() {
     this._time = 60;  //time in seconds
@@ -38,16 +38,14 @@ update:function() {
     }
 
     //check whether to decrease the time of the inner logic of the game
-    console.log('patCount: ', this._patCount);
-    console.log('patCountThreshold: ', this._patCountThreshold);
     if(this._patCount > this._patCountThreshold) {
         this._patCountdown = this._patCountdown - 1;
-        console.log('patCount:', this._patCountdown );
         this._patCount = 1;
     }
 
     //have pat walk in at the end
     if (this._patCountdown === 0) {
+        console.log('fór inn í pat countdown');
         entityManager._pat[0].startWalkingIn();
     }
     this.checkGameState();   //check if the game is over

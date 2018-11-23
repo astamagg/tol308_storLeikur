@@ -7,9 +7,13 @@ function Pat(descr) {
   this.sprite = this.sprite || g_sprites.powerUpsDowns[11].sprite;
   this.powerType = g_sprites.powerUpsDowns[11].powerType;
 
+  this.height = this.sprite.height * 10;
+  this.width = this.sprite.width * 2;
+
   this.cx = g_canvas.width + this.getWidth()/2;
   this.cy = 320;
 
+  this.isWalkingIn = false;
   // remember Pat's position
   this.reset_cx = this.cx;
   this.reset_cy = this.cy;
@@ -33,13 +37,12 @@ Pat.prototype.reset = function() {
 Pat.prototype.speed = 1;
 
 Pat.prototype.getWidth = function() {
-  //  console.log('WIDTH: ' + this.sprite.width);
-    return this.sprite.width;
+    return this.width;
 };
 
 Pat.prototype.getHeight = function() {
-  //  console.log('HEIGHT: ' + this.sprite.height);
-    return this.sprite.height;
+
+    return this.height;
 };
 
 Pat.prototype.startWalkingIn = function () {
@@ -52,13 +55,14 @@ Pat.prototype.getPowerType = function() {
 };
 
 Pat.prototype.getPos = function() {
-    return {posX : this.cx - this.getWidth()/2.0, posY : this.cy-this.getHeight()/2.0};
+    return { posX : this.cx - this.getWidth()/2.0, posY : this.cy-this.getHeight()/2.0 };
 };
 
 Pat.prototype.update = function (du) {
+    console.log(this.isWalkingIn);
     if (this.isWalkingIn) {
         this.cx -= this.speed * du;
-        if (this.cx <= g_canvas.width - (this.getWidth()/2) - 50) {
+        if (this.cx <= g_canvas.width - (this.sprite.width/2) - 50) {
             this.isWalkingIn = false;
             g_patIsShowing = true;
         }
