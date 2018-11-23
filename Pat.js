@@ -56,7 +56,6 @@ Pat.prototype.getPowerType = function() {
 
 Pat.prototype.getPos = function() {
     return { posX : this.cx - this.getWidth(), posY : this.cy-this.getHeight()/2.0 };
-   //return { posX: this.cx, posY: this.cx};
 };
 
 Pat.prototype.update = function (du) {
@@ -67,7 +66,6 @@ Pat.prototype.update = function (du) {
             g_patIsShowing = true;
         }
     }
-    console.log('g_pat: ', g_patIsShowing);
 };
 
 Pat.prototype.render = function () {

@@ -303,8 +303,6 @@ Runner.prototype.blinkingRender = function(ctx) {
 
 //draw a frame from the spritesheet
 Runner.prototype.render = function(ctx) {
-  this.sprite.image.style.opacity = 0.2;
-
   //change color of hair when the power up appears
   if (this.isPowered) {
     this.sprite.drawFrame(
