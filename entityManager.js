@@ -88,13 +88,12 @@ var entityManager = {
     for (let i = 0; i < this._pat.length; i++) {
       this._pat[i].reset();
     }
-
     
     for (let i = 0; i < this._powerChanger.length; i++) {
       this._powerChanger[i].reset();
     }
     
-    for (let i = 0; i < this._powerChanger.length; i++) {
+    for (let i = 0; i < this._stillPowerChanger.length; i++) {
       this._stillPowerChanger[i].reset();
     }
     
