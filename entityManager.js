@@ -102,7 +102,6 @@ var entityManager = {
     
     this._generatePowerChangers();
     this._generateStillPowerChangers();
-
   },
 
   reactToPowerChanger: function(entity) {

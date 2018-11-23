@@ -8,12 +8,6 @@ function PowerChanger(descr) {
 
 PowerChanger.prototype = new Entity();
 
-PowerChanger.prototype.reset = function() {
-    spatialManager.unregister(this);
-    g_powerChangerCounter = 0;
-    return entityManager.KILL_ME_NOW;
-};
-
 PowerChanger.prototype.innerSetUp = function() {
     //find the power changer, that is what effect it has if the runner hits it
     var ID = Math.floor(util.randRange(0,8));
@@ -37,6 +31,10 @@ PowerChanger.prototype.innerSetUp = function() {
 PowerChanger.prototype.reset = function() {
     this.cx = this.reset_cx;
     this.cy = this.reset_cy;
+
+    spatialManager.unregister(this);
+    g_powerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
 };
 
 //return the height of the entity

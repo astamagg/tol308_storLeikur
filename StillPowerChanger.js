@@ -8,13 +8,6 @@ function StillPowerChanger(descr) {
 
 StillPowerChanger.prototype = new Entity();
 
-
-StillPowerChanger.prototype.reset = function() {
-    spatialManager.unregister(this);
-    g_stillPowerChangerCounter = 0;
-    return entityManager.KILL_ME_NOW;
-};
-
 StillPowerChanger.prototype.innerSetUp = function() {
      //find the power changer, that is what effect it has if the runner hits it
     this.ID = Math.floor(util.randRange(8,11));
@@ -30,11 +23,6 @@ StillPowerChanger.prototype.innerSetUp = function() {
     this.height = this.sprite.height;
 
     this.cx = g_ctx.canvas.width + 10;
-    this.x = this.cx - this.width;
-
-    // Remember reset positions
-    this.reset_cx = this.cx;
-    this.reset_cy = this.cy;
    
     //decide between the three static power ups because they need different placements
     if(this.ID === 8) {
@@ -46,6 +34,10 @@ StillPowerChanger.prototype.innerSetUp = function() {
         this.width = this.width/2;
     }
 
+    // Remember reset positions
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
+
     this.drawLogic();
 
 };
@@ -54,6 +46,10 @@ StillPowerChanger.prototype.innerSetUp = function() {
 StillPowerChanger.prototype.reset = function() {
     this.cx = this.reset_cx;
     this.cy = this.reset_cy;
+
+    spatialManager.unregister(this);
+    g_powerChangerCounter = 0;
+    return entityManager.KILL_ME_NOW;
 };
 
 StillPowerChanger.prototype.getHeight = function() {

@@ -79,8 +79,6 @@ Camera.prototype.update = function() {
     } else if (runner.roomX - this.xDeadZone < this.xView) {
         this.xView = runner.roomX  - this.xDeadZone;
     }
-
-    console.log("Hello: "+runner.roomX + this.xView)
     
     // update viewportRect
     this.viewportRect.setX(this.xView);

@@ -186,7 +186,6 @@ Runner.prototype.update = function(du) {
     //hvað er hvert skref mikil x færsla?
     //placeholder if settning til þess að stelpan birtist aftur
     this.roomX += this.speed;
-    console.log("RoomX: "+ this.roomX + "Reset: "+this.reset_roomX);
     this.cx = this.roomX - this.width / 2 - g_camera.xView;
     this.updateInterval = 30;
   }
