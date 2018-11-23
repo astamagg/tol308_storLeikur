@@ -38,7 +38,13 @@ function createInitialRunner() {
   });
 }
 
-// Button
+function makeOnClickHandler(block) {
+  return () => {
+    g_mouseX = undefined;
+    g_mouseY = undefined;
+    block();
+  }
+}
 
 var g_gameOver = false;
 var g_theStory = true;
@@ -95,6 +101,11 @@ function setGameState(state) {
   gameState = state;
 }
 
+// =========
+//  BUTTONS
+// =========
+
+// buttons on the Front page
 var g_buttonsFrontPage = [
   new Button({
     text: 'Start new game',
@@ -103,9 +114,9 @@ var g_buttonsFrontPage = [
     height: 40,
     x: g_canvas.width / 2 - 100,
     y: g_canvas.height / 1.2 - 85,
-    onClick: function() {
+    onClick: makeOnClickHandler(function() {
       setGameState('playGame');
-    },
+    }),
   }),
 
   new Button({
@@ -115,12 +126,13 @@ var g_buttonsFrontPage = [
     height: 40,
     x: g_canvas.width / 2 - 100,
     y: g_canvas.height / 1.1 - 65,
-    onClick: function() {
+    onClick: makeOnClickHandler(function() {
       setGameState('instructions');
-    },
+    }),
   }),
 ];
 
+// button on the game over page
 var g_buttonGameOver = new Button({
   text: 'Start new game',
   color: 'red',
@@ -128,13 +140,14 @@ var g_buttonGameOver = new Button({
   height: 40,
   x: g_canvas.width / 2 - 100,
   y: 100,
-  onClick: function() {
+  onClick: makeOnClickHandler(function() {
     //console.log('START NEW GAME FROM GAMEOVER CLICKED!');
     entityManager.reset();
     setGameState('playGame');
-  },
+  }),
 });
 
+// button on the instruction page
 var g_buttonInstruction = new Button({
   text: 'Go back',
   color: 'red',
@@ -238,6 +251,7 @@ function renderSimulation(ctx) {
   if (gameState === 'gameOver' || gameState == 'winner') {
     g_buttonGameOver.render(ctx);
     gameOver(ctx);
+    console.log("game over: "+ g_gameOver +  g_WINNER);
   } else if (gameState === 'story') {
     theStory(ctx);
     for (let i = 0; i < g_buttonsFrontPage.length; i++) {

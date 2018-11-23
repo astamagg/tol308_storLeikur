@@ -9,11 +9,12 @@ function Button(descr) {
 
 //creating a button base on the height, width and placement of an object
 Button.prototype.contains = function (x, y) {
-    var topY = this.y + this.height;
-    var bottomY = this.y;
-    var leftX = this.x;
-    var rightX = this.x + this.width;
+    var topY = this.y + this.height; // top of the button
+    var bottomY = this.y; // bottom of the button
+    var leftX = this.x;  // left side of the button
+    var rightX = this.x + this.width; // right side of the button
 
+    // return true if contains, else return false 
     if ((y >= bottomY && y <= topY) && (x >= leftX && x <= rightX)) {
         return true;
     }
@@ -29,5 +30,5 @@ Button.prototype.render = function (ctx) {
     g_ctx.fillStyle = 'white';      //text color
     g_ctx.textAlign = 'center';     //text placement
 
-    g_ctx.fillText(this.text, this.x + this.width/2, this.y + (this.height/2 + 5));
+    g_ctx.fillText(this.text, this.x + this.width/2, this.y + (this.height/2 + 5)); // the text in the button
 };

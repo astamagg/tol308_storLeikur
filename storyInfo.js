@@ -14,7 +14,7 @@ function theStory(ctx) {
     ctx.canvas.height / 4 - 15
   );
 
-  // description text
+  // The story text
 
   ctx.textAlign = 'center';
   ctx.font = '15px Courier';
@@ -79,6 +79,7 @@ function theStory(ctx) {
 }
 
 function instructionGame(ctx) {
+  // background
   ctx.drawImage(g_images.background, 0, 700, g_canvas.width, g_canvas.height);
 
   // title text
@@ -277,27 +278,27 @@ function instructionGame(ctx) {
 }
 
 function gameOver(ctx) {
-        // start game and information button
-        if (g_buttonGameOver.contains(g_mouseX, g_mouseY)) {
-                g_buttonGameOver.onClick();
-        }
-        
-        if (gameState !== 'gameOver' && gameState !== 'winner') { return }
-        // Clear the game
-        ctx.drawImage(g_images.background,0,700, g_canvas.width, g_canvas.height);
+  // start game and information button
+  if (g_buttonGameOver.contains(g_mouseX, g_mouseY)) {
+    g_buttonGameOver.onClick();
+  }
+  
+  if (gameState !== 'gameOver' && gameState !== 'winner') { return }
+  // Clear the game
+  ctx.drawImage(g_images.background,0,700, g_canvas.width, g_canvas.height);
 
-        // title text
-        ctx.textAlign = "center";
-        ctx.font = '50px Courier';
-        ctx.fillStyle = 'black';
+  // title text
+  ctx.textAlign = "center";
+  ctx.font = '50px Courier';
+  ctx.fillStyle = 'black';
 
-        // style and write the gameOver-text
-        ctx.textAlign = "center";
-        if(g_gameOver) {
-                ctx.fillText('You Lost',ctx.canvas.width/2, ctx.canvas.height/2);
-        } else if (g_WINNER){
-                ctx.fillText("YOU WON!!",ctx.canvas.width/2, ctx.canvas.height/2);
-        }
+  // style and write the gameOver-text
+  ctx.textAlign = "center";
+  if(g_gameOver) {
+    ctx.fillText('You Lost',ctx.canvas.width/2, ctx.canvas.height/2);
+  } else if (g_WINNER){
+    ctx.fillText("YOU WON!!",ctx.canvas.width/2, ctx.canvas.height/2);
+  }
 
-   
+
 }

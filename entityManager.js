@@ -20,7 +20,7 @@ var entityManager = {
 
   //Generate power changers that move
   _generatePowerChangers: function() {
-    var i,
+    let i,
       NUM_POWERCHANGERS = 30;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
       this.generatePowerChangers();
@@ -29,7 +29,7 @@ var entityManager = {
 
   //generate power changers that stay still
   _generateStillPowerChangers: function() {
-    var i,
+    let i,
       NUM_POWERCHANGERS = 30;
     for (i = 0; i < NUM_POWERCHANGERS; ++i) {
       this.generateStillPowerChangers();
@@ -80,27 +80,25 @@ var entityManager = {
   reset: function() {
     countdown.reset();
 
+    // reset the runner
     for (let i = 0; i < this._runner.length; i++) {
       this._runner[i].reset();
     }
 
+    // reset pat 
     for (let i = 0; i < this._pat.length; i++) {
       this._pat[i].reset();
     }
 
-    for (let i = 0; i < this._powerChanger.length; i++) {
-      this._powerChanger[i].reset();
-    }
-
-    for (let i = 0; i < this._stillPowerChanger.length; i++) {
-      this._stillPowerChanger[i].reset();
-    }
-
+    // generate new powerchangers
     this._powerChanger = [];
     this._stillPowerChanger = [];
 
+    g_stillPowerChangerCounter = 0;
     this._generatePowerChangers();
     this._generateStillPowerChangers();
+    console.log(this._stillPowerChanger);
+    this.deferredSetup();
   },
 
   reactToPowerChanger: function(entity) {
@@ -150,15 +148,16 @@ var entityManager = {
       console.log('fór inn í pat');
       this._runner[0].speed = 0;
 
-      setTimeout(function() {
+      //setTimeout(function() {
         setGameState('winner');
-      }, 3000);
+      //}, 3000);
     }
   },
 
   update: function(du) {
     countdown.update(du);
 
+    // if pat is not showing, keep the camera rolling
     if (!g_patIsShowing) {
       g_camera.update(du);
     }

@@ -24,6 +24,7 @@ function handleMouse(evt) {
 //change the color of a button if it is pressed
 function handleButtonColor(evt) {
     
+    // change the button colors to yellow on mousedown
     let instructionButton = g_buttonInstruction.contains(
         evt.clientX - g_canvas.offsetLeft, 
         evt.clientY - g_canvas.offsetTop);
@@ -36,7 +37,6 @@ function handleButtonColor(evt) {
             evt.clientX - g_canvas.offsetLeft, 
             evt.clientY - g_canvas.offsetTop)) {
             g_buttonsFrontPage[i].color = 'yellow';
-            
         }
     }
 
@@ -52,6 +52,7 @@ function handleButtonColor(evt) {
 //change the color back to the original when we stop pressing
 function handleButtonUp(evt) {
     
+    // change the button colors back to red on mouseup
     g_buttonInstruction.color = 'red';
     g_buttonGameOver.color = 'red';
 
@@ -60,7 +61,6 @@ function handleButtonUp(evt) {
             evt.clientX - g_canvas.offsetLeft, 
             evt.clientY - g_canvas.offsetTop)) {
             g_buttonsFrontPage[i].color = 'red';
-            
         }
     }
 

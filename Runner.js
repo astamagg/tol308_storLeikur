@@ -263,12 +263,6 @@ Runner.prototype.getSpeed = function() {
   return this.speed;
 };
 
-/*Runner.prototype.reset = function() {
-  this.setPos(this.reset_cx, this.reset_cy);
-  this.roomX = this.reset_cx;
-  this.halt();
-};*/
-
 Runner.prototype.halt = function() {
   this.velX = 0;
   this.velY = 0;
